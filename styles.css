@@ -16,7 +16,7 @@ body {
 header {
     background-color: #57b846; /* Cor verde do cabeçalho */
     color: #fff;
-    padding: 20px;
+    padding: 20px; /* Espaçamento no cabeçalho */
     text-align: center;
 }
 
@@ -25,31 +25,29 @@ header {
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2.5em;
-    font-weight: bold;
-    letter-spacing: 1px; /* Espaçamento entre caracteres */
+    margin: 0; /* Remove margem no título */
+    font-size: 2.5em; /* Tamanho de fonte */
 }
 
 header p {
-    margin: 5px 0;
-    font-size: 1.2em;
+    margin: 5px 0; /* Margem reduzida para o parágrafo */
+    font-size: 1.2em; /* Tamanho de fonte maior para descrição */
 }
 
 /* Barra de Navegação */
 nav {
     background: #333; /* Fundo do menu */
     position: sticky; /* Fixa a barra de navegação abaixo do header */
-    top: 0;
-    width: 100%;
-    z-index: 999; /* Aparece acima do restante */
+    top: 0; /* Fica no topo da página */
+    width: 100%; /* Largura total */
+    z-index: 999; /* Fica acima de outros conteúdos */
 }
 
 nav ul {
-    list-style: none;
-    display: flex;
+    list-style: none; /* Remove bullets */
+    display: flex; /* Usa flexbox para a distribuição */
     justify-content: space-evenly; /* Espaça uniformemente os itens */
-    padding: 0;
+    padding: 0; /* Remove padding */
     margin: 0; /* Remove margens */
 }
 
@@ -83,80 +81,110 @@ section {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
-/* Centraliza o conteúdo */
+/* Estilo dos Títulos e Parágrafos */
 section h2 {
-    font-size: 2em;
-    color: #333;
-    margin-bottom: 20px;
+    font-size: 2em; /* Tamanho do título */
+    color: #333; /* Cor do título */
+    margin-bottom: 20px; /* Margem abaixo do título */
     text-align: center; /* Centraliza os títulos */
 }
 
-#projects { 
-    text-align: center; /* Centraliza o conteúdo nessa seção */
-}
-
-#projects button {
-    margin-top: 10px; /* Espaçamento adicional acima do botão */
-}
-
-/* Adiciona um estilo para a informação de projetos */
 section p {
-    text-align: center; /* Centraliza o texto "Confira meus projetos" */
-    margin-bottom: 15px;
+    text-align: center; /* Centraliza o texto */
+    margin-bottom: 15px; /* Margem abaixo do parágrafo */
+}
+
+/* Estilo dos Projetos */
+#projects {
+    text-align: center; /* Centraliza o conteúdo nesta seção */
+}
+
+.project-buttons {
+    display: flex; /* Usar flexbox para os botões */
+    flex-direction: column; /* Empilha os botões um em cima do outro */
+    align-items: center; /* Centraliza os botões horizontalmente */
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 10px; /* Quote espaço acima dos botões */
+}
+
+button {
+    width: 200px; /* Largura fixa para os botões */
+    padding: 15px; /* Padding dos botões */
+}
+
+/* Estilo dos Bullets */
+section ul {
+    list-style: none; /* Remove marcadores padrão */
+    padding: 0; /* Remove padding */
+    text-align: center; /* Centraliza todos os itens */
+}
+
+section ul li {
+    display: flex; /* Exibe os itens da lista em um layout flex */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    margin-bottom: 10px; /* Espaço entre os itens da lista */
+}
+
+section ul li::before {
+    content: '•'; /* Adiciona um bullet personalizado */
+    color: #57b846; /* Cor do bullet */
+    font-size: 1.5em; /* Tamanho do bullet */
+    margin-right: 10px; /* Espaço entre bullet e texto */
 }
 
 /* Estilo do Formulário */
 form {
-    display: flex;
-    flex-direction: column;
+    display: flex; /* Define o layout do formulário */
+    flex-direction: column; /* Coloca campos em coluna */
     gap: 15px; /* Espaço entre os campos */
 }
 
 input, textarea {
-    font-family: 'Helvetica', sans-serif;
-    font-size: 1em;
-    padding: 15px;
-    border: 1px solid #ddd;
+    font-family: 'Helvetica', sans-serif; /* Fonte padronizada */
+    font-size: 1em; /* Tamanho da fonte */
+    padding: 15px; /* Espaçamento interno */
+    border: 1px solid #ddd; /* Borda clara */
     border-radius: 10px; /* Bordas arredondadas */
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interna leve */
-    transition: border-color 0.3s;
-    width: 100%; /* As caixas de entrada ocupam toda a largura */
+    transition: border-color 0.3s; /* Transição suave ao focar */
+    width: 100%; /* Máxima largura para os inputs */
 }
 
 textarea {
-    resize: none; /* Remove o redimensionamento manual */
-    height: 120px; /* Altura inicial, expande conforme necessário */
+    resize: none; /* Remove redimensionamento manual */
+    height: 120px; /* Altura padrão */
 }
 
 input:focus, textarea:focus {
-    border-color: #57b846;
-    outline: none; /* Remove a borda padrão ao focar */
+    border-color: #57b846; /* Foco nos campos */
+    outline: none; /* Remove borda padrão ao focar */
 }
 
 button {
     background: #57b846; /* Cor do botão */
-    color: #fff;
-    border: none;
-    padding: 15px;
-    font-size: 1em;
+    color: #fff; /* Cor do texto do botão */
+    border: none; /* Remove borda */
+    padding: 15px; /* Espaçamento interno */
+    font-size: 1em; /* Tamanho do botão */
     border-radius: 10px; /* Bordas arredondadas */
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s;
+    cursor: pointer; /* Estilo de ponteiro */
+    transition: background 0.3s ease, transform 0.2s; /* Efeitos de transição */
 }
 
 button:hover {
     background: #45a63a; /* Tom de verde mais escuro */
-    transform: scale(1.05); /* Botão cresce ligeiramente */
+    transform: scale(1.05); /* Cresce ligeiramente ao passar o mouse */
 }
 
 /* Rodapé */
 footer {
     text-align: center; /* Centraliza o footer */
-    padding: 15px;
-    font-size: 0.9em;
-    color: #555;
-    background: #f0f4f8;
-    margin-top: 30px;
+    padding: 15px; /* Espaçamento no rodapé */
+    font-size: 0.9em; /* Tamanho da fonte do rodapé */
+    color: #555; /* Cor do texto do rodapé */
+    background: #f0f4f8; /* Cor de fundo do rodapé */
+    margin-top: 30px; /* Espaço acima do rodapé */
 }
 
 /* Responsividade */
@@ -166,12 +194,18 @@ footer {
         margin-bottom: 30px; /* Menor espaçamento entre seções */
     }
 
+    nav ul {
+        flex-direction: column; /* Coloca o menu como uma coluna */
+        align-items: center; /* Centraliza os itens do menu */
+        padding: 5px; /* Adiciona espaço */
+    }
+
     nav ul li {
-        flex: none; /* Menus ocupam seu espaço corretamente */
+        margin: 5px 0; /* Para melhorar espaço entre itens do menu */
     }
 
     header h1 {
-        font-size: 2em; /* Tamanho de título em telas menores */
+        font-size: 2em; /* Tamanho menor de título em telas menores */
     }
 
     header p {
