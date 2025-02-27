@@ -21,13 +21,14 @@ header {
 }
 
 .header-content {
-    margin-bottom: 0;
+    margin-bottom: 0; /* Reduz a margem inferior */
 }
 
 header h1 {
     margin: 0;
     font-size: 2.5em;
     font-weight: bold;
+    letter-spacing: 1px; /* Espaçamento entre caracteres */
 }
 
 header p {
@@ -47,28 +48,28 @@ nav {
 nav ul {
     list-style: none;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-evenly; /* Espaça uniformemente os itens */
     padding: 0;
-    margin: 0;
+    margin: 0; /* Remove margens */
 }
 
 nav ul li {
-    flex: 1;
-    text-align: center;
+    flex: 1; /* Permite que os itens ocupem espaço igual */
+    text-align: center; /* Centraliza os links */
 }
 
 nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 15px 0;
-    display: block;
-    transition: background 0.3s, transform 0.2s;
+    color: #fff; /* Cor do texto dos links */
+    text-decoration: none; /* Remove underline */
+    padding: 15px 0; /* Padding para os links */
+    display: block; /* Faz o link ocupar o bloco */
+    transition: background 0.3s, transform 0.2s; /* Efeitos de transição */
 }
 
 nav ul li a:hover {
-    background: #57b846;
-    border-radius: 30px;
-    transform: scale(1.05);
+    background: #57b846; /* Cor de fundo ao passar o mouse */
+    border-radius: 30px; /* Cantos arredondados */
+    transform: scale(1.05); /* Aumenta ligeiramente ao passar o mouse */
 }
 
 /* Divisões entre Seções */
@@ -80,42 +81,28 @@ section {
     background: #fff; /* Fundo branco para se destacar */
     border-radius: 15px; /* Bordas arredondadas */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    text-align: center; /* Centraliza a informação dentro das seções */
 }
 
+/* Centraliza o conteúdo */
 section h2 {
     font-size: 2em;
     color: #333;
     margin-bottom: 20px;
+    text-align: center; /* Centraliza os títulos */
 }
 
-/* Alinhamento do texto e botão na seção Projetos */
-#projects {
-    text-align: center; /* Centraliza o texto da seção de projetos */
+#projects { 
+    text-align: center; /* Centraliza o conteúdo nessa seção */
 }
 
 #projects button {
-    margin-top: 10px; /* Margem entre o texto e o botão */
+    margin-top: 10px; /* Espaçamento adicional acima do botão */
 }
 
-/* Adicionado um estilo para o alinhamento dos bullets e textos */
-section ul {
-    list-style: none; /* Remove marcadores padrão */
-    padding: 0; /* Remove padding */
-}
-
-section ul li {
-    display: flex; /* Usa flexbox para alinhar texto e bullet */
-    align-items: center; /* Centraliza verticalmente os itens */
-    margin-bottom: 10px; /* Espaço entre os itens da lista */
-}
-
-section ul li::before {
-    content: '•'; /* Usando bullet personalizado */
-    color: #57b846; /* Cor do bullet */
-    margin-right: 10px; /* Espaço entre bullet e texto */
-    font-size: 1.5em; /* Tamanho do bullet */
-    line-height: 1; /* Evita que o bullet fique desalinhado */
+/* Adiciona um estilo para a informação de projetos */
+section p {
+    text-align: center; /* Centraliza o texto "Confira meus projetos" */
+    margin-bottom: 15px;
 }
 
 /* Estilo do Formulário */
@@ -147,7 +134,7 @@ input:focus, textarea:focus {
 }
 
 button {
-    background: #57b846;
+    background: #57b846; /* Cor do botão */
     color: #fff;
     border: none;
     padding: 15px;
