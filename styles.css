@@ -56,7 +56,7 @@ nav ul li {
 nav ul li a {
     color: #fff;
     text-decoration: none;
-    padding: 15px 0;
+    padding: 15px 10px; /* Mantendo num tamanho razoável */
     display: block;
     border-radius: 30px;
     transition: background 0.3s, transform 0.2s;
@@ -64,8 +64,7 @@ nav ul li a {
 
 nav ul li a:hover {
     background: #57b846;
-    border-radius: 30px;
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 section {
@@ -113,7 +112,6 @@ section p {
     border-radius: 10px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s;
-    text-align: center;
 }
 
 .project-button:hover {
@@ -124,14 +122,12 @@ section p {
 section ul {
     list-style: none;
     padding: 0;
-    text-align: center;
+    margin: 0;
 }
 
 section ul li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin-bottom: 10px;
+    text-align: left; /* Alinhamento à esquerda */
 }
 
 section ul li::before {
@@ -139,6 +135,7 @@ section ul li::before {
     color: #57b846;
     font-size: 1.5em;
     margin-right: 10px;
+    vertical-align: middle; /* Alinhamento vertical */
 }
 
 form {
@@ -200,13 +197,18 @@ footer {
     }
 
     nav ul {
-        flex-direction: column;
-        align-items: center;
-        padding: 5px;
+        flex-wrap: nowrap; /* Mantém alinhado na horizontal */
+        overflow-x: auto; /* Permite rolagem horizontal se necessário */
+        white-space: nowrap; /* Impede quebra de linha dos itens do menu */
     }
 
     nav ul li {
-        margin: 5px 0;
+        flex: 0 0 auto; /* Permite que os itens mantenham seu tamanho natural */
+    }
+
+    nav ul li a {
+        padding: 10px; /* Diminuindo o padding para melhor ajuste */
+        font-size: 0.9em; /* Tamanho da fonte um pouco menor */
     }
 
     header h1 {
@@ -218,6 +220,10 @@ footer {
     }
 
     textarea {
-        height: 100px;
+        height: 100px; /* Ajustando a altura do textarea */
+    }
+
+    .project-button {
+        width: 100%; /* Botão em tela cheia no mobile */
     }
 }
