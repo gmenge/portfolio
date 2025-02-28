@@ -209,8 +209,8 @@ footer {
     }
 
     nav ul li a {
-        padding: 10px; /* Diminui o padding para melhor ajuste em telas pequenas */
-        font-size: 0.9em; /* Diminui o tamanho da fonte dos links no menu */
+        padding: 8px; /* Diminui o padding para melhor ajuste em telas pequenas */
+        font-size: 0.8em; /* Diminui o tamanho da fonte dos links no menu */
     }
 
     header h1 {
