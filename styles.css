@@ -1,205 +1,207 @@
 * {
-    box-sizing: border-box;
+    box-sizing: border-box; /* Faz com que o tamanho de todos os elementos considere padding e bordas na largura e altura total */
 }
 
 body {
-    font-family: 'Helvetica', sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
+    font-family: 'Helvetica', sans-serif; /* Define a fonte principal da página */
+    line-height: 1.6; /* Define a altura da linha para melhor legibilidade */
+    margin: 0; /* Remove a margem padrão do corpo */
+    padding: 0; /* Remove o padding padrão do corpo */
+    background-color: #f9f9f9; /* Define a cor de fundo da página */
+    color: #333; /* Define a cor do texto */
 }
 
 header {
-    background-color: #57b846;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+    background-color: #000000; /* Define a cor de fundo do cabeçalho */
+    color: #ffffff; /* Define a cor do texto do cabeçalho */
+    padding: 20px; /* Adiciona espaçamento interno ao cabeçalho */
+    text-align: center; /* Centraliza o texto dentro do cabeçalho */
 }
 
 .header-content {
-    margin-bottom: 0;
+    margin-bottom: 0; /* Remove a margem inferior do conteúdo do cabeçalho */
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2.5em;
+    margin: 0; /* Remove a margem padrão do título principal */
+    font-size: 2.5em; /* Define o tamanho da fonte do título principal */
 }
 
 header p {
-    margin: 5px 0;
-    font-size: 1.2em;
+    margin: 5px 0; /* Define a margem do parágrafo do cabeçalho (superior e inferior) */
+    font-size: 1.2em; /* Define o tamanho da fonte do parágrafo do cabeçalho */
 }
 
 nav {
-    background: #333;
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 999;
+    background: #787878; /* Define a cor de fundo da barra de navegação */
+    position: sticky; /* Faz a barra de navegação "grudar" no topo ao rolar a página */
+    top: 0; /* Define que a barra de navegação deve ficar no topo da página */
+    width: 100%; /* Faz com que a barra de navegação tenha 100% da largura disponível */
+    z-index: 999; /* Garante que a barra de navegação esteja sempre acima de outros elementos */
 }
 
 nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 0;
-    margin: 0;
+    list-style: none; /* Remove a lista padrão de marcadores */
+    display: flex; /* Exibe os itens da lista em linha (horizontalmente) */
+    justify-content: space-evenly; /* Distribui os itens da lista uniformemente */
+    padding: 0; /* Remove o padding padrão da lista */
+    margin: 0; /* Remove a margem padrão da lista */
 }
 
 nav ul li {
-    flex: 1;
-    text-align: center;
+    flex: 1; /* Faz com que cada item da lista cresça igualmente para ocupar o espaço disponível */
+    text-align: center; /* Centraliza o texto dentro dos itens da lista */
 }
 
 nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 15px 10px; /* Mantendo num tamanho razoável */
-    display: block;
-    border-radius: 30px;
-    transition: background 0.3s, transform 0.2s;
+    color: #fff; /* Define a cor do texto dos links de navegação */
+    text-decoration: none; /* Remove o sublinhado dos links */
+    padding: 15px 10px; /* Adiciona espaçamento interno aos links */
+    display: block; /* Faz com que o link ocupe toda a área do item da lista */
+    border-radius: 30px; /* Adiciona bordas arredondadas aos links */
+    transition: background 0.3s, transform 0.2s; /* Define uma transição suave para as mudanças de fundo e escala */
 }
 
 nav ul li a:hover {
-    background: #57b846;
-    transform: scale(1.1);
+    background: #57b846; /* Define a cor de fundo quando o link é hover (passado o mouse) */
+    transform: scale(1.1); /* Aumenta levemente o tamanho do link ao passar o mouse */
 }
 
 section {
-    padding: 40px 20px;
-    max-width: 900px;
-    margin: auto;
-    margin-bottom: 50px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px 20px; /* Adiciona espaçamento interno à seção */
+    max-width: 900px; /* Define a largura máxima da seção */
+    margin: auto; /* Centraliza a seção horizontalmente */
+    margin-bottom: 50px; /* Adiciona espaço abaixo da seção */
+    background: #fff; /* Define a cor de fundo da seção */
+    border-radius: 15px; /* Adiciona bordas arredondadas à seção */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra à seção */
 }
 
 section h2 {
-    font-size: 2em;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+    font-size: 2em; /* Define o tamanho da fonte do subtítulo */
+    color: #333; /* Define a cor do subtítulo */
+    margin-bottom: 20px; /* Adiciona espaço abaixo do subtítulo */
+    text-align: center; /* Centraliza o texto do subtítulo */
 }
 
 section p {
-    text-align: center;
-    margin-bottom: 15px;
+    text-align: center; /* Centraliza o texto do parágrafo */
+    margin-bottom: 15px; /* Adiciona espaço abaixo do parágrafo */
 }
 
 #projects {
-    text-align: center;
+    text-align: center; /* Centraliza o texto da seção de projetos */
 }
 
 .project-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 10px;
+    display: flex; /* Exibe os botões dos projetos em linha */
+    flex-direction: column; /* Alinha os botões em coluna */
+    align-items: center; /* Centraliza os botões horizontalmente */
+    gap: 15px; /* Define espaço entre os botões */
+    margin-top: 10px; /* Adiciona espaço acima dos botões */
 }
 
 .project-button {
-    width: 200px;
-    height: 50px;
-    background: #57b846;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    font-size: 1em;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s;
+    width: 200px; /* Define a largura do botão do projeto */
+    height: 50px; /* Define a altura do botão do projeto */
+    background: #787878; /* Define a cor de fundo do botão */
+    color: #fff; /* Define a cor do texto do botão */
+    border: none; /* Remove a borda padrão do botão */
+    padding: 10px; /* Adiciona espaçamento interno ao botão */
+    font-size: 1em; /* Define o tamanho da fonte do texto do botão */
+    border-radius: 10px; /* Adiciona bordas arredondadas ao botão */
+    cursor: pointer; /* Muda o cursor para indicar que o botão é clicável */
+    transition: background 0.3s ease, transform 0.2s; /* Define uma transição suave para mudanças de fundo e escala */
 }
 
 .project-button:hover {
-    background: #45a63a;
-    transform: scale(1.05);
+    background: #45a63a; /* Define a cor de fundo quando o botão é hover */
+    transform: scale(1.05); /* Aumenta levemente o tamanho do botão ao passar o mouse */
 }
 
 section ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    list-style: none; /* Remove a lista padrão de marcadores */
+    padding: 0; /* Remove o padding padrão da lista */
+    margin: 0; /* Remove a margem padrão da lista */
 }
 
 section ul li {
-    margin-bottom: 10px;
-    text-align: left; /* Alinhamento à esquerda */
+    margin-bottom: 10px; /* Adiciona espaço abaixo de cada item da lista */
+    text-align: left; /* Alinha o texto à esquerda */
 }
 
 section ul li::before {
-    content: '•';
-    color: #57b846;
-    font-size: 1.5em;
-    margin-right: 10px;
-    vertical-align: middle; /* Alinhamento vertical */
+    content: '•'; /* Adiciona um marcador personalizado antes de cada item da lista */
+    color: #57b846; /* Define a cor do marcador */
+    font-size: 1.5em; /* Define o tamanho do marcador */
+    margin-right: 10px; /* Adiciona espaço à direita do marcador */
+    vertical-align: middle; /* Alinha verticalmente o marcador com o texto */
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    display: flex; /* Exibe os campos do formulário em linha */
+    flex-direction: column; /* Alinha os campos em coluna */
+    gap: 15px; /* Define espaço entre os campos do formulário */
 }
 
 input, textarea {
-    font-family: 'Helvetica', sans-serif;
-    font-size: 1em;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s;
-    width: 100%;
+    font-family: 'Helvetica', sans-serif; /* Define a fonte para campos de entrada e textarea */
+    font-size: 1em; /* Define o tamanho da fonte para campos de entrada e textarea */
+    padding: 15px; /* Adiciona espaçamento interno aos campos */
+    border: 1px solid #ddd; /* Define a borda padrão dos campos */
+    border-radius: 10px; /* Adiciona bordas arredondadas aos campos */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Adiciona sombra interna aos campos */
+    transition: border-color 0.3s; /* Define uma transição suave para a mudança de cor da borda */
+    width: 100%; /* Faz com que os campos ocupem toda a largura disponível */
 }
 
 textarea {
-    resize: none;
-    height: 120px;
+    resize: none; /* Impede o redimensionamento de textarea */
+    height: 120px; /* Define a altura fixa do textarea */
 }
 
 input:focus, textarea:focus {
-    border-color: #57b846;
-    outline: none;
+    border-color: #57b846; /* Muda a cor da borda ao focar no campo */
+    outline: none; /* Remove o contorno padrão ao focar no campo */
 }
 
 button {
-    background: #57b846;
-    color: #fff;
-    border: none;
-    padding: 15px;
-    font-size: 1em;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s;
+    background: #787878; /* Define a cor de fundo do botão */
+    color: #fff; /* Define a cor do texto do botão */
+    border: none; /* Remove a borda padrão do botão */
+    padding: 15px; /* Adiciona espaçamento interno ao botão */
+    font-size: 1em; /* Define o tamanho da fonte do texto do botão */
+    border-radius: 10px; /* Adiciona bordas arredondadas ao botão */
+    cursor: pointer; /* Muda o cursor para indicar que o botão é clicável */
+    transition: background 0.3s ease, transform 0.2s; /* Define uma transição suave para mudanças de fundo e escala */
 }
 
 button:hover {
-    background: #45a63a;
-    transform: scale(1.05);
+    background: #45a63a; /* Define a cor de fundo quando o botão é hover */
+    transform: scale(1.05); /* Aumenta levemente o tamanho do botão ao passar o mouse */
 }
 
 footer {
-    text-align: center;
-    padding: 15px;
-    font-size: 0.9em;
-    color: #555;
-    background: #f0f4f8;
-    margin-top: 30px;
+    text-align: center; /* Centraliza o texto do rodapé */
+    padding: 15px; /* Adiciona espaçamento interno ao rodapé */
+    font-size: 0.9em; /* Define o tamanho da fonte do texto do rodapé */
+    color: #555; /* Define a cor do texto do rodapé */
+    background: #f0f4f8; /* Define a cor de fundo do rodapé */
+    margin-top: 30px; /* Adiciona espaço acima do rodapé */
 }
 
 @media (max-width: 768px) {
+    /* Define estilos que só serão aplicados quando a largura da tela for igual ou menor que 768px */
+
     section {
-        padding: 20px;
-        margin-bottom: 30px;
+        padding: 20px; /* Adiciona espaçamento interno reduzido à seção */
+        margin-bottom: 30px; /* Adiciona espaço abaixo da seção */
     }
 
     nav ul {
-        flex-wrap: nowrap; /* Mantém alinhado na horizontal */
+        flex-wrap: nowrap; /* Mantém alinhados os itens do menu na horizontal */
         overflow-x: auto; /* Permite rolagem horizontal se necessário */
-        white-space: nowrap; /* Impede quebra de linha dos itens do menu */
+        white-space: nowrap; /* Impede a quebra de linha dos itens do menu */
     }
 
     nav ul li {
@@ -207,23 +209,23 @@ footer {
     }
 
     nav ul li a {
-        padding: 10px; /* Diminuindo o padding para melhor ajuste */
-        font-size: 0.9em; /* Tamanho da fonte um pouco menor */
+        padding: 10px; /* Diminui o padding para melhor ajuste em telas pequenas */
+        font-size: 0.9em; /* Diminui o tamanho da fonte dos links no menu */
     }
 
     header h1 {
-        font-size: 2em;
+        font-size: 2em; /* Diminui o tamanho do título principal em telas pequenas */
     }
 
     header p {
-        font-size: 1em;
+        font-size: 1em; /* Diminui o tamanho do parágrafo do cabeçalho em telas pequenas */
     }
 
     textarea {
-        height: 100px; /* Ajustando a altura do textarea */
+        height: 100px; /* Ajusta a altura do textarea em telas pequenas */
     }
 
     .project-button {
-        width: 100%; /* Botão em tela cheia no mobile */
+        width: 100%; /* Faz os botões ocuparem toda a largura disponível em telas pequenas */
     }
 }
