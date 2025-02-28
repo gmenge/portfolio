@@ -63,7 +63,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background: #57b846; /* Define a cor de fundo quando o link é hover (passado o mouse) */
+    background: #a0a0a0; /* Define a cor de fundo quando o link é hover (passado o mouse) */
     transform: scale(1.1); /* Aumenta levemente o tamanho do link ao passar o mouse */
 }
 
@@ -115,7 +115,7 @@ section p {
 }
 
 .project-button:hover {
-    background: #45a63a; /* Define a cor de fundo quando o botão é hover */
+    background: #a0a0a0; /* Define a cor de fundo quando o botão é hover */
     transform: scale(1.05); /* Aumenta levemente o tamanho do botão ao passar o mouse */
 }
 
@@ -177,7 +177,7 @@ button {
 }
 
 button:hover {
-    background: #45a63a; /* Define a cor de fundo quando o botão é hover */
+    background: #a0a0a0; /* Define a cor de fundo quando o botão é hover */
     transform: scale(1.05); /* Aumenta levemente o tamanho do botão ao passar o mouse */
 }
 
