@@ -1,77 +1,63 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Analista de Sistemas - Gabriel Menge</title>
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <h1>Gabriel Menge</h1>
-            <p>Analista de Sistemas</p>
-        </div>
-    </header>
+<section id="projects">
+    <h2>Meus Projetos</h2>
+    <p>Confira algumas das soluções e sistemas que desenvolvi:</p>
 
-    <nav>
-        <ul>
-            <li><a href="#services">Serviços</a></li>
-            <li><a href="#benefits">Missão</a></li>
-            <li><a href="#projects">Meus Projetos</a></li>
-            <li><a href="#contact">Contato</a></li>
-            <li><a href="#info">Informações</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <section id="services">
-            <h2>Serviços Oferecidos</h2>
-            <ul>
-                <li>Desenvolvimento de Software Sob Medida - Soluções personalizadas para atender suas necessidades específicas, entregando produtos de alta qualidade que facilitam a gestão de processos.</li>
-                <li>Consultoria em Tecnologias da Informação - Orientação especializada para melhorar sua infraestrutura de TI e otimizar a eficiência dos seus projetos.</li>
-                <li>Gestão de Projetos de Desenvolvimento - Serviços completos de gerenciamento para garantir a entrega pontual e dentro do escopo definido, com a máxima qualidade.</li>
-                <li>Suporte Técnico Especializado - Sempre disponível para oferecer suporte técnico de excelência, garantindo a continuidade de suas operações.</li>
-            </ul>
-        </section>
-
-        <section id="benefits">
-            <h2>Missão</h2>
-            <p>Soluções elaboradas com foco na eficiência, qualidade e adaptação às suas necessidades específicas. Trabalhamos para maximizar o resultado dos seus investimentos em tecnologia, propiciando um ambiente sustentável e de inovação. Além disso, nosso compromisso com a excelência garante que você tenha sempre um suporte técnico ágil e eficaz.</p>
-        </section>
-
-        <section id="projects">
-            <h2>Meus Projetos</h2>
-            <p>Confira meus projetos:</p>
-            <div class="project-buttons">
-                <a href="https://gmenge.github.io/calculadora-solar/" target="_blank">
-                    <button class="project-button">Calculadora Solar</button>
-                </a>
-                <a href="https://gmenge.github.io/portfolio/" target="_blank">
-                    <button class="project-button">Meu Portfólio</button>
-                </a>
+    <div class="projects-grid">
+        <!-- Projeto 1: Calculadora Solar -->
+        <article class="project-card">
+            <h3>Calculadora Solar</h3>
+            <p>Aplicação interativa para estimativa de geração de energia solar e economia estimada na fatura.</p>
+            <div class="tags">
+                <span>HTML5</span>
+                <span>CSS3</span>
+                <span>JavaScript</span>
             </div>
-        </section>
+            <div class="card-links">
+                <a href="https://gmenge.github.io/calculadora-solar/" target="_blank" class="btn btn-primary">Acessar</a>
+                <a href="https://github.com/gmenge/calculadora-solar" target="_blank" class="btn btn-secondary">Repositório</a>
+            </div>
+        </article>
 
-        <section id="contact">
-            <h2>Entre em Contato</h2>
-            <form action="seu_script.php" method="POST">
-                <input type="text" name="name" placeholder="Seu Nome" required>
-                <input type="email" name="email" placeholder="Seu Email" required>
-                <textarea name="message" placeholder="Sua Mensagem" required></textarea>
-                <button type="submit">Enviar</button>
-            </form>
-        </section>
+        <!-- Projeto 2: Portfólio Atual -->
+        <article class="project-card">
+            <h3>Portfólio Profissional</h3>
+            <p>Página de apresentação profissional e catálogo dos meus projetos como Analista de Sistemas.</p>
+            <div class="tags">
+                <span>HTML5</span>
+                <span>CSS3</span>
+            </div>
+            <div class="card-links">
+                <a href="https://gmenge.github.io/portfolio/" target="_blank" class="btn btn-primary">Acessar</a>
+                <a href="https://github.com/gmenge/portfolio" target="_blank" class="btn btn-secondary">Repositório</a>
+            </div>
+        </article>
 
-        <section id="info">
-            <h2>Informações Adicionais</h2>
-            <p>Conecte-se: <a href="https://github.com/gmenge" target="_blank">GitHub</a> | <a href="#">LinkedIn</a></p>
-        </section>
-    </main>
+        <!-- Projeto 3 (Novo): Insira os dados aqui -->
+        <article class="project-card">
+            <h3>Nome do Projeto 3</h3>
+            <p>Breve descrição sobre o objetivo do sistema, o problema resolvido e as funcionalidades principais.</p>
+            <div class="tags">
+                <span>Node.js</span>
+                <span>SQL</span>
+            </div>
+            <div class="card-links">
+                <a href="LINK_DO_PROJETO_3" target="_blank" class="btn btn-primary">Acessar</a>
+                <a href="LINK_DO_GITHUB_3" target="_blank" class="btn btn-secondary">Repositório</a>
+            </div>
+        </article>
 
-    <footer>
-        <p>&copy; 2025 Gabriel Menge. Todos os direitos reservados.</p>
-    </footer>
-</body>
-</html>
-
+        <!-- Projeto 4 (Novo): Insira os dados aqui -->
+        <article class="project-card">
+            <h3>Nome do Projeto 4</h3>
+            <p>Breve descrição sobre o objetivo do sistema, o problema resolvido e as funcionalidades principais.</p>
+            <div class="tags">
+                <span>React</span>
+                <span>API REST</span>
+            </div>
+            <div class="card-links">
+                <a href="LINK_DO_PROJETO_4" target="_blank" class="btn btn-primary">Acessar</a>
+                <a href="LINK_DO_GITHUB_4" target="_blank" class="btn btn-secondary">Repositório</a>
+            </div>
+        </article>
+    </div>
+</section>
