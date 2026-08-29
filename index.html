@@ -1,63 +1,153 @@
-<section id="projects">
-    <h2>Meus Projetos</h2>
-    <p>Confira algumas das soluções e sistemas que desenvolvi:</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Menge | Analista de Sistemas</title>
+    
+    <!-- CSS do Projeto -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Ícones (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Gabriel Menge</h1>
+            <p>Analista de Sistemas</p>
+        </div>
+    </header>
 
-    <div class="projects-grid">
-        <!-- Projeto 1: Calculadora Solar -->
-        <article class="project-card">
-            <h3>Calculadora Solar</h3>
-            <p>Aplicação interativa para estimativa de geração de energia solar e economia estimada na fatura.</p>
-            <div class="tags">
-                <span>HTML5</span>
-                <span>CSS3</span>
-                <span>JavaScript</span>
-            </div>
-            <div class="card-links">
-                <a href="https://gmenge.github.io/calculadora-solar/" target="_blank" class="btn btn-primary">Acessar</a>
-                <a href="https://github.com/gmenge/calculadora-solar" target="_blank" class="btn btn-secondary">Repositório</a>
-            </div>
-        </article>
+    <nav>
+        <ul>
+            <li><a href="#services">Serviços</a></li>
+            <li><a href="#skills">Habilidades</a></li>
+            <li><a href="#benefits">Missão</a></li>
+            <li><a href="#projects">Meus Projetos</a></li>
+            <li><a href="#contact">Contato</a></li>
+            <li><a href="#info">Informações</a></li>
+        </ul>
+    </nav>
 
-        <!-- Projeto 2: Portfólio Atual -->
-        <article class="project-card">
-            <h3>Portfólio Profissional</h3>
-            <p>Página de apresentação profissional e catálogo dos meus projetos como Analista de Sistemas.</p>
-            <div class="tags">
-                <span>HTML5</span>
-                <span>CSS3</span>
-            </div>
-            <div class="card-links">
-                <a href="https://gmenge.github.io/portfolio/" target="_blank" class="btn btn-primary">Acessar</a>
-                <a href="https://github.com/gmenge/portfolio" target="_blank" class="btn btn-secondary">Repositório</a>
-            </div>
-        </article>
+    <main>
+        <section id="services">
+            <h2><i class="fa-solid fa-gears"></i> Serviços Oferecidos</h2>
+            <ul class="services-list">
+                <li><strong>Desenvolvimento de Software Sob Medida:</strong> Soluções personalizadas para atender suas necessidades específicas, entregando produtos de alta qualidade que facilitam a gestão de processos.</li>
+                <li><strong>Consultoria em Tecnologias da Informação:</strong> Orientação especializada para melhorar sua infraestrutura de TI e otimizar a eficiência dos seus projetos.</li>
+                <li><strong>Gestão de Projetos de Desenvolvimento:</strong> Serviços completos de gerenciamento para garantir a entrega pontual e dentro do escopo definido, com a máxima qualidade.</li>
+                <li><strong>Suporte Técnico Especializado:</strong> Suporte ágil e eficiente para garantir a continuidade das operações.</li>
+            </ul>
+        </section>
 
-        <!-- Projeto 3 (Novo): Insira os dados aqui -->
-        <article class="project-card">
-            <h3>Nome do Projeto 3</h3>
-            <p>Breve descrição sobre o objetivo do sistema, o problema resolvido e as funcionalidades principais.</p>
-            <div class="tags">
-                <span>Node.js</span>
-                <span>SQL</span>
+        <section id="skills">
+            <h2><i class="fa-solid fa-code"></i> Tecnologias & Ferramentas</h2>
+            <div class="skills-grid">
+                <div class="skill-item"><i class="fa-brands fa-python"></i> Python</div>
+                <div class="skill-item"><i class="fa-brands fa-java"></i> Java</div>
+                <div class="skill-item"><i class="fa-brands fa-js"></i> JavaScript</div>
+                <div class="skill-item"><i class="fa-brands fa-html5"></i> HTML5</div>
+                <div class="skill-item"><i class="fa-brands fa-css3-alt"></i> CSS3</div>
+                <div class="skill-item"><i class="fa-solid fa-database"></i> SQL</div>
+                <div class="skill-item"><i class="fa-brands fa-github"></i> Git / GitHub</div>
+                <div class="skill-item"><i class="fa-solid fa-diagram-project"></i> Gestão de TI</div>
             </div>
-            <div class="card-links">
-                <a href="LINK_DO_PROJETO_3" target="_blank" class="btn btn-primary">Acessar</a>
-                <a href="LINK_DO_GITHUB_3" target="_blank" class="btn btn-secondary">Repositório</a>
-            </div>
-        </article>
+        </section>
 
-        <!-- Projeto 4 (Novo): Insira os dados aqui -->
-        <article class="project-card">
-            <h3>Nome do Projeto 4</h3>
-            <p>Breve descrição sobre o objetivo do sistema, o problema resolvido e as funcionalidades principais.</p>
-            <div class="tags">
-                <span>React</span>
-                <span>API REST</span>
+        <section id="benefits">
+            <h2><i class="fa-solid fa-bullseye"></i> Missão</h2>
+            <p>Desenvolvo softwares e rotinas de automação sob medida para eliminar processos manuais e destravar a eficiência operacional do seu negócio. Meu foco é transformar problemas operacionais em soluções tecnológicas práticas, integradas e escaláveis — garantindo suporte próximo e resultados mensuráveis do código à produção.</p>
+        </section>
+
+        <section id="projects">
+            <h2><i class="fa-solid fa-laptop-code"></i> Meus Projetos</h2>
+            <p>Confira algumas das soluções desenvolvidas:</p>
+            <div class="project-buttons">
+                <div class="project-card">
+                    <a href="https://gmenge.github.io/calculadora-solar/" target="_blank">
+                        <button class="project-button"><i class="fa-solid fa-solar-panel"></i> Calculadora Solar</button>
+                    </a>
+                    <span class="project-tech">Web App • JavaScript</span>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://gmenge.github.io/portfolio/" target="_blank">
+                        <button class="project-button"><i class="fa-solid fa-folder-open"></i> Meu Portfólio</button>
+                    </a>
+                    <span class="project-tech">Web • HTML/CSS</span>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://github.com/gmenge/AjaRemote" target="_blank">
+                        <button class="project-button"><i class="fa-solid fa-tower-broadcast"></i> AjaRemote</button>
+                    </a>
+                    <span class="project-tech">Automação • Python</span>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://github.com/gmenge/AjaSchedule/" target="_blank">
+                        <button class="project-button"><i class="fa-regular fa-calendar-check"></i> AjaSchedule</button>
+                    </a>
+                    <span class="project-tech">Agendamento • Python</span>
+                </div>
             </div>
-            <div class="card-links">
-                <a href="LINK_DO_PROJETO_4" target="_blank" class="btn btn-primary">Acessar</a>
-                <a href="LINK_DO_GITHUB_4" target="_blank" class="btn btn-secondary">Repositório</a>
+        </section>
+
+        <section id="contact">
+            <h2><i class="fa-solid fa-envelope"></i> Entre em Contato</h2>
+            <form id="contact-form" action="https://formspree.io/f/moeqvnkl" method="POST">
+                <input type="text" name="name" placeholder="Seu Nome" required>
+                <input type="email" name="email" placeholder="Seu Email" required>
+                <textarea name="message" placeholder="Sua Mensagem" required></textarea>
+                <button type="submit" id="form-btn">Enviar Mensagem</button>
+            </form>
+        </section>
+
+        <section id="info">
+            <h2><i class="fa-solid fa-address-card"></i> Conecte-se Comigo</h2>
+            <div class="social-links">
+                <a href="https://github.com/gmenge" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="https://linkedin.com/in/SEU_PERFIL" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
             </div>
-        </article>
-    </div>
-</section>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Gabriel Menge. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Script para envio assíncrono e redirecionamento gratuito -->
+    <script>
+      const form = document.getElementById("contact-form");
+      
+      form.addEventListener("submit", async function(event) {
+        event.preventDefault();
+        const btn = document.getElementById("form-btn");
+        btn.disabled = true;
+        btn.innerText = "Enviando...";
+
+        try {
+          const data = new FormData(event.target);
+          const response = await fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+          
+          if (response.ok) {
+            window.location.href = "obrigado.html";
+          } else {
+            alert("Ocorreu um erro ao enviar a mensagem. Tente novamente.");
+            btn.disabled = false;
+            btn.innerText = "Enviar Mensagem";
+          }
+        } catch (error) {
+          alert("Ocorreu um erro de conexão. Tente novamente.");
+          btn.disabled = false;
+          btn.innerText = "Enviar Mensagem";
+        }
+      });
+    </script>
+</body>
+</html>
