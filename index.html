@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Menge | Analista de Sistemas</title>
+    
+    <!-- CSS do Projeto -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Ícones (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Gabriel Menge</h1>
+            <p>Analista de Sistemas</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#services">Serviços</a></li>
+            <li><a href="#skills">Habilidades</a></li>
+            <li><a href="#benefits">Missão</a></li>
+            <li><a href="#projects">Meus Projetos</a></li>
+            <li><a href="#contact">Contato</a></li>
+            <li><a href="#info">Informações</a></li>
+        </ul>
+    </nav>
+
+    <section id="services">
+    <h2><i class="fa-solid fa-gears"></i> Serviços Oferecidos</h2>
+    <ul class="services-list">
+        <li><strong>Software Sob Medida:</strong> Sistemas exclusivos feitos para resolver problemas reais e escalar seu negócio.</li>
+        <li><strong>Consultoria em TI:</strong> Estratégias para otimizar infraestrutura, reduzir custos e acelerar processos.</li>
+        <li><strong>Gestão de Projetos:</strong> Controle total do ciclo de desenvolvimento com entregas pontuais e organizadas.</li>
+        <li><strong>Suporte Especializado:</strong> Monitoramento e resolução rápida de problemas para garantir a estabilidade da sua operação.</li>
+    </ul>
+</section>
+        </section>
+
+        <section id="skills">
+            <h2><i class="fa-solid fa-code"></i> Tecnologias & Ferramentas</h2>
+            <div class="skills-grid">
+                <div class="skill-item"><i class="fa-brands fa-python"></i> Python</div>
+                <div class="skill-item"><i class="fa-brands fa-java"></i> Java</div>
+                <div class="skill-item"><i class="fa-brands fa-js"></i> JavaScript</div>
+                <div class="skill-item"><i class="fa-brands fa-html5"></i> HTML5</div>
+                <div class="skill-item"><i class="fa-brands fa-css3-alt"></i> CSS3</div>
+                <div class="skill-item"><i class="fa-solid fa-database"></i> SQL</div>
+                <div class="skill-item"><i class="fa-brands fa-github"></i> Git / GitHub</div>
+                <div class="skill-item"><i class="fa-solid fa-diagram-project"></i> Gestão de TI</div>
+            </div>
+        </section>
+
+        <section id="benefits">
+            <h2><i class="fa-solid fa-bullseye"></i> Missão</h2>
+            <p>Desenvolvo softwares e rotinas de automação sob medida para eliminar processos manuais e destravar a eficiência operacional do seu negócio. Meu foco é transformar problemas operacionais em soluções tecnológicas práticas, integradas e escaláveis — garantindo suporte próximo e resultados mensuráveis do código à produção.</p>
+        </section>
+
+        <section id="projects">
+            <h2><i class="fa-solid fa-laptop-code"></i> Meus Projetos</h2>
+            <p>Confira algumas das soluções desenvolvidas:</p>
+            <div class="project-buttons">
+                <div class="project-card">
+                    <a href="https://gmenge.github.io/calculadora-solar/" target="_blank">
+                        <button class="project-button"><i class="fa-solid fa-solar-panel"></i> Calculadora Solar</button>
+                    </a>
+                    <span class="project-tech">Web App • JavaScript</span>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://gmenge.github.io/portfolio/" target="_blank">
+                        <button class="project-button"><i class="fa-solid fa-folder-open"></i> Meu Portfólio</button>
+                    </a>
+                    <span class="project-tech">Web • HTML/CSS</span>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://github.com/gmenge/AjaRemote" target="_blank">
+                        <button class="project-button"><i class="fa-solid fa-tower-broadcast"></i> AjaRemote</button>
+                    </a>
+                    <span class="project-tech">Automação • Python</span>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://github.com/gmenge/AjaSchedule/" target="_blank">
+                        <button class="project-button"><i class="fa-regular fa-calendar-check"></i> AjaSchedule</button>
+                    </a>
+                    <span class="project-tech">Agendamento • Python</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2><i class="fa-solid fa-envelope"></i> Entre em Contato</h2>
+            <form id="contact-form" action="https://formspree.io/f/moeqvnkl" method="POST">
+                <input type="text" name="name" placeholder="Seu Nome" required>
+                <input type="email" name="email" placeholder="Seu Email" required>
+                <textarea name="message" placeholder="Sua Mensagem" required></textarea>
+                <button type="submit" id="form-btn">Enviar Mensagem</button>
+            </form>
+        </section>
+
+        <section id="info">
+            <h2><i class="fa-solid fa-address-card"></i> Conecte-se Comigo</h2>
+            <div class="social-links">
+                <a href="https://github.com/gmenge" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="https://linkedin.com/in/gabrielmenge" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Gabriel Menge. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Script para envio assíncrono e redirecionamento gratuito -->
+    <script>
+      const form = document.getElementById("contact-form");
+      
+      form.addEventListener("submit", async function(event) {
+        event.preventDefault();
+        const btn = document.getElementById("form-btn");
+        btn.disabled = true;
+        btn.innerText = "Enviando...";
+
+        try {
+          const data = new FormData(event.target);
+          const response = await fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+          
+          if (response.ok) {
+            window.location.href = "obrigado.html";
+          } else {
+            alert("Ocorreu um erro ao enviar a mensagem. Tente novamente.");
+            btn.disabled = false;
+            btn.innerText = "Enviar Mensagem";
+          }
+        } catch (error) {
+          alert("Ocorreu um erro de conexão. Tente novamente.");
+          btn.disabled = false;
+          btn.innerText = "Enviar Mensagem";
+        }
+      });
+    </script>
+</body>
+</html>
