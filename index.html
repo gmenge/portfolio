@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     
     <!-- Ícones (Font Awesome) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 <body>
     <header>
@@ -105,6 +105,8 @@
                 <input type="text" name="name" placeholder="Seu Nome" required>
                 <input type="email" name="email" placeholder="Seu Email" required>
                 <textarea name="message" placeholder="Sua Mensagem" required></textarea>
+                <!-- Armadilha anti-spam do Formspree: invisivel para pessoas -->
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
                 <button type="submit" id="form-btn">Enviar Mensagem</button>
             </form>
         </section>
