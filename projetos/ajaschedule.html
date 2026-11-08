@@ -360,7 +360,7 @@
         };
         $('btnRem').onclick = () => {
             const r = exigeSel('Por favor, selecione um agendamento na lista para excluir.'); if (!r) return;
-            if (!confirm(t(`Confirmar Exclusão\n\nRemover o agendamento #${r.id}?`))) return;
+            if (!confirm(I18N.t(`Confirmar Exclusão\n\nRemover o agendamento #${r.id}?`))) return;
             rotinas = rotinas.filter((x) => x !== r); sel = null;
             log(`ROTINA REMOVIDA (ID #${r.id}): Destino [${r.dest}] <- Origem [${r.orig}] às ${r.hora} | Frequência: ${freqTxt(r)}`); render();
         };
@@ -393,7 +393,7 @@
         $('cFiltro').oninput = renderCfg;
         $('cEditar').onclick = () => {
             if (!cSel) { toast('Selecione uma porta na lista.', true); return; }
-            const novo = prompt(t('Novo Nome para o Rótulo:'), nomes[cTipo][cSel - 1]);
+            const novo = prompt(I18N.t('Novo Nome para o Rótulo:'), nomes[cTipo][cSel - 1]);
             if (novo && novo.trim()) { nomes[cTipo][cSel - 1] = novo.trim(); renderCfg(); render(); atualizarForm(); }
         };
         $('cSalvarIp').onclick = () => {

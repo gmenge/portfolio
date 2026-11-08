@@ -272,7 +272,7 @@
                 pessoa(c, 250 + Math.sin(t * 1.1) * 5, 120, 42, '#8a5a2b');
                 c.fillStyle = '#222'; c.fillRect(270, 168, 10, 34); c.fillStyle = '#e53935'; c.beginPath(); c.arc(275, 166, 8, 0, Math.PI * 2); c.fill();
                 c.restore();
-                c.fillStyle = '#e53935'; c.fillRect(14, 14, 74, 22); c.fillStyle = '#fff'; c.font = 'bold 14px Arial'; c.textAlign = 'left'; c.fillText(t('AO VIVO'), 21, 30);
+                c.fillStyle = '#e53935'; c.fillRect(14, 14, 74, 22); c.fillStyle = '#fff'; c.font = 'bold 14px Arial'; c.textAlign = 'left'; c.fillText(I18N.t('AO VIVO'), 21, 30);
                 c.fillStyle = 'rgba(0,0,0,.55)'; c.fillRect(SW - 130, 14, 116, 22); c.fillStyle = '#fff'; c.font = '14px Consolas, monospace'; c.fillText(timecode(t), SW - 124, 30);
             },
             barras(c, t) {
@@ -290,7 +290,7 @@
                     const g = c.createRadialGradient(x, y, 0, x, y, 70); g.addColorStop(0, `hsla(${(i * 60 + t * 20) % 360},80%,60%,.55)`); g.addColorStop(1, 'transparent');
                     c.fillStyle = g; c.fillRect(0, 0, SW, SH);
                 }
-                c.globalAlpha = Math.max(0, Math.min(1, lt / 2, (12 - lt) / 1.5)); c.fillStyle = '#fff'; c.font = 'bold 40px Arial'; c.textAlign = 'center'; c.fillText(t('ABERTURA'), SW / 2, SH / 2 + 14); c.globalAlpha = 1;
+                c.globalAlpha = Math.max(0, Math.min(1, lt / 2, (12 - lt) / 1.5)); c.fillStyle = '#fff'; c.font = 'bold 40px Arial'; c.textAlign = 'center'; c.fillText(I18N.t('ABERTURA'), SW / 2, SH / 2 + 14); c.globalAlpha = 1;
                 c.fillStyle = 'rgba(255,255,255,.25)'; c.fillRect(20, SH - 14, SW - 40, 3); c.fillStyle = '#fff'; c.fillRect(20, SH - 14, (SW - 40) * lt / 12, 3);
             },
             tela(c, t) {
@@ -461,7 +461,7 @@
         function colocarPrevia(id) { if (id !== pgm) { pvw = id; atualizarTally(); } }
 
         function renomear(e) {
-            const n = prompt(t('Novo Nome:'), e.nome);
+            const n = prompt(I18N.t('Novo Nome:'), e.nome);
             if (n && n.trim()) { e.nome = n.trim(); renderCards(); renderStrips(); }
         }
         function duplicar(e) {
@@ -474,7 +474,7 @@
             renderCards(); renderStrips(); toast(`${e.nome}: agora ${tp.nome}`);
         }
         function remover(e) {
-            if (!confirm(t(`Remover a entrada "${e.nome}"?`))) return;
+            if (!confirm(I18N.t(`Remover a entrada "${e.nome}"?`))) return;
             entradas = entradas.filter((x) => x !== e);
             if (pgm === e.id) pgm = null;
             if (pvw === e.id) pvw = null;
@@ -617,7 +617,7 @@
             if (ftb > 0) { cPgm.fillStyle = `rgba(0,0,0,${ftb})`; cPgm.fillRect(0, 0, 640, 360); }
             if (replay) {
                 cPgm.fillStyle = '#1e88e5'; cPgm.fillRect(16, 316, 160, 28); cPgm.fillStyle = '#fff'; cPgm.font = 'bold 16px Segoe UI, Arial'; cPgm.textAlign = 'left';
-                cPgm.fillText(t(replay.vel < 1 ? '⟲ REPLAY LENTO' : '⟲ REPLAY'), 26, 336);
+                cPgm.fillText(I18N.t(replay.vel < 1 ? '⟲ REPLAY LENTO' : '⟲ REPLAY'), 26, 336);
                 if (agora - replay.t0 > replay.dur) voltarAoVivo();
             }
             desenharMonitor(cPvw, [[pvw, 1]], 'preview');
@@ -772,7 +772,7 @@
             };
         }
         menuBarra($('mArq'), () => [
-            { t: 'Novo projeto', k: 'Ctrl+N', fn: () => { if (confirm(t(`Deseja salvar as alterações em ${projeto}?`))) toast(`Projeto salvo: ${projeto}`); carregarProjeto(null); } },
+            { t: 'Novo projeto', k: 'Ctrl+N', fn: () => { if (confirm(I18N.t(`Deseja salvar as alterações em ${projeto}?`))) toast(`Projeto salvo: ${projeto}`); carregarProjeto(null); } },
             { t: 'Abrir projeto…', k: 'Ctrl+O', fn: dlgAbrir },
             { t: 'Projetos recentes', sub: [{ t: 'Demonstração', fn: () => carregarProjeto('Demonstração') }, { t: 'Estúdio A', fn: () => carregarProjeto('Estúdio A') }] },
             '-',
@@ -782,7 +782,7 @@
             { t: 'Sair', k: 'Ctrl+Q', fn: () => toast('Na demonstração o app não fecha 🙂') },
         ]);
         function salvarComo() {
-            const n = prompt(t('Salvar projeto como'), projeto === 'Sem título' ? t('Meu projeto') : projeto);
+            const n = prompt(I18N.t('Salvar projeto como'), projeto === 'Sem título' ? I18N.t('Meu projeto') : projeto);
             if (n && n.trim()) { projeto = n.trim(); $('tituloJanela').textContent = `AVR — Central de Produção e Roteamento — ${projeto}`; toast(`Projeto salvo: ${projeto}`); }
         }
         function dlgAbrir() {

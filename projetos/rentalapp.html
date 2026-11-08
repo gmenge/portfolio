@@ -263,7 +263,7 @@
                 if (c) $('detalhe').innerHTML = `<div class="lf-card"><h5>Contrato #${c.id} — ${esc(c.cliente)} ${c.doc ? '(' + esc(c.doc) + ')' : ''}</h5>${c.itens.map((i) => `${i.q}x ${esc(eqPor(i.eq).nome)}`).join(' · ')} — ${dias(c.ini, c.fim)} diária(s)</div>`;
                 const precisa = () => { if (!c) { $('gMsg').className = 'lf-msg'; $('gMsg').textContent = 'Selecione um contrato na lista.'; } return c; };
                 $('gDev').onclick = () => { if (!precisa()) return; if (c.dev) { $('gMsg').textContent = 'Este contrato já foi devolvido.'; return; } c.dev = true; render(); $('gMsg').className = 'lf-msg ok'; $('gMsg').textContent = `Devolução do contrato #${c.id} registrada. Itens voltaram ao estoque.`; };
-                $('gExc').onclick = () => { if (!precisa() || !confirm(t(`Excluir o contrato #${c.id}?`))) return; contratos = contratos.filter((x) => x !== c); selCt = null; render(); };
+                $('gExc').onclick = () => { if (!precisa() || !confirm(I18N.t(`Excluir o contrato #${c.id}?`))) return; contratos = contratos.filter((x) => x !== c); selCt = null; render(); };
             },
         };
 

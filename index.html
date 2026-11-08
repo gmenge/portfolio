@@ -154,12 +154,12 @@
           if (response.ok) {
             window.location.href = "obrigado.html";
           } else {
-            alert(t("Ocorreu um erro ao enviar a mensagem. Tente novamente."));
+            alert(I18N.t("Ocorreu um erro ao enviar a mensagem. Tente novamente."));
             btn.disabled = false;
             btn.innerText = "Enviar Mensagem";
           }
         } catch (error) {
-          alert(t("Ocorreu um erro de conexão. Tente novamente."));
+          alert(I18N.t("Ocorreu um erro de conexão. Tente novamente."));
           btn.disabled = false;
           btn.innerText = "Enviar Mensagem";
         }
