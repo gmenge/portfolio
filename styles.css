@@ -288,21 +288,30 @@ footer {
         padding: 25px 15px;
     }
 
+    /* Menu quebra em linhas centralizadas, sem cortar nem rolar para o lado */
     nav ul {
-        flex-wrap: nowrap;
-        overflow-x: auto;
+        flex-wrap: wrap;
+        padding: 4px 6px;
     }
 
     nav ul li a {
-        padding: 12px 10px;
-        font-size: 0.85em;
+        padding: 8px 12px;
+        font-size: 0.9em;
+        white-space: nowrap;
     }
 
     .skills-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .project-card, .project-button {
+    /* Botões dos projetos todos com a mesma largura */
+    .project-card,
+    .project-card a,
+    .project-button {
         width: 100%;
+    }
+
+    .project-card a {
+        display: block;
     }
 }
