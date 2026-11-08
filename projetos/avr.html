@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="projeto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-        .avr { background: #121212; color: #ddd; font: 12px 'Segoe UI', Arial, sans-serif; min-width: 1060px; position: relative; user-select: none; aspect-ratio: 16 / 9; display: flex; flex-direction: column; overflow: hidden; }
+        .avr { background: #121212; color: #ddd; font: 12px 'Segoe UI', Arial, sans-serif; position: relative; user-select: none; display: flex; flex-direction: column; overflow: hidden; }
         .avr-menu { flex-shrink: 0; display: flex; align-items: center; background: #1b1b1b; border-bottom: 1px solid #262626; height: 26px; padding: 0 4px; }
         .avr-menu > span { padding: 4px 9px; cursor: default; color: #ddd; }
         .avr-menu > span:hover, .avr-menu > span.on { background: #2d2d2d; }
@@ -65,8 +65,8 @@
         .avr-sec { flex: 1; display: flex; flex-direction: column; min-height: 0; }
         .avr-sec + .avr-sec { border-top: 5px solid #1e1e1e; padding-top: 2px; }
         .avr-sec h6 { margin: 0 0 2px; font-size: 9px; color: #8a8a8a; letter-spacing: 1px; }
-        .avr-strips { flex: 1; display: flex; gap: 4px; overflow-x: auto; min-height: 0; justify-content: safe center; }
-        .avr-strip { width: 50px; flex-shrink: 0; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 4px; padding: 4px 3px; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: opacity 0.2s; }
+        .avr-strips { flex: 1; display: flex; gap: 3px; overflow-x: auto; min-height: 0; justify-content: safe center; }
+        .avr-strip { width: 44px; flex-shrink: 0; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 4px; padding: 4px 3px; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: opacity 0.2s; }
         .avr-strip.master { background: #1c2430; border-color: #2c3e57; }
         .avr-strip.off { opacity: 0.35; }
         .avr-strip.off > * { pointer-events: none; }
@@ -158,8 +158,8 @@
                     <div class="janela-titulo"><i class="fa-solid fa-sliders"></i> <span id="tituloJanela">AVR — Central de Produção e Roteamento</span></div>
                     <div class="janela-controles"><span>&#8212;</span><span>&#9744;</span><span>&#10005;</span></div>
                 </div>
-                <div class="janela-corpo rolagem">
-                    <div class="avr" id="avr">
+                <div class="janela-corpo palco">
+                    <div class="avr app" id="avr">
                         <div class="avr-menu">
                             <span id="mArq">Arquivo</span><span id="mCfg">Configurações</span><span id="mOvl">Overlays</span><span id="mAjuda">Ajuda</span>
                             <div class="avr-sys"><span>CPU <b id="sCpu">-</b></span><span>GPU <b id="sGpu">-</b></span><span>RAM <b id="sRam">-</b></span><span>Disco <b id="sDisco">0 MB/s</b></span></div>
@@ -391,12 +391,13 @@
         function abrirMenu(itens, cx, cy) {
             fecharMenu();
             const m = montarMenu(itens); raiz.appendChild(m); ctxAberto = m;
-            const r = raiz.getBoundingClientRect();
-            let x = cx - r.left, y = cy - r.top;
-            x = Math.min(x, r.width - m.offsetWidth - 4); y = Math.min(y, r.height - m.offsetHeight - 4);
+            // O app pode estar escalado: converte o clique para as coordenadas internas
+            const r = raiz.getBoundingClientRect(), k = r.width / raiz.offsetWidth, W = raiz.offsetWidth, H = raiz.offsetHeight;
+            let x = (cx - r.left) / k, y = (cy - r.top) / k;
+            x = Math.min(x, W - m.offsetWidth - 4); y = Math.min(y, H - m.offsetHeight - 4);
             m.style.left = Math.max(0, x) + 'px'; m.style.top = Math.max(0, y) + 'px';
             // Submenus abrem para a esquerda perto da borda direita
-            if (x + m.offsetWidth * 2 > r.width) m.querySelectorAll('.it > .avr-ctx').forEach((s) => { s.style.left = 'auto'; s.style.right = '100%'; });
+            if (x + m.offsetWidth * 2 > W) m.querySelectorAll('.it > .avr-ctx').forEach((s) => { s.style.left = 'auto'; s.style.right = '100%'; });
         }
         document.addEventListener('mousedown', (ev) => { if (ctxAberto && !ctxAberto.contains(ev.target) && !ev.target.closest('.avr-menu > span.on')) fecharMenu(); });
         document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { fecharMenu(); fechar(); } });
@@ -845,5 +846,6 @@
         carregarProjeto('Demonstração');
         requestAnimationFrame(quadro);
     </script>
+    <script src="projeto.js"></script>
 </body>
 </html>

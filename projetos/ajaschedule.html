@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="projeto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-        /* Janela em 16:9 */
-        .as { background: #141414; color: #fff; font: bold 13px Arial, sans-serif; width: 100%; min-width: 1000px; aspect-ratio: 16 / 9; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+                .as { background: #141414; color: #fff; font: bold 13px Arial, sans-serif; overflow: hidden; display: flex; flex-direction: column; position: relative; }
         .as-abas { display: flex; background: #1A1A1A; flex-shrink: 0; }
         .as-abas button { background: transparent; border: 0; border-bottom: 3px solid transparent; color: #CCCCCC; padding: 13px 24px; font: bold 15px Arial, sans-serif; cursor: pointer; }
         .as-abas button:hover { color: #fff; }
@@ -102,8 +101,8 @@
                     <div class="janela-titulo"><i class="fa-regular fa-clock" style="color:#2A9BC9"></i> Agendador KUMO 64x64</div>
                     <div class="janela-controles"><span>&#8212;</span><span>&#9744;</span><span>&#10005;</span></div>
                 </div>
-                <div class="janela-corpo rolagem">
-                    <div class="as">
+                <div class="janela-corpo palco">
+                    <div class="as app">
                         <div class="as-abas" id="abas">
                             <button class="on" data-aba="agendar">Agendar Trocas</button>
                             <button data-aba="monitor">Monitoramento em Tempo Real</button>
@@ -418,5 +417,6 @@
         log('[INICIALIZAÇÃO] CONEXÃO BEM-SUCEDIDA com a Matriz KUMO (192.168.0.150) - Equipamento Online e Operacional.');
         atualizarForm(); render(); renderCfg();
     </script>
+    <script src="projeto.js"></script>
 </body>
 </html>

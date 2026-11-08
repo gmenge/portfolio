@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
         .lf { --fundo: #09090B; --sup: #18181B; --borda: #27272A; --bforte: #3F3F46; --txt: #FAFAFA; --sec: #A1A1AA; --fraco: #71717A; --alerta: #F87171;
-              display: flex; background: var(--fundo); color: var(--txt); font: 13px 'Segoe UI', Arial, sans-serif; min-width: 860px; aspect-ratio: 16 / 9; overflow: hidden; position: relative; }
+              display: flex; background: var(--fundo); color: var(--txt); font: 13px 'Segoe UI', Arial, sans-serif; overflow: hidden; position: relative; }
         .lf-menu { width: 210px; background: var(--sup); padding: 22px 12px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
         .lf-menu h3 { margin: 0 8px 24px; font-size: 19px; }
         .lf-menu button { text-align: left; background: transparent; border: 0; color: var(--sec); padding: 11px 12px; border-radius: 8px; font: inherit; cursor: pointer; }
@@ -80,8 +80,8 @@
                     <div class="janela-titulo"><i class="fa-regular fa-calendar-check"></i> LocaFácil</div>
                     <div class="janela-controles"><span>&#8212;</span><span>&#9744;</span><span>&#10005;</span></div>
                 </div>
-                <div class="janela-corpo rolagem">
-                    <div class="lf">
+                <div class="janela-corpo palco">
+                    <div class="lf app">
                         <nav class="lf-menu" id="menu">
                             <h3>LocaFácil</h3>
                             <button data-v="dashboard" class="on">Dashboard</button>
@@ -278,5 +278,6 @@
         document.querySelectorAll('#menu button').forEach((b) => { b.onclick = () => { view = b.dataset.v; render(); }; });
         render();
     </script>
+    <script src="projeto.js"></script>
 </body>
 </html>

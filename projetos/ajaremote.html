@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="projeto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-        .aja { background: #1E1E1E; color: #E0E0E0; font-family: Arial, sans-serif; padding: 0 15px 12px; min-width: 900px; position: relative; aspect-ratio: 16 / 9; display: flex; flex-direction: column; overflow: hidden; }
+        .aja { background: #1E1E1E; color: #E0E0E0; font-family: Arial, sans-serif; padding: 0 15px 12px; position: relative; display: flex; flex-direction: column; overflow: hidden; }
         .aja-topo { display: flex; align-items: center; justify-content: space-between; height: 56px; }
         .aja-logo { font-size: 18px; font-weight: bold; color: #00E5FF; letter-spacing: 1px; }
         .aja-ip { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: bold; }
@@ -67,8 +67,8 @@
                     <div class="janela-titulo"><i class="fa-solid fa-tower-broadcast"></i> AJA REMOTE</div>
                     <div class="janela-controles"><span>&#8212;</span><span>&#9744;</span><span>&#10005;</span></div>
                 </div>
-                <div class="janela-corpo rolagem">
-                    <div class="aja" id="aja">
+                <div class="janela-corpo palco">
+                    <div class="aja app" id="aja">
                         <div class="aja-topo">
                             <div style="width:220px"></div>
                             <div class="aja-logo"><i class="fa-solid fa-tower-broadcast"></i> AJA REMOTE</div>
@@ -175,5 +175,6 @@
         $('btnIp').onclick = () => abrirIp(false);
         log('AjaRemote iniciado');
     </script>
+    <script src="projeto.js"></script>
 </body>
 </html>
