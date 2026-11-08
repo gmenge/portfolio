@@ -153,6 +153,7 @@
                 <span data-t="avr.d3"><b>Botão direito</b> no card: menu da entrada</span>
                 <span data-t="avr.d4"><b>1–8</b> no card: overlay (direito: na Prévia)</span>
                 <span data-t="avr.d5"><b>Botão direito</b> nos canais A–G: liga/desliga</span>
+                <span data-t="avr.d6"><b>Tela / Janela</b> e <b>Câmera</b>: captura de verdade, só no seu navegador</span>
             </div>
 
             <div class="janela">
@@ -311,6 +312,15 @@
             },
         };
 
+        GER.cena = function (c) {
+            const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#0d1b2a'); g.addColorStop(1, '#1b263b'); c.fillStyle = g; c.fillRect(0, 0, SW, SH);
+            c.strokeStyle = 'rgba(100,181,246,.25)'; c.lineWidth = 1;
+            for (let i = -8; i <= 8; i++) { c.beginPath(); c.moveTo(SW / 2 + i * 12, SH * 0.62); c.lineTo(SW / 2 + i * 80, SH); c.stroke(); }
+            for (let j = 0; j < 5; j++) { const y = SH * 0.62 + SH * 0.38 * Math.pow(j / 5, 1.6); c.beginPath(); c.moveTo(0, y); c.lineTo(SW, y); c.stroke(); }
+            c.fillStyle = 'rgba(30,136,229,.85)'; c.fillRect(0, SH - 30, SW, 30);
+            c.fillStyle = '#fff'; c.font = 'bold 13px Arial'; c.textAlign = 'left'; c.fillText(I18N.t('AVR · CENÁRIO VIRTUAL'), 14, SH - 11);
+        };
+
         const TIPOS = [
             { k: 'cam', nome: 'Câmera', ic: 'fa-camera', ger: ['cam1', 'cam2'], tipo: 'Câmera · 1920x1080 30p', audio: true },
             { k: 'sdi', nome: 'SDI / HDMI', ic: 'fa-plug', ger: ['cam2', 'cam1'], tipo: 'DeckLink · 1080i59,94', audio: true },
@@ -320,6 +330,7 @@
             { k: 'video', nome: 'Vídeo', ic: 'fa-film', ger: ['video'], tipo: 'Vídeo · abertura.mp4 (loop)', audio: true },
             { k: 'img', nome: 'Imagem', ic: 'fa-image', ger: ['imagem'], tipo: 'Imagem · PNG', audio: false },
             { k: 'teste', nome: 'Sinal de Teste', ic: 'fa-border-all', ger: ['barras'], tipo: 'Sinal de Teste · 1080p30', audio: true },
+            { k: 'cena', nome: 'Cenário Virtual', ic: 'fa-layer-group', ger: ['cena'], tipo: 'Cenário Virtual · camadas', audio: false },
         ];
         const tipoPor = (k) => TIPOS.find((x) => x.k === k);
 
@@ -337,14 +348,15 @@
             const can = document.createElement('canvas'); can.width = SW; can.height = SH;
             const e = { id: proxId++, k, nome: nome || `${tp.nome} ${cont + 1}`, tipo: tp.tipo, ger: tp.ger[cont % tp.ger.length], audio: tp.audio,
                         can, ctx: can.getContext('2d'), fase: Math.random() * 10, vol: 75, mudo: false, envios: [true, false, false, false, false, false, false, false],
-                        aj: { ...AJ0 }, filtro: 'none' };
-            if (base) { e.ger = base.ger; e.vol = base.vol; e.envios = base.envios.slice(); e.aj = { ...base.aj }; e.filtro = base.filtro; }
+                        aj: { ...AJ0 }, filtro: 'none', camadas: [] };
+            if (base) { e.ger = base.ger; e.vol = base.vol; e.envios = base.envios.slice(); e.aj = { ...base.aj }; e.filtro = base.filtro; e.camadas = base.camadas.map((l) => ({ ...l })); }
             entradas.push(e);
             return e;
         }
         const porId = (id) => entradas.find((e) => e.id === id);
 
         function carregarProjeto(nome) {
+            if (entradas) entradas.forEach((e) => pararReal(e, true));
             entradas = []; proxId = 1; trans = null; replay = null; ftb = ftbAlvo = 0; $('bFtb').classList.remove('ftb-on');
             overlays = Array.from({ length: 8 }, () => ({ id: null, dest: 'program', a: 0 }));
             buses = BUS_NOMES.map((n, i) => ({ nome: n, curto: BUS_CURTOS[i], on: i === 0, vol: 80, mudo: false }));
@@ -352,8 +364,9 @@
             pgm = pvw = null;
             if (nome === 'Demonstração') {
                 const c1 = novaEntrada('cam', 'Câmera 1'), c2 = novaEntrada('cam', 'Câmera 2');
-                novaEntrada('srt', 'Repórter (SRT)'); novaEntrada('video', 'Abertura');
-                novaEntrada('tela', 'Apresentação'); novaEntrada('teste', 'Sinal de Teste');
+                const srt = novaEntrada('srt', 'Repórter (SRT)'); novaEntrada('video', 'Abertura');
+                const apr = novaEntrada('tela', 'Apresentação'); novaEntrada('teste', 'Sinal de Teste');
+                presetCena(novaEntrada('cena', 'Cenário Virtual'), [c1.id, srt.id, apr.id]);
                 pgm = c1.id; pvw = c2.id;
                 saidas = [
                     { tipo: 'SRT', fonte: 'Programa', dest: 'srt://0.0.0.0:9000 (listener)', on: true },
@@ -411,6 +424,7 @@
             [['Entrada…', 'entrada'], ['Transformação…', 'transf'], ['Cor…', 'cor'], ['Luminosidade…', 'lum'], ['Key (chroma/luma)…', 'key'], ['Camadas…', 'camadas']]
                 .forEach(([t, aba]) => itens.push({ t, fn: () => dlgEntrada(e, aba) }));
             itens.push('-', { t: 'Overlay', sub: Array.from({ length: 8 }, (_, n) => ({ t: `Overlay ${n + 1} (Programa)`, chk: overlays[n].id === e.id, fn: () => alternarOverlay(n, e.id, 'program') })) });
+            if (podeReal(e)) itens.push('-', { t: e.real ? 'Voltar à simulação' : 'Capturar de verdade…', fn: () => (e.real ? pararReal(e) : dlgReal(e)) });
             itens.push('-', { t: 'Renomear…', fn: () => renomear(e) }, { t: 'Duplicar', fn: () => duplicar(e) }, { t: 'Redefinir entrada…', fn: () => dlgTipos('Redefinir Entrada', (k) => redefinir(e, k)) });
             itens.push('-', { t: 'Remover', fn: () => remover(e) });
             abrirMenu(itens, ev.clientX, ev.clientY);
@@ -470,11 +484,14 @@
         }
         function redefinir(e, k) {
             const tp = tipoPor(k);
+            pararReal(e, true);
             Object.assign(e, { k, tipo: tp.tipo, ger: tp.ger[0], audio: tp.audio });
+            if (k === 'cena' && !e.camadas.length) presetCena(e);
             renderCards(); renderStrips(); toast(`${e.nome}: agora ${tp.nome}`);
         }
         function remover(e) {
             if (!confirm(I18N.t(`Remover a entrada "${e.nome}"?`))) return;
+            pararReal(e, true);
             entradas = entradas.filter((x) => x !== e);
             if (pgm === e.id) pgm = null;
             if (pvw === e.id) pvw = null;
@@ -595,8 +612,9 @@
             const t = agora / 1000, dt = agora - ultimoQuadro; ultimoQuadro = agora;
             entradas.forEach((e) => {
                 const tt = replay && e.id === replay.id ? replay.tIni + (agora - replay.t0) / 1000 * replay.vel : t + e.fase;
-                GER[e.ger](e.ctx, tt);
+                if (e.real) desenharReal(e); else GER[e.ger](e.ctx, tt);
             });
+            entradas.forEach(desenharCamadas);
             // Fade dos overlays (300 ms)
             overlays.forEach((o, n) => {
                 if (o.id !== null && (o.idVis !== o.id || o.destVis !== o.dest)) { if (o.a <= 0 || !cfgOverlay[n].fade) { o.idVis = o.id; o.destVis = o.dest; } else o.a = Math.max(0, o.a - dt / 300); }
@@ -632,7 +650,11 @@
                 const soma = new Array(8).fill(0);
                 entradas.forEach((e) => {
                     let n = 0;
-                    if (e.audio) n = e.k === 'teste' ? 0.5 : Math.max(0, 0.25 + 0.45 * Math.abs(Math.sin(t * 2.3 + e.fase)) + Math.random() * 0.25 - (Math.sin(t * 0.4 + e.fase) > 0.85 ? 0.5 : 0));
+                    if (e.real && e.real.an) {
+                        e.real.an.getFloatTimeDomainData(e.real.buf);
+                        let q = 0; for (const x of e.real.buf) q += x * x;
+                        n = Math.min(1, Math.sqrt(q / e.real.buf.length) * 4);
+                    } else if (e.audio) n = e.k === 'teste' ? 0.5 : Math.max(0, 0.25 + 0.45 * Math.abs(Math.sin(t * 2.3 + e.fase)) + Math.random() * 0.25 - (Math.sin(t * 0.4 + e.fase) > 0.85 ? 0.5 : 0));
                     const saida = e.mudo ? 0 : n * e.vol / 100;
                     vu(e.vus, n);
                     vu(e.vuEls, saida); if (e.dbEl) e.dbEl.textContent = db(saida);
@@ -672,9 +694,12 @@
         }
         $('bAddIn').onclick = () => dlgTipos('Adicionar Entrada', (k) => {
             if (entradas.length >= 12) { toast('Limite desta demonstração: 12 entradas'); return; }
-            const e = novaEntrada(k); renderCards(); renderStrips();
+            const e = novaEntrada(k);
+            if (k === 'cena') presetCena(e);
+            renderCards(); renderStrips();
             if (pvw === null && e.id !== pgm) colocarPrevia(e.id);
             toast(`${e.nome} adicionada`);
+            if (podeReal(e)) dlgReal(e);
         });
 
         // Configurações da entrada (abas)
@@ -686,14 +711,20 @@
                 entrada: `<p><b style="color:#fff">${esc(e.nome)}</b><br>Tipo: ${esc(tipoPor(e.k).nome)}<br>${esc(e.tipo)}${e.audio ? ', com áudio' : ', sem áudio'}</p>
                     <div class="avr-form"><label>Atraso do áudio:</label><select class="linha"><option>0 ms</option><option>40 ms</option><option>80 ms</option><option>120 ms</option></select>
                     <label>Desentrelaçamento</label><select class="linha"><option>Automático</option><option>Forçar desentrelaçamento</option></select></div>
-                    <button class="avr-b" id="eAlt" style="align-self:flex-start">Alterar entrada...</button>`,
+                    <div style="display:flex;gap:6px"><button class="avr-b" id="eAlt">Alterar entrada...</button>${podeReal(e) ? `<button class="avr-b" id="eReal">${e.real ? 'Voltar à simulação' : 'Capturar de verdade…'}</button>` : ''}</div>`,
                 transf: `<div class="avr-form">${sl('zoom', 'Tamanho:', 20, 200)}${sl('x', 'Posição X:', -50, 50)}${sl('y', 'Posição Y:', -50, 50)}${ck('espH', 'Espelhar horizontal')}${ck('espV', 'Espelhar vertical')}</div>`,
                 cor: `<div class="avr-form">${sl('brilho', 'Brilho:', -100, 100)}${sl('contraste', 'Contraste:', -100, 100)}${sl('sat', 'Saturação:', -100, 100)}${sl('matiz', 'Matiz:', -180, 180)}</div>`,
                 lum: `<div class="avr-form">${sl('lift', 'Lift (pretos)', -100, 100)}${sl('gamma', 'Gamma (meios-tons)', -100, 100)}${sl('gain', 'Gain (brancos)', -100, 100)}</div>`,
                 key: `<div class="avr-form">${ck('key', 'Ativar key')}<label>Algoritmo:</label><select class="linha" data-c="keyTipo"><option value="luma" ${e.aj.keyTipo === 'luma' ? 'selected' : ''}>Luma (brilho)</option><option value="chroma" ${e.aj.keyTipo === 'chroma' ? 'selected' : ''}>Chroma (cor)</option></select>${sl('keyLim', 'Limite de brilho:', 0, 100)}</div>
                     <div class="avr-nota">No app, o que for mais escuro que o limite (ou da cor escolhida) some e mostra a entrada de baixo. Nesta demonstração o key não é aplicado à imagem.</div>`,
-                camadas: `<div class="avr-form">${[1, 2, 3].map((n) => `<label>Camada ${n}:</label><select class="linha"><option>(escolha a entrada)</option>${entradas.filter((x) => x !== e).map((x) => `<option>${esc(x.nome)}</option>`).join('')}</select>`).join('')}</div>
-                    <div class="avr-nota">No app, cada camada põe outra entrada por cima desta, com posição, recorte e opacidade. Nesta demonstração as camadas são só ilustrativas.</div>`,
+                camadas: (() => {
+                    while (e.camadas.length < 3) e.camadas.push({ id: null, x: 5, y: 5, tam: 40, opac: 100 });
+                    const sc = (n, k, rot, min, max) => `<label>${rot}</label><input type="range" data-cam="${n}" data-ck="${k}" min="${min}" max="${max}" value="${e.camadas[n][k]}"><span class="v" data-cv="${n}${k}">${e.camadas[n][k]}</span>`;
+                    return e.camadas.slice(0, 3).map((l, n) => `<div class="avr-grupo">Camada ${n + 1}</div><div class="avr-form">
+                        <label>Entrada</label><select class="linha" data-cam="${n}" data-ck="id"><option value="">(escolha a entrada)</option>${entradas.filter((x) => x !== e).map((x) => `<option value="${x.id}" ${l.id === x.id ? 'selected' : ''}>${esc(x.nome)}</option>`).join('')}</select>
+                        ${sc(n, 'x', 'Posição X:', 0, 100)}${sc(n, 'y', 'Posição Y:', 0, 100)}${sc(n, 'tam', 'Tamanho:', 5, 100)}${sc(n, 'opac', 'Opacidade:', 0, 100)}</div>`).join('')
+                        + '<div class="avr-nota">As camadas são desenhadas por cima desta entrada, na ordem da lista. O resultado aparece no card, na Prévia e no Programa.</div>';
+                })(),
             };
             abrir(`Configurações da entrada: ${esc(e.nome)}`,
                 `<div class="avr-abas">${ABAS.map(([k, n]) => `<button data-aba="${k}" class="${k === aba ? 'on' : ''}">${n}</button>`).join('')}</div>${conteudo[aba]}
@@ -710,11 +741,92 @@
                     });
                     $('eOk').onclick = fechar;
                     if ($('eAlt')) $('eAlt').onclick = () => dlgTipos('Redefinir Entrada', (k) => redefinir(e, k));
+                    if ($('eReal')) $('eReal').onclick = () => { if (e.real) { pararReal(e); dlgEntrada(e, 'entrada'); } else dlgReal(e); };
+                    $('dlg').querySelectorAll('[data-cam]').forEach((c) => {
+                        c.oninput = c.onchange = () => {
+                            const l = e.camadas[+c.dataset.cam], k = c.dataset.ck;
+                            l[k] = k === 'id' ? (c.value ? +c.value : null) : +c.value;
+                            const v = $('dlg').querySelector(`[data-cv="${c.dataset.cam}${k}"]`); if (v) v.textContent = c.value;
+                        };
+                    });
                     if ($('eRst')) $('eRst').onclick = () => {
                         const campos = { transf: ['zoom', 'x', 'y', 'espH', 'espV'], cor: ['brilho', 'contraste', 'sat', 'matiz'], lum: ['lift', 'gamma', 'gain'] }[aba];
                         campos.forEach((c) => { e.aj[c] = AJ0[c]; }); e.filtro = filtroDe(e.aj); dlgEntrada(e, aba);
                     };
                 }, 500);
+        }
+
+        // ---------- Camadas e cenário virtual ----------
+        function presetCena(e, ids) {
+            const outros = ids || entradas.filter((x) => x !== e && x.k !== 'cena').slice(0, 3).map((x) => x.id);
+            e.camadas = [{ x: 3, y: 8, tam: 60 }, { x: 65, y: 8, tam: 32 }, { x: 65, y: 52, tam: 32 }]
+                .map((p, i) => ({ id: outros[i] === undefined ? null : outros[i], ...p, opac: 100 }));
+        }
+        function desenharCamadas(e) {
+            if (!e.camadas.length) return;
+            const W = e.can.width, H = e.can.height;
+            e.camadas.forEach((l) => {
+                const s = porId(l.id);
+                if (!s || s === e || l.opac <= 0) return;
+                const w = W * l.tam / 100, h = w * 9 / 16;
+                e.ctx.save(); e.ctx.globalAlpha = l.opac / 100;
+                desenharFonte(e.ctx, s, W * l.x / 100, H * l.y / 100, w, h);
+                e.ctx.restore();
+            });
+        }
+
+        // ---------- Captura real (tela e webcam): tudo fica no navegador ----------
+        const md = navigator.mediaDevices;
+        const podeReal = (e) => (e.k === 'tela' && !!(md && md.getDisplayMedia)) || (e.k === 'cam' && !!(md && md.getUserMedia));
+        let audioCtx = null;
+        function dlgReal(e) {
+            const rot = e.k === 'tela' ? 'Capturar a tela de verdade' : 'Usar a webcam de verdade';
+            abrir('Captura real', `<div class="avr-nota">O navegador vai pedir permissão. A imagem e o som ficam só no seu computador: nada é enviado para servidor nenhum.</div>
+                <div class="avr-pe"><button class="avr-b" id="rSim">Usar simulação</button><button class="avr-b azul" id="rOk">${rot}</button></div>`,
+                () => { $('rSim').onclick = fechar; $('rOk').onclick = () => { fechar(); capturarReal(e); }; });
+        }
+        async function capturarReal(e) {
+            let stream;
+            try {
+                stream = e.k === 'tela'
+                    ? await md.getDisplayMedia({ video: { frameRate: 30 }, audio: true })
+                    : await md.getUserMedia({ video: { width: 1280, height: 720 }, audio: true });
+            } catch (err) { toast('Permissão negada ou captura indisponível neste navegador'); return; }
+            pararReal(e, true);
+            const v = document.createElement('video');
+            v.muted = true; v.playsInline = true; v.srcObject = stream;
+            try { await v.play(); } catch (err) { /* começa no próximo quadro */ }
+            e.real = { stream, v };
+            e.can.width = 1280; e.can.height = 720;
+            if (stream.getAudioTracks().length) {
+                try {
+                    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                    audioCtx.resume();
+                    const an = audioCtx.createAnalyser(); an.fftSize = 1024;
+                    audioCtx.createMediaStreamSource(stream).connect(an);
+                    e.real.an = an; e.real.buf = new Float32Array(an.fftSize);
+                } catch (err) { /* sem VU real */ }
+            }
+            e.audio = !!e.real.an || tipoPor(e.k).audio;
+            e.tipo = e.k === 'tela' ? 'Tela · captura real' : 'Câmera · webcam real';
+            stream.getVideoTracks()[0].addEventListener('ended', () => { if (e.real && e.real.stream === stream) { pararReal(e); toast(`${e.nome}: captura encerrada`); } });
+            renderCards(); renderStrips();
+            toast(`${e.nome}: capturando de verdade`);
+        }
+        function pararReal(e, silencioso) {
+            if (!e.real) return;
+            e.real.stream.getTracks().forEach((tr) => tr.stop());
+            e.real = null;
+            e.can.width = SW; e.can.height = SH;
+            const tp = tipoPor(e.k); e.tipo = tp.tipo; e.audio = tp.audio;
+            if (!silencioso) { renderCards(); renderStrips(); }
+        }
+        function desenharReal(e) {
+            const v = e.real.v, c = e.ctx, W = e.can.width, H = e.can.height;
+            c.fillStyle = '#000'; c.fillRect(0, 0, W, H);
+            if (!v.videoWidth) return;
+            const s = Math.min(W / v.videoWidth, H / v.videoHeight), w = v.videoWidth * s, h = v.videoHeight * s;
+            c.drawImage(v, (W - w) / 2, (H - h) / 2, w, h);
         }
 
         // Saídas
