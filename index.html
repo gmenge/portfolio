@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gabriel Menge | Full Stack Developer</title>
+    <title>Gabriel Menge | Desenvolvedor Full Stack</title>
     
     <!-- CSS do Projeto -->
     <link rel="stylesheet" href="styles.css">
     
     <!-- Ícones (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="i18n.js"></script>
 </head>
 <body>
     <header>
+        <div data-idioma></div>
         <div class="header-content">
             <h1>Gabriel Menge</h1>
-            <p>Analista de Sistemas</p>
+            <p>Desenvolvedor Full Stack</p>
         </div>
     </header>
 
@@ -55,7 +57,7 @@
 
         <section id="benefits">
             <h2><i class="fa-solid fa-bullseye"></i> Missão</h2>
-            <p>Desenvolvo softwares e rotinas de automação sob medida para eliminar processos manuais e destravar a eficiência operacional do seu negócio. Meu foco é transformar problemas operacionais em soluções tecnológicas práticas, integradas e escaláveis .</p>
+            <p data-t="missao">Desenvolvo softwares e rotinas de automação sob medida para eliminar processos manuais e destravar a eficiência operacional do seu negócio. Meu foco é transformar problemas operacionais em soluções tecnológicas práticas, integradas e escaláveis.</p>
         </section>
 
         <section id="projects">
@@ -152,12 +154,12 @@
           if (response.ok) {
             window.location.href = "obrigado.html";
           } else {
-            alert("Ocorreu um erro ao enviar a mensagem. Tente novamente.");
+            alert(t("Ocorreu um erro ao enviar a mensagem. Tente novamente."));
             btn.disabled = false;
             btn.innerText = "Enviar Mensagem";
           }
         } catch (error) {
-          alert("Ocorreu um erro de conexão. Tente novamente.");
+          alert(t("Ocorreu um erro de conexão. Tente novamente."));
           btn.disabled = false;
           btn.innerText = "Enviar Mensagem";
         }

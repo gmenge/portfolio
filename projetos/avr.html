@@ -126,14 +126,16 @@
         .dicas { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 0.85em; color: #666; margin-top: 10px; }
         .dicas b { color: #333; }
     </style>
+    <script src="../i18n.js"></script>
+    <script src="i18n/avr.js"></script>
 </head>
 <body>
-    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a><div data-idioma></div></div>
 
     <main>
         <section class="projeto-intro">
             <h2><i class="fa-solid fa-sliders"></i> AVR</h2>
-            <p>Switcher de produção ao vivo para Windows. Recebe câmeras, SDI/HDMI, SRT, NDI, captura de tela, vídeos e imagens; corta e faz transições entre Prévia e Programa com composição na GPU; mixa o áudio em barramentos; e envia o Programa ao mesmo tempo para saídas SRT, RTMP, SDI e NDI, com gravação, gravação ISO por entrada e replay.</p>
+            <p data-t="avr.intro">Switcher de produção ao vivo para Windows. Recebe câmeras, SDI/HDMI, SRT, NDI, captura de tela, vídeos e imagens; corta e faz transições entre Prévia e Programa com composição na GPU; mixa o áudio em barramentos; e envia o Programa ao mesmo tempo para saídas SRT, RTMP, SDI e NDI, com gravação, gravação ISO por entrada e replay.</p>
             <div class="tags">
                 <span class="tag">C++</span><span class="tag">Qt 6</span><span class="tag">GStreamer</span><span class="tag">Direct3D 12</span><span class="tag">Media Foundation</span><span class="tag">SRT / NDI / SDI</span>
             </div>
@@ -146,11 +148,11 @@
             <h2><i class="fa-solid fa-hand-pointer"></i> Experimente</h2>
             <p class="aviso-demo">Simulação interativa da interface. As fontes de vídeo são geradas no navegador; nada é transmitido nem gravado.</p>
             <div class="dicas">
-                <span><b>Clique</b> num card: Prévia</span>
-                <span><b>Duplo clique</b> ou <b>Cortar</b>: Programa</span>
-                <span><b>Botão direito</b> no card: menu da entrada</span>
-                <span><b>1–8</b> no card: overlay (direito: na Prévia)</span>
-                <span><b>Botão direito</b> nos canais A–G: liga/desliga</span>
+                <span data-t="avr.d1"><b>Clique</b> num card: Prévia</span>
+                <span data-t="avr.d2"><b>Duplo clique</b> ou <b>Cortar</b>: Programa</span>
+                <span data-t="avr.d3"><b>Botão direito</b> no card: menu da entrada</span>
+                <span data-t="avr.d4"><b>1–8</b> no card: overlay (direito: na Prévia)</span>
+                <span data-t="avr.d5"><b>Botão direito</b> nos canais A–G: liga/desliga</span>
             </div>
 
             <div class="janela">
@@ -270,7 +272,7 @@
                 pessoa(c, 250 + Math.sin(t * 1.1) * 5, 120, 42, '#8a5a2b');
                 c.fillStyle = '#222'; c.fillRect(270, 168, 10, 34); c.fillStyle = '#e53935'; c.beginPath(); c.arc(275, 166, 8, 0, Math.PI * 2); c.fill();
                 c.restore();
-                c.fillStyle = '#e53935'; c.fillRect(14, 14, 74, 22); c.fillStyle = '#fff'; c.font = 'bold 14px Arial'; c.textAlign = 'left'; c.fillText('AO VIVO', 21, 30);
+                c.fillStyle = '#e53935'; c.fillRect(14, 14, 74, 22); c.fillStyle = '#fff'; c.font = 'bold 14px Arial'; c.textAlign = 'left'; c.fillText(t('AO VIVO'), 21, 30);
                 c.fillStyle = 'rgba(0,0,0,.55)'; c.fillRect(SW - 130, 14, 116, 22); c.fillStyle = '#fff'; c.font = '14px Consolas, monospace'; c.fillText(timecode(t), SW - 124, 30);
             },
             barras(c, t) {
@@ -288,7 +290,7 @@
                     const g = c.createRadialGradient(x, y, 0, x, y, 70); g.addColorStop(0, `hsla(${(i * 60 + t * 20) % 360},80%,60%,.55)`); g.addColorStop(1, 'transparent');
                     c.fillStyle = g; c.fillRect(0, 0, SW, SH);
                 }
-                c.globalAlpha = Math.max(0, Math.min(1, lt / 2, (12 - lt) / 1.5)); c.fillStyle = '#fff'; c.font = 'bold 40px Arial'; c.textAlign = 'center'; c.fillText('ABERTURA', SW / 2, SH / 2 + 14); c.globalAlpha = 1;
+                c.globalAlpha = Math.max(0, Math.min(1, lt / 2, (12 - lt) / 1.5)); c.fillStyle = '#fff'; c.font = 'bold 40px Arial'; c.textAlign = 'center'; c.fillText(t('ABERTURA'), SW / 2, SH / 2 + 14); c.globalAlpha = 1;
                 c.fillStyle = 'rgba(255,255,255,.25)'; c.fillRect(20, SH - 14, SW - 40, 3); c.fillStyle = '#fff'; c.fillRect(20, SH - 14, (SW - 40) * lt / 12, 3);
             },
             tela(c, t) {
@@ -459,7 +461,7 @@
         function colocarPrevia(id) { if (id !== pgm) { pvw = id; atualizarTally(); } }
 
         function renomear(e) {
-            const n = prompt('Novo Nome:', e.nome);
+            const n = prompt(t('Novo Nome:'), e.nome);
             if (n && n.trim()) { e.nome = n.trim(); renderCards(); renderStrips(); }
         }
         function duplicar(e) {
@@ -472,7 +474,7 @@
             renderCards(); renderStrips(); toast(`${e.nome}: agora ${tp.nome}`);
         }
         function remover(e) {
-            if (!confirm(`Remover a entrada "${e.nome}"?`)) return;
+            if (!confirm(t(`Remover a entrada "${e.nome}"?`))) return;
             entradas = entradas.filter((x) => x !== e);
             if (pgm === e.id) pgm = null;
             if (pvw === e.id) pvw = null;
@@ -615,7 +617,7 @@
             if (ftb > 0) { cPgm.fillStyle = `rgba(0,0,0,${ftb})`; cPgm.fillRect(0, 0, 640, 360); }
             if (replay) {
                 cPgm.fillStyle = '#1e88e5'; cPgm.fillRect(16, 316, 160, 28); cPgm.fillStyle = '#fff'; cPgm.font = 'bold 16px Segoe UI, Arial'; cPgm.textAlign = 'left';
-                cPgm.fillText(replay.vel < 1 ? '⟲ REPLAY LENTO' : '⟲ REPLAY', 26, 336);
+                cPgm.fillText(t(replay.vel < 1 ? '⟲ REPLAY LENTO' : '⟲ REPLAY'), 26, 336);
                 if (agora - replay.t0 > replay.dur) voltarAoVivo();
             }
             desenharMonitor(cPvw, [[pvw, 1]], 'preview');
@@ -770,7 +772,7 @@
             };
         }
         menuBarra($('mArq'), () => [
-            { t: 'Novo projeto', k: 'Ctrl+N', fn: () => { if (confirm(`Deseja salvar as alterações em ${projeto}?`)) toast(`Projeto salvo: ${projeto}`); carregarProjeto(null); } },
+            { t: 'Novo projeto', k: 'Ctrl+N', fn: () => { if (confirm(t(`Deseja salvar as alterações em ${projeto}?`))) toast(`Projeto salvo: ${projeto}`); carregarProjeto(null); } },
             { t: 'Abrir projeto…', k: 'Ctrl+O', fn: dlgAbrir },
             { t: 'Projetos recentes', sub: [{ t: 'Demonstração', fn: () => carregarProjeto('Demonstração') }, { t: 'Estúdio A', fn: () => carregarProjeto('Estúdio A') }] },
             '-',
@@ -780,7 +782,7 @@
             { t: 'Sair', k: 'Ctrl+Q', fn: () => toast('Na demonstração o app não fecha 🙂') },
         ]);
         function salvarComo() {
-            const n = prompt('Salvar projeto como', projeto === 'Sem título' ? 'Meu projeto' : projeto);
+            const n = prompt(t('Salvar projeto como'), projeto === 'Sem título' ? t('Meu projeto') : projeto);
             if (n && n.trim()) { projeto = n.trim(); $('tituloJanela').textContent = `AVR — Central de Produção e Roteamento — ${projeto}`; toast(`Projeto salvo: ${projeto}`); }
         }
         function dlgAbrir() {
@@ -801,7 +803,7 @@
         const cfg = { res: '1920x1080', fps: '30', dec: 'Automático (recomendado)', lat: '120', enc: 'Automático (recomendado)', br: '6000', fones: 'Padrão do Windows', idioma: 'Automático (o do Windows: Português)' };
         $('mCfg').onclick = () => dlgCfg();
         function dlgCfg() {
-            const sel = (c, opcs) => `<select class="linha" data-k="${c}">${opcs.map((o) => `<option ${cfg[c] === o ? 'selected' : ''}>${o}</option>`).join('')}</select>`;
+            const sel = (c, opcs) => `<select class="linha" data-k="${c}">${opcs.map((o) => `<option value="${o}" ${cfg[c] === o ? 'selected' : ''}>${o}</option>`).join('')}</select>`;
             const abas = {
                 geral: `<div class="avr-grupo">Formato master</div><div class="avr-form"><label>Resolução:</label>${sel('res', ['1280x720', '1920x1080', '3840x2160'])}
                         <label>Quadros por segundo:</label>${sel('fps', ['25', '29,97', '30', '50', '59,94', '60'])}</div>

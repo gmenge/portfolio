@@ -42,14 +42,16 @@
         .spin { width: 28px; height: 28px; border: 3px solid #333; border-top-color: #00E5FF; border-radius: 50%; margin: 6px auto 12px; animation: gira 0.8s linear infinite; }
         @keyframes gira { to { transform: rotate(360deg); } }
     </style>
+    <script src="../i18n.js"></script>
+    <script src="i18n/ajaremote.js"></script>
 </head>
 <body>
-    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a><div data-idioma></div></div>
 
     <main>
         <section class="projeto-intro">
             <h2><i class="fa-solid fa-tower-broadcast"></i> AjaRemote</h2>
-            <p>Painel de controle remoto para matrizes de vídeo AJA KUMO 64x64. O operador escolhe um destino (saída) e em seguida a origem (entrada): a comutação é enviada à matriz pela API HTTP e o estado de cada saída é lido de volta, com tally colorido e histórico de ações.</p>
+            <p data-t="aja.intro">Painel de controle remoto para matrizes de vídeo AJA KUMO 64x64. O operador escolhe um destino (saída) e em seguida a origem (entrada): a comutação é enviada à matriz pela API HTTP e o estado de cada saída é lido de volta, com tally colorido e histórico de ações.</p>
             <div class="tags">
                 <span class="tag">Python</span><span class="tag">Tkinter</span><span class="tag">Requests / API HTTP</span><span class="tag">PyInstaller</span>
             </div>

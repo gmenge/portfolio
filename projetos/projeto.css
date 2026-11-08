@@ -4,6 +4,20 @@
     max-width: 1100px;
     margin: 0 auto;
     padding: 18px 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.topo-projeto .idioma button {
+    border-color: #ccc;
+    color: #555;
+}
+
+.topo-projeto .idioma button.on {
+    border-color: #57b846;
+    color: #fff;
 }
 
 .voltar {

@@ -15,14 +15,16 @@
         /* No celular o app é responsivo: mostra em pé, com altura de tela */
         @media (max-width: 700px) { .app-frame { aspect-ratio: auto; height: 75vh; min-height: 0; } }
     </style>
+    <script src="../i18n.js"></script>
+    <script src="i18n/calculadora-solar.js"></script>
 </head>
 <body>
-    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a><div data-idioma></div></div>
 
     <main>
         <section class="projeto-intro">
             <h2><i class="fa-solid fa-solar-panel"></i> Calculadora Solar</h2>
-            <p>Calculadora web de investimento e retorno em energia solar. A partir do tipo de sistema e do consumo mensal em kWh, estima a quantidade de placas, o investimento e o tempo de retorno. Este projeto já é um app web, então a prévia abaixo é o próprio app funcionando.</p>
+            <p data-t="solar.intro">Calculadora web de investimento e retorno em energia solar. A partir do tipo de sistema e do consumo mensal em kWh, estima a quantidade de placas, o investimento e o tempo de retorno. Este projeto já é um app web, então a prévia abaixo é o próprio app funcionando.</p>
             <div class="tags">
                 <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">GitHub Pages</span>
             </div>

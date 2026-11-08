@@ -35,14 +35,16 @@
         .vu { height: 6px; background: #333; border-radius: 3px; overflow: hidden; }
         .vu div { height: 100%; width: 0; background: linear-gradient(90deg, #4caf50 70%, #e0a800 85%, #D9534F); transition: width 0.08s; }
     </style>
+    <script src="../i18n.js"></script>
+    <script src="i18n/simplesrt.js"></script>
 </head>
 <body>
-    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a><div data-idioma></div></div>
 
     <main>
         <section class="projeto-intro">
             <h2><i class="fa-solid fa-video"></i> SimpleSRT</h2>
-            <p>Receptor de vídeo SRT para Windows. Recebe transmissões ao vivo pela internet ou rede local com baixa latência, nos modos <strong>caller</strong> e <strong>listener</strong>, com escolha da saída de áudio e janela de vídeo em tela cheia.</p>
+            <p data-t="srt.intro">Receptor de vídeo SRT para Windows. Recebe transmissões ao vivo pela internet ou rede local com baixa latência, nos modos <strong>caller</strong> e <strong>listener</strong>, com escolha da saída de áudio e janela de vídeo em tela cheia.</p>
             <div class="tags">
                 <span class="tag">C#</span><span class="tag">.NET 8</span><span class="tag">WPF / MVVM</span><span class="tag">LibVLC</span><span class="tag">Inno Setup</span>
             </div>

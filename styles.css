@@ -12,6 +12,7 @@ body {
 }
 
 header {
+    position: relative;
     background-color: #111111;
     color: #ffffff;
     padding: 35px 20px;
@@ -282,8 +283,46 @@ footer {
     margin-top: 40px;
 }
 
+/* Seletor de idioma */
+.idioma {
+    display: flex;
+    gap: 4px;
+}
+
+header .idioma {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+}
+
+.idioma button {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ccc;
+    font: bold 12px 'Helvetica', Arial, sans-serif;
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.idioma button:hover {
+    color: #fff;
+    border-color: #57b846;
+}
+
+.idioma button.on {
+    background: #57b846;
+    border-color: #57b846;
+    color: #fff;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
+    header {
+        padding-top: 52px;
+    }
+
     section {
         padding: 25px 15px;
     }

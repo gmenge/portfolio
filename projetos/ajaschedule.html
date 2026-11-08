@@ -76,14 +76,16 @@
         .janela-barra.clara { background: #fff; color: #000; border-bottom: 1px solid #ddd; }
         .janela-barra.clara .janela-controles span { color: #333; }
     </style>
+    <script src="../i18n.js"></script>
+    <script src="i18n/ajaschedule.js"></script>
 </head>
 <body>
-    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a><div data-idioma></div></div>
 
     <main>
         <section class="projeto-intro">
             <h2><i class="fa-regular fa-clock"></i> AjaSchedule</h2>
-            <p>Agendador desktop que executa comutações programadas em matrizes de vídeo AJA KUMO 64x64. Cada rotina define destino, origem, horário e frequência (dias recorrentes ou data única); o app executa no horário, mostra o painel de monitoração por destino e registra tudo em log. Interface em português, inglês e espanhol.</p>
+            <p data-t="as.intro">Agendador desktop que executa comutações programadas em matrizes de vídeo AJA KUMO 64x64. Cada rotina define destino, origem, horário e frequência (dias recorrentes ou data única); o app executa no horário, mostra o painel de monitoração por destino e registra tudo em log. Interface em português, inglês e espanhol.</p>
             <div class="tags">
                 <span class="tag">Python</span><span class="tag">Tkinter</span><span class="tag">API HTTP</span><span class="tag">Pytest</span><span class="tag">GitHub Actions</span>
             </div>
@@ -358,7 +360,7 @@
         };
         $('btnRem').onclick = () => {
             const r = exigeSel('Por favor, selecione um agendamento na lista para excluir.'); if (!r) return;
-            if (!confirm(`Confirmar Exclusão\n\nRemover o agendamento #${r.id}?`)) return;
+            if (!confirm(t(`Confirmar Exclusão\n\nRemover o agendamento #${r.id}?`))) return;
             rotinas = rotinas.filter((x) => x !== r); sel = null;
             log(`ROTINA REMOVIDA (ID #${r.id}): Destino [${r.dest}] <- Origem [${r.orig}] às ${r.hora} | Frequência: ${freqTxt(r)}`); render();
         };
@@ -391,7 +393,7 @@
         $('cFiltro').oninput = renderCfg;
         $('cEditar').onclick = () => {
             if (!cSel) { toast('Selecione uma porta na lista.', true); return; }
-            const novo = prompt('Novo Nome para o Rótulo:', nomes[cTipo][cSel - 1]);
+            const novo = prompt(t('Novo Nome para o Rótulo:'), nomes[cTipo][cSel - 1]);
             if (novo && novo.trim()) { nomes[cTipo][cSel - 1] = novo.trim(); renderCfg(); render(); atualizarForm(); }
         };
         $('cSalvarIp').onclick = () => {

@@ -55,14 +55,16 @@
         .lf-modal input { width: 100%; }
         .lf-vazio { color: var(--fraco); padding: 14px; }
     </style>
+    <script src="../i18n.js"></script>
+    <script src="i18n/rentalapp.js"></script>
 </head>
 <body>
-    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a><div data-idioma></div></div>
 
     <main>
         <section class="projeto-intro">
             <h2><i class="fa-regular fa-calendar-check"></i> LocaFácil (RentalAPP)</h2>
-            <p>Sistema desktop de gestão de aluguéis de equipamentos. Cadastra equipamentos com patrimônio, importa listas de vários formatos, emite contratos com vários itens e controla o estoque por período, com dashboard de faturamento e atrasos. Dados salvos localmente em SQLite com backup automático.</p>
+            <p data-t="lf.intro">Sistema desktop de gestão de aluguéis de equipamentos. Cadastra equipamentos com patrimônio, importa listas de vários formatos, emite contratos com vários itens e controla o estoque por período, com dashboard de faturamento e atrasos. Dados salvos localmente em SQLite com backup automático.</p>
             <div class="tags">
                 <span class="tag">Python</span><span class="tag">CustomTkinter</span><span class="tag">SQLite</span><span class="tag">Pytest</span><span class="tag">PyInstaller</span>
             </div>
@@ -261,7 +263,7 @@
                 if (c) $('detalhe').innerHTML = `<div class="lf-card"><h5>Contrato #${c.id} — ${esc(c.cliente)} ${c.doc ? '(' + esc(c.doc) + ')' : ''}</h5>${c.itens.map((i) => `${i.q}x ${esc(eqPor(i.eq).nome)}`).join(' · ')} — ${dias(c.ini, c.fim)} diária(s)</div>`;
                 const precisa = () => { if (!c) { $('gMsg').className = 'lf-msg'; $('gMsg').textContent = 'Selecione um contrato na lista.'; } return c; };
                 $('gDev').onclick = () => { if (!precisa()) return; if (c.dev) { $('gMsg').textContent = 'Este contrato já foi devolvido.'; return; } c.dev = true; render(); $('gMsg').className = 'lf-msg ok'; $('gMsg').textContent = `Devolução do contrato #${c.id} registrada. Itens voltaram ao estoque.`; };
-                $('gExc').onclick = () => { if (!precisa() || !confirm(`Excluir o contrato #${c.id}?`)) return; contratos = contratos.filter((x) => x !== c); selCt = null; render(); };
+                $('gExc').onclick = () => { if (!precisa() || !confirm(t(`Excluir o contrato #${c.id}?`))) return; contratos = contratos.filter((x) => x !== c); selCt = null; render(); };
             },
         };
 
