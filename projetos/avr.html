@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="projeto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-        .avr { background: #121212; color: #ddd; font: 12px 'Segoe UI', Arial, sans-serif; min-width: 1000px; position: relative; user-select: none; }
+        .avr { background: #121212; color: #ddd; font: 12px 'Segoe UI', Arial, sans-serif; min-width: 1060px; position: relative; user-select: none; }
         .avr-menu { display: flex; align-items: center; background: #1b1b1b; border-bottom: 1px solid #262626; height: 26px; padding: 0 4px; }
         .avr-menu > span { padding: 4px 9px; cursor: default; color: #ddd; }
-        .avr-menu > span:hover { background: #2d2d2d; }
+        .avr-menu > span:hover, .avr-menu > span.on { background: #2d2d2d; }
         .avr-sys { margin-left: auto; color: #9e9e9e; font-size: 11px; display: flex; gap: 14px; padding-right: 8px; }
         .avr-sys b { color: #ddd; font-weight: 600; }
         .avr-sw { display: grid; grid-template-columns: 1fr 120px 1fr; gap: 12px; background: #161616; padding: 10px 12px; border-bottom: 4px solid #262626; }
@@ -25,25 +25,31 @@
         .avr-ctl button:active { background: #1565c0; border-color: #1e88e5; }
         .avr-ctl button.ftb-on { background: #e53935; border-color: #e53935; color: #fff; animation: pisca 1s steps(2) infinite; }
         @keyframes pisca { 50% { background: #7f1d1d; border-color: #7f1d1d; } }
-        .avr-ctl select { background: #2b2b2b; color: #fff; border: 1px solid #4a4a4a; border-radius: 3px; padding: 3px; font: inherit; }
+        .avr select, .avr input[type=text], .avr input[type=number] { background: #2b2b2b; color: #fff; border: 1px solid #4a4a4a; border-radius: 3px; padding: 4px 5px; font: inherit; }
         .avr-prog { height: 4px; background: #222; } .avr-prog div { height: 100%; width: 0; background: #1e88e5; }
-        .avr-baixo { display: flex; height: 330px; }
+        .avr-baixo { display: flex; height: 440px; }
         .avr-entradas { flex: 1; display: flex; flex-direction: column; min-width: 0; }
         .avr-cards { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+        .avr-vazio { color: #9e9e9e; font-style: italic; padding: 20px; }
         .avr-card { width: 196px; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 6px; display: flex; flex-direction: column; gap: 5px; }
         .avr-card.pgm { border: 2px solid #e53935; padding: 5px; } .avr-card.pvw { border: 2px solid #43a047; padding: 5px; }
         .avr-card-cab { display: flex; align-items: center; gap: 4px; }
         .avr-card-cab div { flex: 1; min-width: 0; line-height: 1.2; }
         .avr-card-cab b { color: #fff; font-size: 12px; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-        .avr-card-cab small { color: #888; font-size: 10px; }
-        .avr-mini { width: 22px; height: 22px; background: #2b2b2b; color: #aaa; border: 1px solid #3d3d3d; border-radius: 3px; cursor: pointer; font-size: 11px; padding: 0; }
+        .avr-card-cab small { color: #888; font-size: 10px; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .avr-mini { width: 22px; height: 22px; background: #2b2b2b; color: #aaa; border: 1px solid #3d3d3d; border-radius: 3px; cursor: pointer; font-size: 11px; padding: 0; flex-shrink: 0; }
         .avr-mini:hover { background: #3d3d3d; color: #fff; }
-        .avr-x { background: transparent; border: 0; color: #ff5555; font-weight: bold; cursor: pointer; width: 20px; height: 22px; }
+        .avr-x { background: transparent; border: 0; color: #ff5555; font-weight: bold; cursor: pointer; width: 20px; height: 22px; flex-shrink: 0; }
         .avr-x:hover { background: #331111; border-radius: 3px; }
         .avr-card-vid { display: flex; gap: 3px; }
         .avr-card-vid canvas { flex: 1; min-width: 0; aspect-ratio: 16 / 9; background: #000; border: 1px solid #2a2a2a; cursor: pointer; display: block; }
         .avr-vu { width: 5px; background: #111; border: 1px solid #2a2a2a; position: relative; overflow: hidden; }
         .avr-vu i { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: linear-gradient(to top, #00e676 0%, #ffea00 70%, #ff1744 90%); }
+        .avr-ovl { display: flex; gap: 2px; }
+        .avr-ovl button { flex: 1; height: 18px; padding: 0; background: #222; color: #888; border: 1px solid #333; border-radius: 2px; font: bold 10px 'Segoe UI', Arial, sans-serif; cursor: pointer; }
+        .avr-ovl button:hover { color: #fff; border-color: #555; }
+        .avr-ovl button.p { background: #e53935; border-color: #e53935; color: #fff; }
+        .avr-ovl button.v { background: #43a047; border-color: #43a047; color: #fff; }
         .avr-card-pe { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #888; }
         .avr-cut { background: #5a1f1f; color: #ffdddd; border: 0; border-radius: 3px; height: 20px; padding: 0 8px; font: bold 10px 'Segoe UI', Arial, sans-serif; cursor: pointer; }
         .avr-cut:hover { background: #c62828; color: #fff; }
@@ -53,35 +59,65 @@
         .avr-b.azul { background: #1e88e5; border-color: #1e88e5; color: #fff; } .avr-b.azul:hover { background: #1565c0; }
         .avr-b.rec { color: #ff6b6b; } .avr-b.rec.on { background: #c62828; border-color: #c62828; color: #fff; }
         .avr-rec { color: #ff5555; font: bold 12px Consolas, monospace; margin-left: auto; }
-        .avr-mix { width: 300px; background: #161616; border-left: 4px solid #262626; display: flex; flex-direction: column; }
-        .avr-mix h6 { margin: 0; padding: 8px 10px; font-size: 11px; color: #9e9e9e; letter-spacing: 1px; }
-        .avr-strips { flex: 1; display: flex; gap: 6px; padding: 0 10px 10px; overflow-x: auto; }
-        .avr-strip { width: 62px; flex-shrink: 0; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 4px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .avr-mix { width: 410px; background: #121212; border-left: 4px solid #262626; display: flex; flex-direction: column; padding: 4px 6px 4px 4px; gap: 5px; }
+        .avr-sec { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+        .avr-sec + .avr-sec { border-top: 5px solid #1e1e1e; padding-top: 2px; }
+        .avr-sec h6 { margin: 0 0 2px; font-size: 9px; color: #8a8a8a; letter-spacing: 1px; }
+        .avr-strips { flex: 1; display: flex; gap: 4px; overflow-x: auto; min-height: 0; justify-content: safe center; }
+        .avr-strip { width: 50px; flex-shrink: 0; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 4px; padding: 4px 3px; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: opacity 0.2s; }
         .avr-strip.master { background: #1c2430; border-color: #2c3e57; }
+        .avr-strip.off { opacity: 0.35; }
+        .avr-strip.off > * { pointer-events: none; }
         .avr-strip b { font-size: 10px; color: #ddd; width: 100%; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-        .avr-strip-meio { flex: 1; display: flex; gap: 4px; min-height: 0; }
-        .avr-strip-meio .avr-vu { width: 6px; }
-        .avr-strip input[type=range] { writing-mode: vertical-lr; direction: rtl; width: 18px; accent-color: #1e88e5; margin: 0; }
-        .avr-db { font: 10px Consolas, monospace; color: #888; }
-        .avr-mudo { width: 100%; background: #2b2b2b; color: #bbb; border: 1px solid #3d3d3d; border-radius: 3px; font: bold 9px 'Segoe UI', Arial, sans-serif; padding: 3px 0; cursor: pointer; }
+        .avr-strip-meio { flex: 1; display: flex; gap: 3px; min-height: 0; }
+        .avr-strip-meio .avr-vu { width: 5px; }
+        .avr-strip input[type=range] { writing-mode: vertical-lr; direction: rtl; width: 16px; accent-color: #1e88e5; margin: 0; }
+        .avr-db { font: 9px Consolas, monospace; color: #888; }
+        .avr-mudo { width: 100%; background: #2b2b2b; color: #bbb; border: 1px solid #3d3d3d; border-radius: 3px; font: bold 8px 'Segoe UI', Arial, sans-serif; padding: 2px 0; cursor: pointer; }
         .avr-mudo.on { background: #c62828; border-color: #c62828; color: #fff; }
-        .avr-bus { width: 100%; background: #2b2b2b; color: #777; border: 1px solid #3d3d3d; border-radius: 3px; font: 9px 'Segoe UI', Arial, sans-serif; padding: 2px 0; cursor: pointer; }
-        .avr-bus.on { background: #1565c0; border-color: #1e88e5; color: #fff; }
+        .avr-buses { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; width: 100%; }
+        .avr-buses button { background: #2b2b2b; color: #777; border: 1px solid #3d3d3d; border-radius: 2px; font: bold 8px 'Segoe UI', Arial, sans-serif; padding: 1px 0; cursor: pointer; }
+        .avr-buses button.on { background: #1565c0; border-color: #1e88e5; color: #fff; }
+        .avr-ctx { position: absolute; z-index: 9; background: #2b2b2b; border: 1px solid #4a4a4a; box-shadow: 0 6px 18px rgba(0,0,0,.6); padding: 4px 0; min-width: 190px; font: 12px 'Segoe UI', Arial, sans-serif; }
+        .avr-ctx .it { position: relative; display: flex; justify-content: space-between; gap: 24px; padding: 5px 22px 5px 24px; color: #eee; cursor: default; white-space: nowrap; }
+        .avr-ctx .it:hover:not(.dis) { background: #1e88e5; color: #fff; }
+        .avr-ctx .it.dis { color: #777; }
+        .avr-ctx .it kbd { font: inherit; color: #999; }
+        .avr-ctx .it:hover kbd { color: #fff; }
+        .avr-ctx .it.chk::before { content: '✓'; position: absolute; left: 8px; }
+        .avr-ctx .it .seta { position: absolute; right: 8px; }
+        .avr-ctx .sep { height: 1px; background: #444; margin: 4px 0; }
+        .avr-ctx .it > .avr-ctx { display: none; left: 100%; top: -5px; }
+        .avr-ctx .it:hover > .avr-ctx { display: block; }
         .avr-modal { position: absolute; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 5; }
         .avr-modal[hidden] { display: none; }
-        .avr-dlg { background: #1e1e1e; border: 1px solid #3d3d3d; border-radius: 6px; width: 460px; max-height: 90%; overflow-y: auto; box-shadow: 0 12px 30px #000; }
-        .avr-dlg-tit { display: flex; justify-content: space-between; padding: 9px 12px; background: #262626; font-weight: 600; color: #fff; }
+        .avr-dlg { background: #1e1e1e; border: 1px solid #3d3d3d; border-radius: 6px; width: 480px; max-height: 92%; overflow-y: auto; box-shadow: 0 12px 30px #000; }
+        .avr-dlg-tit { display: flex; justify-content: space-between; padding: 9px 12px; background: #262626; font-weight: 600; color: #fff; position: sticky; top: 0; z-index: 1; }
         .avr-dlg-tit span:last-child { cursor: pointer; color: #aaa; }
         .avr-dlg-corpo { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .avr-dlg p { margin: 0; text-align: left; color: #bbb; }
         .avr-tipos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
         .avr-tipos button { background: #2b2b2b; color: #ddd; border: 1px solid #3d3d3d; border-radius: 4px; padding: 12px 4px; cursor: pointer; font: 12px 'Segoe UI', Arial, sans-serif; display: flex; flex-direction: column; align-items: center; gap: 6px; }
         .avr-tipos button:hover { border-color: #1e88e5; color: #fff; }
         .avr-tipos i { font-size: 18px; color: #64b5f6; }
-        .avr-said { width: 100%; border-collapse: collapse; }
-        .avr-said td, .avr-said th { padding: 7px 6px; border-bottom: 1px solid #2b2b2b; text-align: left; }
-        .avr-said th { color: #9e9e9e; font-weight: 600; }
+        .avr-tab { width: 100%; border-collapse: collapse; }
+        .avr-tab td, .avr-tab th { padding: 6px; border-bottom: 1px solid #2b2b2b; text-align: left; }
+        .avr-tab th { color: #9e9e9e; font-weight: 600; }
         .no-ar { color: #00e676; font-weight: bold; } .parado { color: #777; }
-        .avr-toast { position: absolute; left: 50%; top: 34px; transform: translateX(-50%); background: #1e88e5; color: #fff; padding: 7px 14px; border-radius: 4px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 6; font-weight: 600; }
+        .avr-abas { display: flex; border-bottom: 1px solid #3d3d3d; margin: -4px 0 4px; flex-wrap: wrap; }
+        .avr-abas button { background: none; border: 0; border-bottom: 2px solid transparent; color: #aaa; padding: 6px 10px; font: inherit; cursor: pointer; }
+        .avr-abas button.on { color: #fff; border-color: #1e88e5; }
+        .avr-form { display: grid; grid-template-columns: 150px 1fr 44px; gap: 8px 10px; align-items: center; }
+        .avr-form label { color: #bbb; }
+        .avr-form input[type=range] { width: 100%; accent-color: #1e88e5; }
+        .avr-form .v { font: 11px Consolas, monospace; color: #888; text-align: right; }
+        .avr-form .linha { grid-column: 2 / 4; }
+        .avr-grupo { color: #64b5f6; font-weight: 600; margin-top: 6px; }
+        .avr-nota { background: #262626; border-left: 3px solid #1e88e5; padding: 8px; color: #aaa; }
+        .avr-chk { display: flex; align-items: center; gap: 6px; color: #ddd; }
+        .avr-chk input { accent-color: #1e88e5; }
+        .avr-pe { display: flex; justify-content: flex-end; gap: 6px; margin-top: 6px; }
+        .avr-toast { position: absolute; left: 50%; top: 34px; transform: translateX(-50%); background: #1e88e5; color: #fff; padding: 7px 14px; border-radius: 4px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 10; font-weight: 600; }
         .avr-toast.on { opacity: 1; }
         .botao-privado { background: #e9ecef; color: #666; cursor: not-allowed; }
         .botao-privado:hover { transform: none; }
@@ -110,19 +146,20 @@
             <div class="dicas">
                 <span><b>Clique</b> num card: Prévia</span>
                 <span><b>Duplo clique</b> ou <b>Cortar</b>: Programa</span>
-                <span><b>Corte / Fade / Merge</b>: Prévia → Programa</span>
-                <span><b>FTB</b>: fade para o preto</span>
+                <span><b>Botão direito</b> no card: menu da entrada</span>
+                <span><b>1–8</b> no card: overlay (direito: na Prévia)</span>
+                <span><b>Botão direito</b> nos canais A–G: liga/desliga</span>
             </div>
 
             <div class="janela">
                 <div class="janela-barra">
-                    <div class="janela-titulo"><i class="fa-solid fa-sliders"></i> AVR — Central de Produção e Roteamento</div>
+                    <div class="janela-titulo"><i class="fa-solid fa-sliders"></i> <span id="tituloJanela">AVR — Central de Produção e Roteamento</span></div>
                     <div class="janela-controles"><span>&#8212;</span><span>&#9744;</span><span>&#10005;</span></div>
                 </div>
                 <div class="janela-corpo rolagem">
                     <div class="avr" id="avr">
                         <div class="avr-menu">
-                            <span>Arquivo</span><span>Configurações</span><span>Overlays</span><span id="mAjuda">Ajuda</span>
+                            <span id="mArq">Arquivo</span><span id="mCfg">Configurações</span><span id="mOvl">Overlays</span><span id="mAjuda">Ajuda</span>
                             <div class="avr-sys"><span>CPU <b id="sCpu">-</b></span><span>GPU <b id="sGpu">-</b></span><span>RAM <b id="sRam">-</b></span><span>Disco <b id="sDisco">0 MB/s</b></span></div>
                         </div>
 
@@ -155,12 +192,12 @@
                                     <span class="avr-rec" id="recTxt"></span>
                                     <button class="avr-b rec" id="bRec">● Gravar</button>
                                     <button class="avr-b rec" id="bIso">● ISO</button>
-                                    <button class="avr-b" id="bReplay">⟲ Replay</button>
+                                    <button class="avr-b" id="bReplay">⟲ Replay ▾</button>
                                 </div>
                             </div>
                             <div class="avr-mix">
-                                <h6>CANAIS DE ÁUDIO</h6>
-                                <div class="avr-strips" id="strips"></div>
+                                <div class="avr-sec"><h6>ENTRADAS</h6><div class="avr-strips" id="strips"></div></div>
+                                <div class="avr-sec"><h6>CANAIS DE ÁUDIO</h6><div class="avr-strips" id="busStrips"></div></div>
                             </div>
                         </div>
 
@@ -177,10 +214,12 @@
                 <li>Entradas: câmeras, SDI/HDMI (DeckLink), SRT, NDI, tela/janela, vídeos, imagens e sinal de teste</li>
                 <li>Prévia e Programa em quadro cheio, compostos na GPU (Direct3D 12)</li>
                 <li>Corte, Fade, Merge e FTB, com duração ajustável e tally nos cards</li>
+                <li>8 overlays por entrada, no Programa ou na Prévia, com fade</li>
                 <li>Saídas simultâneas SRT, RTMP, SDI e NDI, sem derrubar o Programa</li>
                 <li>Gravação do Programa, gravação ISO por entrada e replay lento</li>
-                <li>Mixer com barramentos de áudio, VU por entrada e escuta nos fones</li>
-                <li>Camadas, transformação, chroma/luma key e overlays</li>
+                <li>Mixer com Master e 7 canais (A–G), envios por entrada e VU</li>
+                <li>Transformação, cor, Lift/Gamma/Gain, chroma/luma key e camadas por entrada</li>
+                <li>Projetos salvos em arquivo, com recuperação automática</li>
                 <li>Codificação por hardware (Media Foundation) e interface em três idiomas</li>
             </ul>
         </section>
@@ -193,6 +232,7 @@
         const pad = (n) => String(n).padStart(2, '0');
         const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
         const SW = 480, SH = 270;
+        const raiz = $('avr');
 
         // ---------- Geradores de imagem das fontes ----------
         function pessoa(c, x, y, s, roupa) {
@@ -239,14 +279,14 @@
                 c.fillStyle = '#fff'; c.beginPath(); c.arc(x, y, 14, 0, Math.PI * 2); c.fill();
             },
             video(c, t) {
-                const lt = t % 12;
+                const lt = ((t % 12) + 12) % 12;
                 c.fillStyle = '#160b2e'; c.fillRect(0, 0, SW, SH);
                 for (let i = 0; i < 6; i++) {
                     const a = t * 0.5 + i * 1.05, x = SW / 2 + Math.cos(a) * (80 + i * 18), y = SH / 2 + Math.sin(a * 1.3) * (50 + i * 8);
                     const g = c.createRadialGradient(x, y, 0, x, y, 70); g.addColorStop(0, `hsla(${(i * 60 + t * 20) % 360},80%,60%,.55)`); g.addColorStop(1, 'transparent');
                     c.fillStyle = g; c.fillRect(0, 0, SW, SH);
                 }
-                c.globalAlpha = Math.min(1, lt / 2, (12 - lt) / 1.5); c.fillStyle = '#fff'; c.font = 'bold 40px Arial'; c.textAlign = 'center'; c.fillText('ABERTURA', SW / 2, SH / 2 + 14); c.globalAlpha = 1;
+                c.globalAlpha = Math.max(0, Math.min(1, lt / 2, (12 - lt) / 1.5)); c.fillStyle = '#fff'; c.font = 'bold 40px Arial'; c.textAlign = 'center'; c.fillText('ABERTURA', SW / 2, SH / 2 + 14); c.globalAlpha = 1;
                 c.fillStyle = 'rgba(255,255,255,.25)'; c.fillRect(20, SH - 14, SW - 40, 3); c.fillStyle = '#fff'; c.fillRect(20, SH - 14, (SW - 40) * lt / 12, 3);
             },
             tela(c, t) {
@@ -272,7 +312,7 @@
             { k: 'sdi', nome: 'SDI / HDMI', ic: 'fa-plug', ger: ['cam2', 'cam1'], tipo: 'DeckLink · 1080i59,94', audio: true },
             { k: 'srt', nome: 'SRT', ic: 'fa-satellite-dish', ger: ['srt'], tipo: 'SRT · escuta :9902 · H.264', audio: true },
             { k: 'ndi', nome: 'NDI', ic: 'fa-network-wired', ger: ['cam1'], tipo: 'NDI · 1080p30', audio: true },
-            { k: 'tela', nome: 'Tela / Janela', ic: 'fa-display', ger: ['tela'], tipo: 'Tela · Monitor 1', audio: false },
+            { k: 'tela', nome: 'Tela / Janela', ic: 'fa-display', ger: ['tela'], tipo: 'Tela · Monitor principal', audio: false },
             { k: 'video', nome: 'Vídeo', ic: 'fa-film', ger: ['video'], tipo: 'Vídeo · abertura.mp4 (loop)', audio: true },
             { k: 'img', nome: 'Imagem', ic: 'fa-image', ger: ['imagem'], tipo: 'Imagem · PNG', audio: false },
             { k: 'teste', nome: 'Sinal de Teste', ic: 'fa-border-all', ger: ['barras'], tipo: 'Sinal de Teste · 1080p30', audio: true },
@@ -280,51 +320,132 @@
         const tipoPor = (k) => TIPOS.find((x) => x.k === k);
 
         // ---------- Estado ----------
-        let entradas = [], proxId = 1;
-        let pgm = null, pvw = null, trans = null, ftb = 0, ftbAlvo = 0, ftbIni = 0, replay = null;
-        const masterSt = { vol: 80, mudo: false, nivel: 0 };
+        const BUS_NOMES = ['Master', 'CH A', 'CH B', 'CH C', 'CH D', 'CH E', 'CH F', 'CH G'];
+        const BUS_CURTOS = ['M', 'A', 'B', 'C', 'D', 'E', 'F', 'G'];
+        let buses, entradas, saidas, proxId, projeto, overlays;
+        let pgm = null, pvw = null, trans = null, ftb = 0, ftbAlvo = 0, ftbIni = 0, ftbT0 = 0, replay = null;
+        const AJ0 = { zoom: 100, x: 0, y: 0, espH: false, espV: false, brilho: 0, contraste: 0, sat: 0, matiz: 0, lift: 0, gamma: 0, gain: 0, key: false, keyTipo: 'luma', keyLim: 20 };
+        const cfgOverlay = Array.from({ length: 8 }, () => ({ esq: 'program', dir: 'preview', fade: true }));
 
-        function novaEntrada(k, nome) {
+        function novaEntrada(k, nome, base) {
             const tp = tipoPor(k);
             const cont = entradas.filter((e) => e.k === k).length;
             const can = document.createElement('canvas'); can.width = SW; can.height = SH;
             const e = { id: proxId++, k, nome: nome || `${tp.nome} ${cont + 1}`, tipo: tp.tipo, ger: tp.ger[cont % tp.ger.length], audio: tp.audio,
-                        can, ctx: can.getContext('2d'), fase: Math.random() * 10, vol: 75, mudo: false, master: true, nivel: 0 };
+                        can, ctx: can.getContext('2d'), fase: Math.random() * 10, vol: 75, mudo: false, envios: [true, false, false, false, false, false, false, false],
+                        aj: { ...AJ0 }, filtro: 'none' };
+            if (base) { e.ger = base.ger; e.vol = base.vol; e.envios = base.envios.slice(); e.aj = { ...base.aj }; e.filtro = base.filtro; }
             entradas.push(e);
             return e;
         }
         const porId = (id) => entradas.find((e) => e.id === id);
 
+        function carregarProjeto(nome) {
+            entradas = []; proxId = 1; trans = null; replay = null; ftb = ftbAlvo = 0; $('bFtb').classList.remove('ftb-on');
+            overlays = Array.from({ length: 8 }, () => ({ id: null, dest: 'program', a: 0 }));
+            buses = BUS_NOMES.map((n, i) => ({ nome: n, curto: BUS_CURTOS[i], on: i === 0, vol: 80, mudo: false }));
+            saidas = [];
+            pgm = pvw = null;
+            if (nome === 'Demonstração') {
+                const c1 = novaEntrada('cam', 'Câmera 1'), c2 = novaEntrada('cam', 'Câmera 2');
+                novaEntrada('srt', 'Repórter (SRT)'); novaEntrada('video', 'Abertura');
+                novaEntrada('tela', 'Apresentação'); novaEntrada('teste', 'Sinal de Teste');
+                pgm = c1.id; pvw = c2.id;
+                saidas = [
+                    { tipo: 'SRT', fonte: 'Programa', dest: 'srt://0.0.0.0:9000 (listener)', on: true },
+                    { tipo: 'SDI', fonte: 'Programa', dest: 'DeckLink (Dispositivo 1)', on: true },
+                    { tipo: 'RTMP', fonte: 'Programa', dest: 'rtmp://a.rtmp.youtube.com/live2', on: false },
+                    { tipo: 'NDI', fonte: 'Prévia', dest: 'Nome na rede: AVR-PVW', on: false },
+                ];
+            } else if (nome === 'Estúdio A') {
+                const a = novaEntrada('sdi', 'Câmera Central'), b = novaEntrada('sdi', 'Câmera Lateral');
+                novaEntrada('ndi', 'Câmera PTZ (NDI)'); novaEntrada('img', 'Vinheta');
+                pgm = a.id; pvw = b.id;
+                buses[1].on = true;
+                entradas.forEach((e) => { e.envios[1] = e.k !== 'img'; });
+                saidas = [{ tipo: 'SDI', fonte: 'Programa', dest: 'DeckLink (Dispositivo 1)', on: true }, { tipo: 'Gravação', fonte: 'Programa', dest: 'Programa.mp4 (H.264 + AAC)', on: false }];
+            }
+            projeto = nome || 'Sem título';
+            $('tituloJanela').textContent = `AVR — Central de Produção e Roteamento — ${projeto}`;
+            renderCards(); renderStrips(); renderBuses();
+        }
+
+        // ---------- Menu de contexto ----------
+        let ctxAberto = null;
+        function fecharMenu() { if (ctxAberto) { ctxAberto.remove(); ctxAberto = null; } document.querySelectorAll('.avr-menu > span.on').forEach((s) => s.classList.remove('on')); }
+        function montarMenu(itens) {
+            const m = document.createElement('div'); m.className = 'avr-ctx';
+            itens.forEach((it) => {
+                if (it === '-') { m.insertAdjacentHTML('beforeend', '<div class="sep"></div>'); return; }
+                const d = document.createElement('div');
+                d.className = 'it' + (it.dis ? ' dis' : '') + (it.chk ? ' chk' : '');
+                d.innerHTML = `<span>${esc(it.t)}</span>${it.k ? `<kbd>${it.k}</kbd>` : ''}${it.sub ? '<span class="seta">▸</span>' : ''}`;
+                if (it.sub) d.appendChild(montarMenu(it.sub));
+                else if (!it.dis) d.onclick = (ev) => { ev.stopPropagation(); fecharMenu(); it.fn && it.fn(); };
+                m.appendChild(d);
+            });
+            return m;
+        }
+        function abrirMenu(itens, cx, cy) {
+            fecharMenu();
+            const m = montarMenu(itens); raiz.appendChild(m); ctxAberto = m;
+            const r = raiz.getBoundingClientRect();
+            let x = cx - r.left, y = cy - r.top;
+            x = Math.min(x, r.width - m.offsetWidth - 4); y = Math.min(y, r.height - m.offsetHeight - 4);
+            m.style.left = Math.max(0, x) + 'px'; m.style.top = Math.max(0, y) + 'px';
+            // Submenus abrem para a esquerda perto da borda direita
+            if (x + m.offsetWidth * 2 > r.width) m.querySelectorAll('.it > .avr-ctx').forEach((s) => { s.style.left = 'auto'; s.style.right = '100%'; });
+        }
+        document.addEventListener('mousedown', (ev) => { if (ctxAberto && !ctxAberto.contains(ev.target) && !ev.target.closest('.avr-menu > span.on')) fecharMenu(); });
+        document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { fecharMenu(); fechar(); } });
+        raiz.addEventListener('contextmenu', (ev) => ev.preventDefault());
+
+        function menuEntrada(e, ev) {
+            const itens = [];
+            itens.push({ t: 'Cortar para o Programa', fn: () => cortarPara(e.id) }, { t: 'Colocar na Prévia', fn: () => colocarPrevia(e.id) }, '-');
+            [['Entrada…', 'entrada'], ['Transformação…', 'transf'], ['Cor…', 'cor'], ['Luminosidade…', 'lum'], ['Key (chroma/luma)…', 'key'], ['Camadas…', 'camadas']]
+                .forEach(([t, aba]) => itens.push({ t, fn: () => dlgEntrada(e, aba) }));
+            itens.push('-', { t: 'Overlay', sub: Array.from({ length: 8 }, (_, n) => ({ t: `Overlay ${n + 1} (Programa)`, chk: overlays[n].id === e.id, fn: () => alternarOverlay(n, e.id, 'program') })) });
+            itens.push('-', { t: 'Renomear…', fn: () => renomear(e) }, { t: 'Duplicar', fn: () => duplicar(e) }, { t: 'Redefinir entrada…', fn: () => dlgTipos('Redefinir Entrada', (k) => redefinir(e, k)) });
+            itens.push('-', { t: 'Remover', fn: () => remover(e) });
+            abrirMenu(itens, ev.clientX, ev.clientY);
+        }
+
         // ---------- Cards ----------
         function renderCards() {
+            if (!entradas.length) { $('cards').innerHTML = '<div class="avr-vazio">Nenhuma entrada. Clique em “+ Adicionar Entrada”.</div>'; atualizarNomes(); return; }
             $('cards').innerHTML = entradas.map((e) => `
-                <div class="avr-card ${e.id === pgm ? 'pgm' : e.id === pvw ? 'pvw' : ''}" data-id="${e.id}">
+                <div class="avr-card" data-id="${e.id}">
                     <div class="avr-card-cab"><div><b>${esc(e.nome)}</b><small>${esc(e.tipo)}</small></div>
-                        <button class="avr-mini" data-a="ren" title="Renomear…">✎</button><button class="avr-x" data-a="rem" title="Remover">✕</button></div>
+                        <button class="avr-mini" data-a="cfg" title="Configurações da entrada">⚙</button><button class="avr-x" data-a="rem" title="Remover">✕</button></div>
                     <div class="avr-card-vid"><canvas width="240" height="135" data-a="pvw" title="Clique: Colocar na Prévia · Duplo clique: Cortar para o Programa"></canvas>
                         <div class="avr-vu"><i></i></div><div class="avr-vu"><i></i></div></div>
+                    <div class="avr-ovl">${Array.from({ length: 8 }, (_, n) => `<button data-n="${n}" title="Overlay ${n + 1}: clique esquerdo ${cfgOverlay[n].esq === 'program' ? 'Programa' : 'Prévia'}, direito ${cfgOverlay[n].dir === 'program' ? 'Programa' : 'Prévia'}">${n + 1}</button>`).join('')}</div>
                     <div class="avr-card-pe"><button class="avr-cut" data-a="cut" title="Cortar para o Programa">Cortar</button><span>${e.audio ? 'Áudio · 48 kHz estéreo' : 'Sem áudio'}</span></div>
                 </div>`).join('');
             $('cards').querySelectorAll('.avr-card').forEach((el) => {
                 const e = porId(+el.dataset.id);
-                e.cardCtx = el.querySelector('canvas').getContext('2d');
-                e.vus = el.querySelectorAll('.avr-vu i');
-                el.querySelector('[data-a=pvw]').onclick = () => { if (e.id !== pgm) { pvw = e.id; atualizarTally(); } };
+                e.cardEl = el; e.cardCtx = el.querySelector('canvas').getContext('2d');
+                e.vus = el.querySelectorAll('.avr-card-vid .avr-vu i');
+                el.querySelector('[data-a=pvw]').onclick = () => colocarPrevia(e.id);
                 el.querySelector('[data-a=pvw]').ondblclick = () => cortarPara(e.id);
                 el.querySelector('[data-a=cut]').onclick = () => cortarPara(e.id);
                 el.querySelector('[data-a=rem]').onclick = () => remover(e);
-                el.querySelector('[data-a=ren]').onclick = () => {
-                    const n = prompt('Novo Nome:', e.nome);
-                    if (n && n.trim()) { e.nome = n.trim(); renderCards(); renderStrips(); atualizarNomes(); }
-                };
+                el.querySelector('[data-a=cfg]').onclick = () => dlgEntrada(e, 'entrada');
+                el.querySelectorAll('.avr-ovl button').forEach((b) => {
+                    const n = +b.dataset.n;
+                    b.onclick = () => alternarOverlay(n, e.id, cfgOverlay[n].esq);
+                    b.oncontextmenu = (ev) => { ev.preventDefault(); ev.stopPropagation(); alternarOverlay(n, e.id, cfgOverlay[n].dir); };
+                });
+                el.oncontextmenu = (ev) => { ev.preventDefault(); menuEntrada(e, ev); };
             });
-            atualizarNomes();
+            atualizarTally(); pintarOverlays();
         }
 
         function atualizarTally() {
-            $('cards').querySelectorAll('.avr-card').forEach((el) => {
-                const id = +el.dataset.id;
-                el.classList.toggle('pgm', id === pgm); el.classList.toggle('pvw', id === pvw && id !== pgm);
+            entradas.forEach((e) => {
+                if (!e.cardEl) return;
+                e.cardEl.classList.toggle('pgm', e.id === pgm); e.cardEl.classList.toggle('pvw', e.id === pvw && e.id !== pgm);
             });
             atualizarNomes();
         }
@@ -332,14 +453,48 @@
             $('nPgm').textContent = replay ? 'Replay' : (porId(pgm) ? porId(pgm).nome : '(nenhum)');
             $('nPvw').textContent = porId(pvw) ? porId(pvw).nome : '(nenhum)';
         }
+        function colocarPrevia(id) { if (id !== pgm) { pvw = id; atualizarTally(); } }
 
+        function renomear(e) {
+            const n = prompt('Novo Nome:', e.nome);
+            if (n && n.trim()) { e.nome = n.trim(); renderCards(); renderStrips(); }
+        }
+        function duplicar(e) {
+            const c = novaEntrada(e.k, `${e.nome} (cópia)`, e); c.fase = e.fase;
+            renderCards(); renderStrips(); toast(`${c.nome} criada`);
+        }
+        function redefinir(e, k) {
+            const tp = tipoPor(k);
+            Object.assign(e, { k, tipo: tp.tipo, ger: tp.ger[0], audio: tp.audio });
+            renderCards(); renderStrips(); toast(`${e.nome}: agora ${tp.nome}`);
+        }
         function remover(e) {
             if (!confirm(`Remover a entrada "${e.nome}"?`)) return;
             entradas = entradas.filter((x) => x !== e);
             if (pgm === e.id) pgm = null;
             if (pvw === e.id) pvw = null;
+            overlays.forEach((o) => { if (o.id === e.id) o.id = null; });
             renderCards(); renderStrips();
         }
+
+        // ---------- Overlays ----------
+        function alternarOverlay(n, id, dest) {
+            const o = overlays[n];
+            if (o.id === id && o.dest === dest) { o.id = null; }
+            else { o.id = id; o.dest = dest; if (!cfgOverlay[n].fade) o.a = 1; }
+            if (!cfgOverlay[n].fade && o.id === null) o.a = 0;
+            pintarOverlays();
+        }
+        function pintarOverlays() {
+            entradas.forEach((e) => {
+                if (!e.cardEl) return;
+                e.cardEl.querySelectorAll('.avr-ovl button').forEach((b) => {
+                    const o = overlays[+b.dataset.n];
+                    b.className = o.id === e.id ? (o.dest === 'program' ? 'p' : 'v') : '';
+                });
+            });
+        }
+        const CANTOS = [[0.64, 0.62], [0.64, 0.04], [0.04, 0.62], [0.04, 0.04], [0.34, 0.62], [0.34, 0.04], [0.64, 0.33], [0.04, 0.33]];
 
         // ---------- Transições ----------
         function cortarPara(id) {
@@ -354,96 +509,134 @@
         }
         $('bFade').onclick = () => iniciar('fade');
         $('bMerge').onclick = () => iniciar('merge');
-        $('bFtb').onclick = () => {
-            ftbAlvo = ftbAlvo ? 0 : 1; ftbIni = ftb;
-            ftbT0 = performance.now(); $('bFtb').classList.toggle('ftb-on', ftbAlvo === 1);
-        };
-        let ftbT0 = 0;
+        $('bFtb').onclick = () => { ftbAlvo = ftbAlvo ? 0 : 1; ftbIni = ftb; ftbT0 = performance.now(); $('bFtb').classList.toggle('ftb-on', ftbAlvo === 1); };
 
         // ---------- Áudio ----------
+        function stripHtml(id, nome, vol, mudo, extra, cls) {
+            return `<div class="avr-strip ${cls || ''}" data-id="${id}"><b title="${esc(nome)}">${esc(nome)}</b>
+                <div class="avr-strip-meio"><div class="avr-vu"><i></i></div><div class="avr-vu"><i></i></div><input type="range" min="0" max="100" value="${vol}"></div>
+                <span class="avr-db">-∞</span><button class="avr-mudo ${mudo ? 'on' : ''}">MUDO</button>${extra || ''}</div>`;
+        }
+        function ligarStrip(el, alvo) {
+            alvo.vuEls = el.querySelectorAll('.avr-vu i'); alvo.dbEl = el.querySelector('.avr-db');
+            el.querySelector('input').oninput = (ev) => { alvo.vol = +ev.target.value; };
+            el.querySelector('.avr-mudo').onclick = (ev) => { alvo.mudo = !alvo.mudo; ev.target.classList.toggle('on', alvo.mudo); };
+        }
         function renderStrips() {
             const com = entradas.filter((e) => e.audio);
-            $('strips').innerHTML = com.map((e) => stripHtml(e.id, e.nome, e.vol, e.mudo, e.master)).join('') + stripHtml('m', 'Master', masterSt.vol, masterSt.mudo, null);
+            if (!com.length) { $('strips').innerHTML = '<div class="avr-vazio" style="font-size:11px;text-align:center">Nenhuma entrada.<br>Adicione uma entrada para mixar.</div>'; return; }
+            $('strips').innerHTML = com.map((e) => stripHtml(e.id, e.nome, e.vol, e.mudo,
+                `<div class="avr-buses">${BUS_CURTOS.map((c, i) => `<button class="${e.envios[i] ? 'on' : ''}" data-b="${i}" title="Enviar esta entrada para o ${BUS_NOMES[i]}">${c}</button>`).join('')}</div>`)).join('');
             $('strips').querySelectorAll('.avr-strip').forEach((el) => {
-                const alvo = el.dataset.id === 'm' ? masterSt : porId(+el.dataset.id);
-                alvo.vuEls = el.querySelectorAll('.avr-vu i'); alvo.dbEl = el.querySelector('.avr-db');
-                el.querySelector('input').oninput = (ev) => { alvo.vol = +ev.target.value; };
-                el.querySelector('.avr-mudo').onclick = (ev) => { alvo.mudo = !alvo.mudo; ev.target.classList.toggle('on', alvo.mudo); };
-                const bus = el.querySelector('.avr-bus');
-                if (bus) bus.onclick = () => { alvo.master = !alvo.master; bus.classList.toggle('on', alvo.master); };
+                const e = porId(+el.dataset.id); ligarStrip(el, e);
+                el.querySelectorAll('.avr-buses button').forEach((b) => { b.onclick = () => { const i = +b.dataset.b; e.envios[i] = !e.envios[i]; b.classList.toggle('on', e.envios[i]); }; });
+                el.oncontextmenu = (ev) => { ev.preventDefault(); menuEntrada(e, ev); };
             });
         }
-        function stripHtml(id, nome, vol, mudo, master) {
-            return `<div class="avr-strip ${id === 'm' ? 'master' : ''}" data-id="${id}"><b title="${esc(nome)}">${esc(nome)}</b>
-                <div class="avr-strip-meio"><div class="avr-vu"><i></i></div><div class="avr-vu"><i></i></div><input type="range" min="0" max="100" value="${vol}"></div>
-                <span class="avr-db">-∞</span><button class="avr-mudo ${mudo ? 'on' : ''}">MUDO</button>
-                ${master === null ? '' : `<button class="avr-bus ${master ? 'on' : ''}" title="Enviar esta entrada para o Master">Master</button>`}</div>`;
+        function renderBuses() {
+            $('busStrips').innerHTML = buses.map((b, i) => stripHtml(i, b.nome, b.vol, b.mudo, '', (i === 0 ? 'master' : '') + (b.on ? '' : ' off'))).join('');
+            $('busStrips').querySelectorAll('.avr-strip').forEach((el) => {
+                const i = +el.dataset.id, b = buses[i]; ligarStrip(el, b);
+                const look = () => {
+                    el.classList.toggle('off', !b.on);
+                    el.title = i === 0 ? '' : b.on ? `Botão direito: desligar o ${b.nome} (economiza processamento)` : `${b.nome} desligado. Botão direito: ligar`;
+                };
+                look();
+                el.oncontextmenu = (ev) => { ev.preventDefault(); if (i === 0) return; b.on = !b.on; look(); toast(`${b.nome} ${b.on ? 'ligado' : 'desligado'}`); };
+            });
         }
         const db = (v) => v <= 0.001 ? '-∞' : (20 * Math.log10(v)).toFixed(0);
+        const vu = (els, v) => { if (els) els.forEach((x, i) => { x.style.height = Math.min(100, v * (i ? 96 : 100) * 100) + '%'; }); };
 
         // ---------- Desenho ----------
-        function desenharMonitor(ctx, ids) {
+        function filtroDe(aj) {
+            const b = (1 + aj.brilho / 100 + aj.gain / 200 + aj.lift / 300) * (1 + aj.gamma / 250);
+            const c = 1 + aj.contraste / 100 - aj.lift / 200, s = 1 + aj.sat / 100;
+            if (b === 1 && c === 1 && s === 1 && !aj.matiz) return 'none';
+            return `brightness(${b.toFixed(3)}) contrast(${c.toFixed(3)}) saturate(${s.toFixed(3)}) hue-rotate(${aj.matiz}deg)`;
+        }
+        function desenharFonte(ctx, e, x, y, w, h) {
+            const aj = e.aj, z = aj.zoom / 100;
+            ctx.save();
+            ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+            ctx.filter = e.filtro;
+            ctx.translate(x + w / 2 + aj.x / 100 * w, y + h / 2 + aj.y / 100 * h);
+            ctx.scale(z * (aj.espH ? -1 : 1), z * (aj.espV ? -1 : 1));
+            ctx.drawImage(e.can, -w / 2, -h / 2, w, h);
+            ctx.restore();
+        }
+        function desenharMonitor(ctx, camadas, dest) {
             ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
             ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 640, 360);
-            ids.forEach(([id, a, modo]) => {
+            camadas.forEach(([id, a, modo]) => {
                 const e = porId(id); if (!e || a <= 0) return;
                 ctx.globalAlpha = Math.min(1, a); ctx.globalCompositeOperation = modo || 'source-over';
-                ctx.drawImage(e.can, 0, 0, 640, 360);
+                desenharFonte(ctx, e, 0, 0, 640, 360);
             });
-            ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+            ctx.globalCompositeOperation = 'source-over';
+            overlays.forEach((o, n) => {
+                const e = porId(o.idVis);
+                if (!e || o.a <= 0 || o.destVis !== dest) return;
+                const [cx, cy] = CANTOS[n];
+                ctx.globalAlpha = o.a; ctx.fillStyle = '#fff'; ctx.fillRect(cx * 640 - 2, cy * 360 - 2, 204, 116);
+                desenharFonte(ctx, e, cx * 640, cy * 360, 200, 112);
+            });
+            ctx.globalAlpha = 1;
         }
 
         const cPgm = $('cPgm').getContext('2d'), cPvw = $('cPvw').getContext('2d');
-        let ultimoCard = 0, ultimoAudio = 0;
+        let ultimoCard = 0, ultimoAudio = 0, ultimoQuadro = performance.now();
         function quadro(agora) {
-            const t = agora / 1000;
+            const t = agora / 1000, dt = agora - ultimoQuadro; ultimoQuadro = agora;
             entradas.forEach((e) => {
-                const tt = replay && e.id === replay.id ? replay.tIni + (agora - replay.t0) / 1000 * 0.4 : t + e.fase;
+                const tt = replay && e.id === replay.id ? replay.tIni + (agora - replay.t0) / 1000 * replay.vel : t + e.fase;
                 GER[e.ger](e.ctx, tt);
             });
+            // Fade dos overlays (300 ms)
+            overlays.forEach((o, n) => {
+                if (o.id !== null && (o.idVis !== o.id || o.destVis !== o.dest)) { if (o.a <= 0 || !cfgOverlay[n].fade) { o.idVis = o.id; o.destVis = o.dest; } else o.a = Math.max(0, o.a - dt / 300); }
+                if (o.id !== null && o.idVis === o.id && o.destVis === o.dest) o.a = cfgOverlay[n].fade ? Math.min(1, o.a + dt / 300) : 1;
+                if (o.id === null) o.a = cfgOverlay[n].fade ? Math.max(0, o.a - dt / 300) : 0;
+            });
 
-            // Programa
             let camadas = [[pgm, 1]];
             if (trans) {
                 const p = Math.min(1, (agora - trans.t0) / trans.dur);
                 $('prog').style.width = (p * 100) + '%';
                 if (trans.tipo === 'fade') camadas = [[trans.de, 1], [trans.para, p]];
-                else camadas = [[trans.de, Math.min(1, 2 - 2 * p), 'source-over'], [trans.para, Math.min(1, 2 * p), 'lighter']];
+                else camadas = [[trans.de, Math.min(1, 2 - 2 * p)], [trans.para, Math.min(1, 2 * p), 'lighter']];
                 if (p >= 1) { pgm = trans.para; pvw = trans.de !== null && porId(trans.de) ? trans.de : null; trans = null; $('prog').style.width = '0'; atualizarTally(); camadas = [[pgm, 1]]; }
             }
-            desenharMonitor(cPgm, camadas);
-            if (ftbAlvo !== ftb) {
-                const p = Math.min(1, (agora - ftbT0) / +$('dur').value);
-                ftb = ftbIni + (ftbAlvo - ftbIni) * p;
-                if (p >= 1) ftb = ftbAlvo;
-            }
+            desenharMonitor(cPgm, camadas, 'program');
+            if (ftbAlvo !== ftb) { const p = Math.min(1, (agora - ftbT0) / +$('dur').value); ftb = p >= 1 ? ftbAlvo : ftbIni + (ftbAlvo - ftbIni) * p; }
             if (ftb > 0) { cPgm.fillStyle = `rgba(0,0,0,${ftb})`; cPgm.fillRect(0, 0, 640, 360); }
             if (replay) {
-                cPgm.fillStyle = '#1e88e5'; cPgm.fillRect(16, 316, 150, 28); cPgm.fillStyle = '#fff'; cPgm.font = 'bold 16px Segoe UI, Arial'; cPgm.textAlign = 'left'; cPgm.fillText('⟲ REPLAY 40%', 26, 336);
-                if (agora - replay.t0 > 5000) { replay = null; atualizarNomes(); }
+                cPgm.fillStyle = '#1e88e5'; cPgm.fillRect(16, 316, 160, 28); cPgm.fillStyle = '#fff'; cPgm.font = 'bold 16px Segoe UI, Arial'; cPgm.textAlign = 'left';
+                cPgm.fillText(replay.vel < 1 ? '⟲ REPLAY LENTO' : '⟲ REPLAY', 26, 336);
+                if (agora - replay.t0 > replay.dur) voltarAoVivo();
             }
-            desenharMonitor(cPvw, [[pvw, 1]]);
+            desenharMonitor(cPvw, [[pvw, 1]], 'preview');
 
-            // Cards a 20 fps
-            if (agora - ultimoCard > 50) {
+            if (agora - ultimoCard > 50) {   // cards a 20 fps
                 ultimoCard = agora;
-                entradas.forEach((e) => { if (e.cardCtx) e.cardCtx.drawImage(e.can, 0, 0, 240, 135); });
+                entradas.forEach((e) => { if (e.cardCtx) { e.cardCtx.fillStyle = '#000'; e.cardCtx.fillRect(0, 0, 240, 135); desenharFonte(e.cardCtx, e, 0, 0, 240, 135); } });
             }
 
-            // VU e números a ~15 fps
-            if (agora - ultimoAudio > 66) {
+            if (agora - ultimoAudio > 66) {  // VU a ~15 fps
                 ultimoAudio = agora;
-                let soma = 0;
+                const soma = new Array(8).fill(0);
                 entradas.forEach((e) => {
                     let n = 0;
                     if (e.audio) n = e.k === 'teste' ? 0.5 : Math.max(0, 0.25 + 0.45 * Math.abs(Math.sin(t * 2.3 + e.fase)) + Math.random() * 0.25 - (Math.sin(t * 0.4 + e.fase) > 0.85 ? 0.5 : 0));
                     const saida = e.mudo ? 0 : n * e.vol / 100;
-                    if (e.vus) e.vus.forEach((v, i) => { v.style.height = Math.min(100, n * (i ? 96 : 100) * 100) + '%'; });
-                    if (e.vuEls) { e.vuEls.forEach((v, i) => { v.style.height = Math.min(100, saida * (i ? 95 : 100) * 100) + '%'; }); e.dbEl.textContent = db(saida); }
-                    if (e.master) soma += saida * saida;
+                    vu(e.vus, n);
+                    vu(e.vuEls, saida); if (e.dbEl) e.dbEl.textContent = db(saida);
+                    e.envios.forEach((on, i) => { if (on) soma[i] += saida * saida; });
                 });
-                const m = masterSt.mudo ? 0 : Math.min(1, Math.sqrt(soma) * masterSt.vol / 100);
-                if (masterSt.vuEls) { masterSt.vuEls.forEach((v, i) => { v.style.height = Math.min(100, m * (i ? 97 : 100) * 100) + '%'; }); masterSt.dbEl.textContent = db(m); }
+                buses.forEach((b, i) => {
+                    const m = (!b.on || b.mudo) ? 0 : Math.min(1, Math.sqrt(soma[i]) * b.vol / 100);
+                    vu(b.vuEls, m); if (b.dbEl) b.dbEl.textContent = db(m);
+                });
             }
             requestAnimationFrame(quadro);
         }
@@ -454,44 +647,81 @@
             $('sCpu').textContent = `${cpu.toFixed(0)}% (AVR: ${(cpu * 0.55).toFixed(0)}%)`;
             $('sGpu').textContent = `${gpu.toFixed(0)}%`;
             $('sRam').textContent = `${(5.8 + n * 0.12).toFixed(1).replace('.', ',')} / 16 GB`;
-            $('sDisco').textContent = rec || iso ? `${(rec ? 1.1 : 0) + iso * 1.1 + Math.random() * 0.2 | 0} MB/s` : '0 MB/s';
+            $('sDisco').textContent = rec || iso ? `${((rec ? 1.1 : 0) + iso * 1.1 + Math.random() * 0.2).toFixed(0)} MB/s` : '0 MB/s';
         }, 1000);
 
         // ---------- Diálogos ----------
         function toast(t) { const e = $('toast'); e.textContent = t; e.classList.add('on'); clearTimeout(e._t); e._t = setTimeout(() => e.classList.remove('on'), 2200); }
-        function abrir(titulo, html, ligar) {
+        function abrir(titulo, html, ligar, largura) {
+            fecharMenu();
+            $('dlg').style.width = (largura || 480) + 'px';
             $('dlg').innerHTML = `<div class="avr-dlg-tit"><span>${titulo}</span><span id="dX">✕</span></div><div class="avr-dlg-corpo">${html}</div>`;
             $('modal').hidden = false; $('dX').onclick = fechar; if (ligar) ligar();
         }
         function fechar() { $('modal').hidden = true; }
-        $('modal').onclick = (ev) => { if (ev.target === $('modal')) fechar(); };
+        $('modal').onmousedown = (ev) => { if (ev.target === $('modal')) fechar(); };
 
-        $('bAddIn').onclick = () => abrir('Adicionar Entrada',
-            `<div class="avr-tipos">${TIPOS.map((tp) => `<button data-k="${tp.k}"><i class="fa-solid ${tp.ic}"></i>${tp.nome}</button>`).join('')}</div>`,
-            () => $('dlg').querySelectorAll('[data-k]').forEach((b) => {
-                b.onclick = () => {
-                    if (entradas.length >= 12) { toast('Limite desta demonstração: 12 entradas'); return; }
-                    const e = novaEntrada(b.dataset.k); fechar(); renderCards(); renderStrips();
-                    if (pvw === null && e.id !== pgm) { pvw = e.id; atualizarTally(); }
-                    toast(`${e.nome} adicionada`);
-                };
-            }));
+        function dlgTipos(titulo, aoEscolher) {
+            abrir(titulo, `<div class="avr-tipos">${TIPOS.map((tp) => `<button data-k="${tp.k}"><i class="fa-solid ${tp.ic}"></i>${tp.nome}</button>`).join('')}</div>`,
+                () => $('dlg').querySelectorAll('[data-k]').forEach((b) => { b.onclick = () => { fechar(); aoEscolher(b.dataset.k); }; }));
+        }
+        $('bAddIn').onclick = () => dlgTipos('Adicionar Entrada', (k) => {
+            if (entradas.length >= 12) { toast('Limite desta demonstração: 12 entradas'); return; }
+            const e = novaEntrada(k); renderCards(); renderStrips();
+            if (pvw === null && e.id !== pgm) colocarPrevia(e.id);
+            toast(`${e.nome} adicionada`);
+        });
 
-        let saidas = [
-            { tipo: 'SRT', fonte: 'Programa', dest: 'srt://0.0.0.0:9000 (listener)', on: true },
-            { tipo: 'SDI', fonte: 'Programa', dest: 'DeckLink (Dispositivo 1)', on: true },
-            { tipo: 'RTMP', fonte: 'Programa', dest: 'rtmp://a.rtmp.youtube.com/live2', on: false },
-            { tipo: 'NDI', fonte: 'Prévia', dest: 'Nome na rede: AVR-PVW', on: false },
-        ];
+        // Configurações da entrada (abas)
+        function dlgEntrada(e, aba) {
+            const ABAS = [['entrada', 'Entrada'], ['transf', 'Transformação'], ['cor', 'Cor'], ['lum', 'Luminosidade'], ['key', 'Key'], ['camadas', 'Camadas']];
+            const sl = (campo, rot, min, max) => `<label>${rot}</label><input type="range" data-c="${campo}" min="${min}" max="${max}" value="${e.aj[campo]}"><span class="v" data-v="${campo}">${e.aj[campo]}</span>`;
+            const ck = (campo, rot) => `<span></span><label class="avr-chk linha"><input type="checkbox" data-c="${campo}" ${e.aj[campo] ? 'checked' : ''}> ${rot}</label>`;
+            const conteudo = {
+                entrada: `<p><b style="color:#fff">${esc(e.nome)}</b><br>Tipo: ${esc(tipoPor(e.k).nome)}<br>${esc(e.tipo)}${e.audio ? ', com áudio' : ', sem áudio'}</p>
+                    <div class="avr-form"><label>Atraso do áudio:</label><select class="linha"><option>0 ms</option><option>40 ms</option><option>80 ms</option><option>120 ms</option></select>
+                    <label>Desentrelaçamento</label><select class="linha"><option>Automático</option><option>Forçar desentrelaçamento</option></select></div>
+                    <button class="avr-b" id="eAlt" style="align-self:flex-start">Alterar entrada...</button>`,
+                transf: `<div class="avr-form">${sl('zoom', 'Tamanho:', 20, 200)}${sl('x', 'Posição X:', -50, 50)}${sl('y', 'Posição Y:', -50, 50)}${ck('espH', 'Espelhar horizontal')}${ck('espV', 'Espelhar vertical')}</div>`,
+                cor: `<div class="avr-form">${sl('brilho', 'Brilho:', -100, 100)}${sl('contraste', 'Contraste:', -100, 100)}${sl('sat', 'Saturação:', -100, 100)}${sl('matiz', 'Matiz:', -180, 180)}</div>`,
+                lum: `<div class="avr-form">${sl('lift', 'Lift (pretos)', -100, 100)}${sl('gamma', 'Gamma (meios-tons)', -100, 100)}${sl('gain', 'Gain (brancos)', -100, 100)}</div>`,
+                key: `<div class="avr-form">${ck('key', 'Ativar key')}<label>Algoritmo:</label><select class="linha" data-c="keyTipo"><option value="luma" ${e.aj.keyTipo === 'luma' ? 'selected' : ''}>Luma (brilho)</option><option value="chroma" ${e.aj.keyTipo === 'chroma' ? 'selected' : ''}>Chroma (cor)</option></select>${sl('keyLim', 'Limite de brilho:', 0, 100)}</div>
+                    <div class="avr-nota">No app, o que for mais escuro que o limite (ou da cor escolhida) some e mostra a entrada de baixo. Nesta demonstração o key não é aplicado à imagem.</div>`,
+                camadas: `<div class="avr-form">${[1, 2, 3].map((n) => `<label>Camada ${n}:</label><select class="linha"><option>(escolha a entrada)</option>${entradas.filter((x) => x !== e).map((x) => `<option>${esc(x.nome)}</option>`).join('')}</select>`).join('')}</div>
+                    <div class="avr-nota">No app, cada camada põe outra entrada por cima desta, com posição, recorte e opacidade. Nesta demonstração as camadas são só ilustrativas.</div>`,
+            };
+            abrir(`Configurações da entrada: ${esc(e.nome)}`,
+                `<div class="avr-abas">${ABAS.map(([k, n]) => `<button data-aba="${k}" class="${k === aba ? 'on' : ''}">${n}</button>`).join('')}</div>${conteudo[aba]}
+                <div class="avr-pe">${['transf', 'cor', 'lum'].includes(aba) ? '<button class="avr-b" id="eRst">Redefinir</button>' : ''}<button class="avr-b azul" id="eOk">Fechar</button></div>`,
+                () => {
+                    $('dlg').querySelectorAll('.avr-abas button').forEach((b) => { b.onclick = () => dlgEntrada(e, b.dataset.aba); });
+                    $('dlg').querySelectorAll('[data-c]').forEach((c) => {
+                        c.oninput = c.onchange = () => {
+                            const campo = c.dataset.c;
+                            e.aj[campo] = c.type === 'checkbox' ? c.checked : c.type === 'range' ? +c.value : c.value;
+                            const v = $('dlg').querySelector(`[data-v=${campo}]`); if (v) v.textContent = c.value;
+                            e.filtro = filtroDe(e.aj);
+                        };
+                    });
+                    $('eOk').onclick = fechar;
+                    if ($('eAlt')) $('eAlt').onclick = () => dlgTipos('Redefinir Entrada', (k) => redefinir(e, k));
+                    if ($('eRst')) $('eRst').onclick = () => {
+                        const campos = { transf: ['zoom', 'x', 'y', 'espH', 'espV'], cor: ['brilho', 'contraste', 'sat', 'matiz'], lum: ['lift', 'gamma', 'gain'] }[aba];
+                        campos.forEach((c) => { e.aj[c] = AJ0[c]; }); e.filtro = filtroDe(e.aj); dlgEntrada(e, aba);
+                    };
+                }, 500);
+        }
+
+        // Saídas
         function dlgSaidas() {
             abrir('Gerenciar Saídas',
-                `<table class="avr-said"><thead><tr><th>Saída</th><th>Fonte</th><th>Destino</th><th>Status</th><th></th></tr></thead><tbody>
+                (saidas.length ? `<table class="avr-tab"><thead><tr><th>Saída</th><th>Fonte</th><th>Destino</th><th>Status</th><th></th></tr></thead><tbody>
                 ${saidas.map((s, i) => `<tr><td><b>${s.tipo}</b></td><td>${s.fonte}</td><td style="font-size:11px">${esc(s.dest)}</td><td class="${s.on ? 'no-ar' : 'parado'}">${s.on ? '● No ar' : 'Parada'}</td><td><button class="avr-b" data-i="${i}">${s.on ? 'Parar' : 'Iniciar'}</button></td></tr>`).join('')}
-                </tbody></table><button class="avr-b azul" id="dNova" style="align-self:flex-start">+ Adicionar Saída</button>`,
+                </tbody></table>` : '<p>Nenhuma saída ativa.</p>') + '<button class="avr-b azul" id="dNova" style="align-self:flex-start">+ Adicionar Saída</button>',
                 () => {
                     $('dlg').querySelectorAll('[data-i]').forEach((b) => { b.onclick = () => { const s = saidas[+b.dataset.i]; s.on = !s.on; dlgSaidas(); toast(`${s.tipo} ${s.on ? 'no ar' : 'parada'}`); }; });
                     $('dNova').onclick = dlgNovaSaida;
-                });
+                }, 540);
         }
         function dlgNovaSaida() {
             const opc = [['SRT', 'fa-satellite-dish', 'srt://192.168.0.20:9000 (caller)'], ['RTMP', 'fa-tower-broadcast', 'rtmp://live.exemplo.com/app'], ['SDI', 'fa-plug', 'DeckLink (Dispositivo 2)'], ['NDI', 'fa-network-wired', 'Nome na rede: AVR-PGM'], ['Gravação', 'fa-circle-dot', 'Programa.mp4 (H.264 + AAC)']];
@@ -503,6 +733,7 @@
         $('bSaidas').onclick = dlgSaidas;
         $('bAddOut').onclick = dlgNovaSaida;
 
+        // Gravação e replay
         let rec = false, iso = 0, recIni = 0;
         function atualizarRec() {
             $('bRec').classList.toggle('on', rec); $('bRec').textContent = rec ? '■ Parar gravação' : '● Gravar';
@@ -515,20 +746,101 @@
             const s = Math.floor((Date.now() - recIni) / 1000);
             $('recTxt').textContent = `● REC ${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}`;
         }, 500);
-        $('bReplay').onclick = () => {
+        function iniciarReplay(lento) {
             if (pgm === null) { toast('Nada no Programa para repetir'); return; }
-            const e = porId(pgm);
-            replay = { id: pgm, t0: performance.now(), tIni: performance.now() / 1000 + e.fase - 4 };
-            atualizarNomes(); toast('Replay lento dos últimos segundos');
+            const e = porId(pgm), vel = lento ? 0.4 : 1;
+            replay = { id: pgm, vel, t0: performance.now(), tIni: performance.now() / 1000 + e.fase - 4, dur: 4000 / vel };
+            atualizarNomes();
+        }
+        function voltarAoVivo() { replay = null; atualizarNomes(); }
+        $('bReplay').onclick = (ev) => {
+            const r = ev.currentTarget.getBoundingClientRect();
+            abrirMenu([{ t: 'Replay em velocidade normal', fn: () => iniciarReplay(false) }, { t: 'Replay lento', fn: () => iniciarReplay(true) },
+                       { t: 'Voltar ao vivo', dis: !replay, fn: voltarAoVivo }, '-', { t: 'Abrir a pasta dos clipes', fn: () => toast('Na demonstração não há clipes gravados') }], r.left, r.top - 120);
         };
-        $('mAjuda').onclick = () => abrir('Sobre o AVR', '<p style="margin:0;text-align:left;color:#ddd">AVR — Audio &amp; Video Router<br>Switcher de produção ao vivo para Windows.<br><br>Desenvolvido por Gabriel Menge.</p>');
+
+        // ---------- Barra de menus ----------
+        function menuBarra(el, itens) {
+            el.onclick = () => {
+                if (el.classList.contains('on')) { fecharMenu(); return; }
+                const r = el.getBoundingClientRect(); abrirMenu(itens(), r.left, r.bottom); el.classList.add('on');
+            };
+        }
+        menuBarra($('mArq'), () => [
+            { t: 'Novo projeto', k: 'Ctrl+N', fn: () => { if (confirm(`Deseja salvar as alterações em ${projeto}?`)) toast(`Projeto salvo: ${projeto}`); carregarProjeto(null); } },
+            { t: 'Abrir projeto…', k: 'Ctrl+O', fn: dlgAbrir },
+            { t: 'Projetos recentes', sub: [{ t: 'Demonstração', fn: () => carregarProjeto('Demonstração') }, { t: 'Estúdio A', fn: () => carregarProjeto('Estúdio A') }] },
+            '-',
+            { t: 'Salvar', k: 'Ctrl+S', fn: () => (projeto === 'Sem título' ? salvarComo() : toast(`Projeto salvo: ${projeto}`)) },
+            { t: 'Salvar como…', k: 'Ctrl+Shift+S', fn: salvarComo },
+            '-',
+            { t: 'Sair', k: 'Ctrl+Q', fn: () => toast('Na demonstração o app não fecha 🙂') },
+        ]);
+        function salvarComo() {
+            const n = prompt('Salvar projeto como', projeto === 'Sem título' ? 'Meu projeto' : projeto);
+            if (n && n.trim()) { projeto = n.trim(); $('tituloJanela').textContent = `AVR — Central de Produção e Roteamento — ${projeto}`; toast(`Projeto salvo: ${projeto}`); }
+        }
+        function dlgAbrir() {
+            abrir('Abrir projeto', `<table class="avr-tab"><thead><tr><th>Projeto</th><th>Entradas</th><th></th></tr></thead><tbody>
+                <tr><td><b>Demonstração</b></td><td>Câmeras, SRT, vídeo, tela e sinal de teste</td><td><button class="avr-b" data-p="Demonstração">Abrir</button></td></tr>
+                <tr><td><b>Estúdio A</b></td><td>2 câmeras SDI, PTZ NDI e vinheta; canal A ligado</td><td><button class="avr-b" data-p="Estúdio A">Abrir</button></td></tr></tbody></table>`,
+                () => $('dlg').querySelectorAll('[data-p]').forEach((b) => { b.onclick = () => { fechar(); carregarProjeto(b.dataset.p); toast(`Projeto aberto: ${b.dataset.p}`); }; }), 520);
+        }
+        menuBarra($('mAjuda'), () => [
+            { t: 'Sobre o AVR', fn: () => abrir('Sobre o AVR', '<p>AVR — Audio &amp; Video Router<br>Switcher de produção ao vivo para Windows.<br><br>Desenvolvido por Gabriel Menge.</p>') },
+            { t: 'Sobre o Qt', fn: () => abrir('Sobre o Qt', '<p>Este programa usa o Qt 6, um toolkit C++ multiplataforma.</p>') },
+            '-',
+            { t: 'Abrir a pasta do log', fn: () => toast('Na demonstração não há arquivo de log') },
+        ]);
+
+        // Configurações gerais
+        let cfgAba = 'geral';
+        const cfg = { res: '1920x1080', fps: '30', dec: 'Automático (recomendado)', lat: '120', enc: 'Automático (recomendado)', br: '6000', fones: 'Padrão do Windows', idioma: 'Automático (o do Windows: Português)' };
+        $('mCfg').onclick = () => dlgCfg();
+        function dlgCfg() {
+            const sel = (c, opcs) => `<select class="linha" data-k="${c}">${opcs.map((o) => `<option ${cfg[c] === o ? 'selected' : ''}>${o}</option>`).join('')}</select>`;
+            const abas = {
+                geral: `<div class="avr-grupo">Formato master</div><div class="avr-form"><label>Resolução:</label>${sel('res', ['1280x720', '1920x1080', '3840x2160'])}
+                        <label>Quadros por segundo:</label>${sel('fps', ['25', '29,97', '30', '50', '59,94', '60'])}</div>
+                        <div class="avr-grupo">Padrões para novas entradas e saídas</div><div class="avr-form">
+                        <label>Decodificação (entrada SRT):</label>${sel('dec', ['Automático (recomendado)', 'GPU', 'Software'])}
+                        <label>Latência SRT:</label>${sel('lat', ['80', '120', '200', '500'])}
+                        <label>Encoder (saídas SRT/RTMP):</label>${sel('enc', ['Automático (recomendado)', 'GPU (Media Foundation)', 'Software'])}
+                        <label>Bitrate de vídeo:</label>${sel('br', ['3000', '4500', '6000', '8000', '12000'])}</div>`,
+                audio: `<div class="avr-form"><label>Monitor (fones):</label>${sel('fones', ['Padrão do Windows', 'Fones de ouvido (USB)', 'Alto-falantes (Realtek Audio)'])}</div>
+                        <div class="avr-nota">Os canais A–G ficam desligados até você ligar (botão direito no canal) para não gastar processamento.</div>`,
+                idioma: `<div class="avr-form"><label>Idioma da interface:</label>${sel('idioma', ['Automático (o do Windows: Português)', 'Português (Brasil)', 'English', 'Español'])}</div>`,
+            };
+            abrir('Configurações', `<div class="avr-abas">${[['geral', 'Geral'], ['audio', 'Áudio'], ['idioma', 'Idioma']].map(([k, n]) => `<button data-aba="${k}" class="${k === cfgAba ? 'on' : ''}">${n}</button>`).join('')}</div>
+                ${abas[cfgAba]}<div class="avr-pe"><button class="avr-b" id="cCancel">Cancelar</button><button class="avr-b azul" id="cSalvar">Salvar</button></div>`,
+                () => {
+                    const rascunho = {};
+                    $('dlg').querySelectorAll('.avr-abas button').forEach((b) => { b.onclick = () => { cfgAba = b.dataset.aba; dlgCfg(); }; });
+                    $('dlg').querySelectorAll('[data-k]').forEach((s) => { s.onchange = () => { rascunho[s.dataset.k] = s.value; }; });
+                    $('cCancel').onclick = fechar;
+                    $('cSalvar').onclick = () => { Object.assign(cfg, rascunho); fechar(); toast(`Configurações salvas · ${cfg.res} ${cfg.fps} fps`); };
+                }, 520);
+        }
+
+        // Overlays
+        $('mOvl').onclick = dlgOverlays;
+        function dlgOverlays() {
+            const op = (v) => `<option value="program" ${v === 'program' ? 'selected' : ''}>Programa</option><option value="preview" ${v === 'preview' ? 'selected' : ''}>Prévia</option>`;
+            abrir('Overlays', `<p>Nos cards, os botões 1–8 põem a entrada no overlay. Escolha onde cada overlay aparece com o clique esquerdo e com o direito.</p>
+                <table class="avr-tab"><thead><tr><th>Overlay</th><th>Clique esquerdo</th><th>Clique direito</th><th>Fade</th><th>Agora</th></tr></thead><tbody>
+                ${cfgOverlay.map((c, n) => `<tr><td><b>${n + 1}</b></td><td><select data-n="${n}" data-c="esq">${op(c.esq)}</select></td><td><select data-n="${n}" data-c="dir">${op(c.dir)}</select></td>
+                    <td><input type="checkbox" data-n="${n}" data-c="fade" ${c.fade ? 'checked' : ''} style="accent-color:#1e88e5"></td>
+                    <td style="font-size:11px;color:#aaa">${porId(overlays[n].id) ? `${esc(porId(overlays[n].id).nome)} (${overlays[n].dest === 'program' ? 'Programa' : 'Prévia'})` : '(nenhum)'}</td></tr>`).join('')}
+                </tbody></table><div class="avr-pe"><button class="avr-b" id="oLimpar">Tirar todos</button><button class="avr-b azul" id="oOk">Fechar</button></div>`,
+                () => {
+                    $('dlg').querySelectorAll('[data-c]').forEach((c) => { c.onchange = () => { cfgOverlay[+c.dataset.n][c.dataset.c] = c.type === 'checkbox' ? c.checked : c.value; renderCards(); }; });
+                    $('oLimpar').onclick = () => { overlays.forEach((o) => { o.id = null; }); pintarOverlays(); dlgOverlays(); };
+                    $('oOk').onclick = fechar;
+                }, 560);
+        }
 
         // ---------- Início ----------
-        const c1 = novaEntrada('cam', 'Câmera 1'), c2 = novaEntrada('cam', 'Câmera 2');
-        novaEntrada('srt', 'Repórter (SRT)'); novaEntrada('video', 'Abertura');
-        novaEntrada('tela', 'Apresentação'); novaEntrada('teste', 'Sinal de Teste');
-        pgm = c1.id; pvw = c2.id;
-        renderCards(); renderStrips();
+        carregarProjeto('Demonstração');
         requestAnimationFrame(quadro);
     </script>
 </body>
