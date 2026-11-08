@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVR | Gabriel Menge</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="projeto.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <style>
+        .avr { background: #121212; color: #ddd; font: 12px 'Segoe UI', Arial, sans-serif; min-width: 1000px; position: relative; user-select: none; }
+        .avr-menu { display: flex; align-items: center; background: #1b1b1b; border-bottom: 1px solid #262626; height: 26px; padding: 0 4px; }
+        .avr-menu > span { padding: 4px 9px; cursor: default; color: #ddd; }
+        .avr-menu > span:hover { background: #2d2d2d; }
+        .avr-sys { margin-left: auto; color: #9e9e9e; font-size: 11px; display: flex; gap: 14px; padding-right: 8px; }
+        .avr-sys b { color: #ddd; font-weight: 600; }
+        .avr-sw { display: grid; grid-template-columns: 1fr 120px 1fr; gap: 12px; background: #161616; padding: 10px 12px; border-bottom: 4px solid #262626; }
+        .avr-mon-cab { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .avr-mon-cab .chip { color: #fff; font-weight: bold; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+        .avr-mon-cab .nome { font-weight: bold; color: #ddd; }
+        .avr-mon canvas { width: 100%; aspect-ratio: 16 / 9; display: block; background: #000; }
+        .avr-ctl { display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+        .avr-ctl button { background: #262626; color: #e0e0e0; border: 1px solid #3a3a3a; border-radius: 4px; padding: 9px 0; font: bold 12px 'Segoe UI', Arial, sans-serif; cursor: pointer; }
+        .avr-ctl button:hover { background: #333; border-color: #555; }
+        .avr-ctl button:active { background: #1565c0; border-color: #1e88e5; }
+        .avr-ctl button.ftb-on { background: #e53935; border-color: #e53935; color: #fff; animation: pisca 1s steps(2) infinite; }
+        @keyframes pisca { 50% { background: #7f1d1d; border-color: #7f1d1d; } }
+        .avr-ctl select { background: #2b2b2b; color: #fff; border: 1px solid #4a4a4a; border-radius: 3px; padding: 3px; font: inherit; }
+        .avr-prog { height: 4px; background: #222; } .avr-prog div { height: 100%; width: 0; background: #1e88e5; }
+        .avr-baixo { display: flex; height: 330px; }
+        .avr-entradas { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+        .avr-cards { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+        .avr-card { width: 196px; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 6px; display: flex; flex-direction: column; gap: 5px; }
+        .avr-card.pgm { border: 2px solid #e53935; padding: 5px; } .avr-card.pvw { border: 2px solid #43a047; padding: 5px; }
+        .avr-card-cab { display: flex; align-items: center; gap: 4px; }
+        .avr-card-cab div { flex: 1; min-width: 0; line-height: 1.2; }
+        .avr-card-cab b { color: #fff; font-size: 12px; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .avr-card-cab small { color: #888; font-size: 10px; }
+        .avr-mini { width: 22px; height: 22px; background: #2b2b2b; color: #aaa; border: 1px solid #3d3d3d; border-radius: 3px; cursor: pointer; font-size: 11px; padding: 0; }
+        .avr-mini:hover { background: #3d3d3d; color: #fff; }
+        .avr-x { background: transparent; border: 0; color: #ff5555; font-weight: bold; cursor: pointer; width: 20px; height: 22px; }
+        .avr-x:hover { background: #331111; border-radius: 3px; }
+        .avr-card-vid { display: flex; gap: 3px; }
+        .avr-card-vid canvas { flex: 1; min-width: 0; aspect-ratio: 16 / 9; background: #000; border: 1px solid #2a2a2a; cursor: pointer; display: block; }
+        .avr-vu { width: 5px; background: #111; border: 1px solid #2a2a2a; position: relative; overflow: hidden; }
+        .avr-vu i { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: linear-gradient(to top, #00e676 0%, #ffea00 70%, #ff1744 90%); }
+        .avr-card-pe { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #888; }
+        .avr-cut { background: #5a1f1f; color: #ffdddd; border: 0; border-radius: 3px; height: 20px; padding: 0 8px; font: bold 10px 'Segoe UI', Arial, sans-serif; cursor: pointer; }
+        .avr-cut:hover { background: #c62828; color: #fff; }
+        .avr-barra { display: flex; align-items: center; gap: 6px; padding: 7px 10px; border-top: 1px solid #262626; background: #161616; }
+        .avr-b { background: #2b2b2b; color: #ddd; border: 1px solid #3d3d3d; border-radius: 4px; padding: 6px 11px; font: 600 12px 'Segoe UI', Arial, sans-serif; cursor: pointer; white-space: nowrap; }
+        .avr-b:hover { background: #3d3d3d; color: #fff; }
+        .avr-b.azul { background: #1e88e5; border-color: #1e88e5; color: #fff; } .avr-b.azul:hover { background: #1565c0; }
+        .avr-b.rec { color: #ff6b6b; } .avr-b.rec.on { background: #c62828; border-color: #c62828; color: #fff; }
+        .avr-rec { color: #ff5555; font: bold 12px Consolas, monospace; margin-left: auto; }
+        .avr-mix { width: 300px; background: #161616; border-left: 4px solid #262626; display: flex; flex-direction: column; }
+        .avr-mix h6 { margin: 0; padding: 8px 10px; font-size: 11px; color: #9e9e9e; letter-spacing: 1px; }
+        .avr-strips { flex: 1; display: flex; gap: 6px; padding: 0 10px 10px; overflow-x: auto; }
+        .avr-strip { width: 62px; flex-shrink: 0; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 4px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .avr-strip.master { background: #1c2430; border-color: #2c3e57; }
+        .avr-strip b { font-size: 10px; color: #ddd; width: 100%; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .avr-strip-meio { flex: 1; display: flex; gap: 4px; min-height: 0; }
+        .avr-strip-meio .avr-vu { width: 6px; }
+        .avr-strip input[type=range] { writing-mode: vertical-lr; direction: rtl; width: 18px; accent-color: #1e88e5; margin: 0; }
+        .avr-db { font: 10px Consolas, monospace; color: #888; }
+        .avr-mudo { width: 100%; background: #2b2b2b; color: #bbb; border: 1px solid #3d3d3d; border-radius: 3px; font: bold 9px 'Segoe UI', Arial, sans-serif; padding: 3px 0; cursor: pointer; }
+        .avr-mudo.on { background: #c62828; border-color: #c62828; color: #fff; }
+        .avr-bus { width: 100%; background: #2b2b2b; color: #777; border: 1px solid #3d3d3d; border-radius: 3px; font: 9px 'Segoe UI', Arial, sans-serif; padding: 2px 0; cursor: pointer; }
+        .avr-bus.on { background: #1565c0; border-color: #1e88e5; color: #fff; }
+        .avr-modal { position: absolute; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 5; }
+        .avr-modal[hidden] { display: none; }
+        .avr-dlg { background: #1e1e1e; border: 1px solid #3d3d3d; border-radius: 6px; width: 460px; max-height: 90%; overflow-y: auto; box-shadow: 0 12px 30px #000; }
+        .avr-dlg-tit { display: flex; justify-content: space-between; padding: 9px 12px; background: #262626; font-weight: 600; color: #fff; }
+        .avr-dlg-tit span:last-child { cursor: pointer; color: #aaa; }
+        .avr-dlg-corpo { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .avr-tipos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .avr-tipos button { background: #2b2b2b; color: #ddd; border: 1px solid #3d3d3d; border-radius: 4px; padding: 12px 4px; cursor: pointer; font: 12px 'Segoe UI', Arial, sans-serif; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .avr-tipos button:hover { border-color: #1e88e5; color: #fff; }
+        .avr-tipos i { font-size: 18px; color: #64b5f6; }
+        .avr-said { width: 100%; border-collapse: collapse; }
+        .avr-said td, .avr-said th { padding: 7px 6px; border-bottom: 1px solid #2b2b2b; text-align: left; }
+        .avr-said th { color: #9e9e9e; font-weight: 600; }
+        .no-ar { color: #00e676; font-weight: bold; } .parado { color: #777; }
+        .avr-toast { position: absolute; left: 50%; top: 34px; transform: translateX(-50%); background: #1e88e5; color: #fff; padding: 7px 14px; border-radius: 4px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 6; font-weight: 600; }
+        .avr-toast.on { opacity: 1; }
+        .botao-privado { background: #e9ecef; color: #666; cursor: not-allowed; }
+        .botao-privado:hover { transform: none; }
+        .dicas { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 0.85em; color: #666; margin-top: 10px; }
+        .dicas b { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+
+    <main>
+        <section class="projeto-intro">
+            <h2><i class="fa-solid fa-sliders"></i> AVR</h2>
+            <p>Switcher de produção ao vivo para Windows. Recebe câmeras, SDI/HDMI, SRT, NDI, captura de tela, vídeos e imagens; corta e faz transições entre Prévia e Programa com composição na GPU; mixa o áudio em barramentos; e envia o Programa ao mesmo tempo para saídas SRT, RTMP, SDI e NDI, com gravação, gravação ISO por entrada e replay.</p>
+            <div class="tags">
+                <span class="tag">C++</span><span class="tag">Qt 6</span><span class="tag">GStreamer</span><span class="tag">Direct3D 12</span><span class="tag">Media Foundation</span><span class="tag">SRT / NDI / SDI</span>
+            </div>
+            <div class="acoes">
+                <span class="botao botao-privado" title="Produto comercial: código fechado"><i class="fa-solid fa-lock"></i> Repositório privado</span>
+            </div>
+        </section>
+
+        <section class="demo">
+            <h2><i class="fa-solid fa-hand-pointer"></i> Experimente</h2>
+            <p class="aviso-demo">Simulação interativa da interface. As fontes de vídeo são geradas no navegador; nada é transmitido nem gravado.</p>
+            <div class="dicas">
+                <span><b>Clique</b> num card: Prévia</span>
+                <span><b>Duplo clique</b> ou <b>Cortar</b>: Programa</span>
+                <span><b>Corte / Fade / Merge</b>: Prévia → Programa</span>
+                <span><b>FTB</b>: fade para o preto</span>
+            </div>
+
+            <div class="janela">
+                <div class="janela-barra">
+                    <div class="janela-titulo"><i class="fa-solid fa-sliders"></i> AVR — Central de Produção e Roteamento</div>
+                    <div class="janela-controles"><span>&#8212;</span><span>&#9744;</span><span>&#10005;</span></div>
+                </div>
+                <div class="janela-corpo rolagem">
+                    <div class="avr" id="avr">
+                        <div class="avr-menu">
+                            <span>Arquivo</span><span>Configurações</span><span>Overlays</span><span id="mAjuda">Ajuda</span>
+                            <div class="avr-sys"><span>CPU <b id="sCpu">-</b></span><span>GPU <b id="sGpu">-</b></span><span>RAM <b id="sRam">-</b></span><span>Disco <b id="sDisco">0 MB/s</b></span></div>
+                        </div>
+
+                        <div class="avr-sw">
+                            <div class="avr-mon">
+                                <div class="avr-mon-cab"><span class="chip" style="background:#43a047">PRÉVIA</span><span class="nome" id="nPvw"></span></div>
+                                <canvas id="cPvw" width="640" height="360"></canvas>
+                            </div>
+                            <div class="avr-ctl">
+                                <button id="bCorte" title="Leva a Prévia para o Programa na hora">Corte</button>
+                                <button id="bFade" title="Dissolve do Programa para a Prévia">Fade</button>
+                                <button id="bMerge">Merge</button>
+                                <button id="bFtb">FTB</button>
+                                <select id="dur" title="Duração do Fade, do Merge e do FTB"><option value="500">0,5 s</option><option value="1000" selected>1 s</option><option value="1500">1,5 s</option><option value="2000">2 s</option></select>
+                                <div class="avr-prog"><div id="prog"></div></div>
+                            </div>
+                            <div class="avr-mon">
+                                <div class="avr-mon-cab"><span class="chip" style="background:#e53935">PROGRAMA</span><span class="nome" id="nPgm"></span></div>
+                                <canvas id="cPgm" width="640" height="360"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="avr-baixo">
+                            <div class="avr-entradas">
+                                <div class="avr-cards" id="cards"></div>
+                                <div class="avr-barra">
+                                    <button class="avr-b azul" id="bAddIn">+ Adicionar Entrada</button>
+                                    <button class="avr-b" id="bSaidas">📊 Gerenciar Saídas</button>
+                                    <button class="avr-b" id="bAddOut">+ Adicionar Saída</button>
+                                    <span class="avr-rec" id="recTxt"></span>
+                                    <button class="avr-b rec" id="bRec">● Gravar</button>
+                                    <button class="avr-b rec" id="bIso">● ISO</button>
+                                    <button class="avr-b" id="bReplay">⟲ Replay</button>
+                                </div>
+                            </div>
+                            <div class="avr-mix">
+                                <h6>CANAIS DE ÁUDIO</h6>
+                                <div class="avr-strips" id="strips"></div>
+                            </div>
+                        </div>
+
+                        <div class="avr-modal" id="modal" hidden><div class="avr-dlg" id="dlg"></div></div>
+                        <div class="avr-toast" id="toast"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="recursos">
+            <h2><i class="fa-solid fa-list-check"></i> Recursos</h2>
+            <ul>
+                <li>Entradas: câmeras, SDI/HDMI (DeckLink), SRT, NDI, tela/janela, vídeos, imagens e sinal de teste</li>
+                <li>Prévia e Programa em quadro cheio, compostos na GPU (Direct3D 12)</li>
+                <li>Corte, Fade, Merge e FTB, com duração ajustável e tally nos cards</li>
+                <li>Saídas simultâneas SRT, RTMP, SDI e NDI, sem derrubar o Programa</li>
+                <li>Gravação do Programa, gravação ISO por entrada e replay lento</li>
+                <li>Mixer com barramentos de áudio, VU por entrada e escuta nos fones</li>
+                <li>Camadas, transformação, chroma/luma key e overlays</li>
+                <li>Codificação por hardware (Media Foundation) e interface em três idiomas</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer><p>&copy; 2026 Gabriel Menge. Todos os direitos reservados.</p></footer>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+        const pad = (n) => String(n).padStart(2, '0');
+        const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const SW = 480, SH = 270;
+
+        // ---------- Geradores de imagem das fontes ----------
+        function pessoa(c, x, y, s, roupa) {
+            c.fillStyle = roupa; c.beginPath(); c.ellipse(x, y + s * 1.25, s * 1.15, s * 0.95, 0, Math.PI, 0); c.fill();
+            c.fillRect(x - s * 1.15, y + s * 1.25, s * 2.3, s * 1.2);
+            c.fillStyle = '#c98f63'; c.beginPath(); c.arc(x, y, s * 0.55, 0, Math.PI * 2); c.fill();
+            c.fillStyle = '#2b1d14'; c.beginPath(); c.arc(x, y - s * 0.12, s * 0.57, Math.PI * 1.05, Math.PI * 1.95); c.fill();
+        }
+        function timecode(t) { const f = Math.floor(t * 30) % 30, s = Math.floor(t) % 60, m = Math.floor(t / 60) % 60; return `00:${pad(m)}:${pad(s)}:${pad(f)}`; }
+        const predios = Array.from({ length: 12 }, (_, i) => ({ x: i * 44 - 10, w: 30 + (i * 37) % 22, h: 70 + (i * 53) % 110 }));
+
+        const GER = {
+            cam1(c, t) {
+                const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#22345c'); g.addColorStop(1, '#0b1224'); c.fillStyle = g; c.fillRect(0, 0, SW, SH);
+                c.fillStyle = '#1a2a4d'; c.fillRect(300, 30, 150, 90); c.fillStyle = '#3b6fd6'; c.fillRect(306, 36, 138, 78);
+                c.fillStyle = 'rgba(255,255,255,.8)'; c.fillRect(318, 48 + Math.sin(t) * 3, 70, 8); c.fillRect(318, 62, 110, 5); c.fillRect(318, 72, 90, 5);
+                pessoa(c, 200 + Math.sin(t * 0.8) * 4, 112 + Math.sin(t * 1.7) * 1.5, 46, '#2f3f6e');
+                c.fillStyle = '#4a3326'; c.fillRect(0, 205, SW, 65); c.fillStyle = '#5c4031'; c.fillRect(0, 200, SW, 8);
+            },
+            cam2(c, t) {
+                const g = c.createLinearGradient(0, 0, SW, SH); g.addColorStop(0, '#1d3b35'); g.addColorStop(1, '#0c1a17'); c.fillStyle = g; c.fillRect(0, 0, SW, SH);
+                for (let i = 0; i < 6; i++) { c.fillStyle = `rgba(120,220,190,${0.06 + 0.04 * Math.sin(t + i)})`; c.fillRect(i * 85, 0, 40, 170); }
+                pessoa(c, 150 + Math.sin(t * 0.6) * 3, 120, 32, '#6b2f2f');
+                pessoa(c, 330 + Math.sin(t * 0.9 + 1) * 3, 118, 33, '#2f4a6b');
+                c.fillStyle = '#3a3a40'; c.fillRect(60, 200, 360, 70); c.fillStyle = '#4a4a52'; c.fillRect(60, 196, 360, 6);
+            },
+            srt(c, t) {
+                const jx = Math.sin(t * 7) * 1.2, jy = Math.cos(t * 5) * 1.2;
+                c.save(); c.translate(jx, jy);
+                const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#5d9be0'); g.addColorStop(1, '#cfe3f7'); c.fillStyle = g; c.fillRect(-5, -5, SW + 10, SH + 10);
+                predios.forEach((p) => { c.fillStyle = '#56657a'; c.fillRect(p.x, SH - p.h - 40, p.w, p.h + 40); c.fillStyle = 'rgba(255,240,180,.35)'; for (let y = SH - p.h - 30; y < SH - 50; y += 14) c.fillRect(p.x + 5, y, p.w - 10, 5); });
+                c.fillStyle = '#7a7a7a'; c.fillRect(-5, SH - 40, SW + 10, 45);
+                pessoa(c, 250 + Math.sin(t * 1.1) * 5, 120, 42, '#8a5a2b');
+                c.fillStyle = '#222'; c.fillRect(270, 168, 10, 34); c.fillStyle = '#e53935'; c.beginPath(); c.arc(275, 166, 8, 0, Math.PI * 2); c.fill();
+                c.restore();
+                c.fillStyle = '#e53935'; c.fillRect(14, 14, 74, 22); c.fillStyle = '#fff'; c.font = 'bold 14px Arial'; c.textAlign = 'left'; c.fillText('AO VIVO', 21, 30);
+                c.fillStyle = 'rgba(0,0,0,.55)'; c.fillRect(SW - 130, 14, 116, 22); c.fillStyle = '#fff'; c.font = '14px Consolas, monospace'; c.fillText(timecode(t), SW - 124, 30);
+            },
+            barras(c, t) {
+                const cores = ['#c0c0c0', '#c0c000', '#00c0c0', '#00c000', '#c000c0', '#c00000', '#0000c0'];
+                cores.forEach((k, i) => { c.fillStyle = k; c.fillRect(i * SW / 7, 0, SW / 7 + 1, SH * 0.67); });
+                c.fillStyle = '#131313'; c.fillRect(0, SH * 0.67, SW, SH * 0.33);
+                const x = (Math.sin(t * 1.4) * 0.5 + 0.5) * (SW - 50) + 25, y = SH * 0.84 - Math.abs(Math.sin(t * 3)) * 20;
+                c.fillStyle = '#fff'; c.beginPath(); c.arc(x, y, 14, 0, Math.PI * 2); c.fill();
+            },
+            video(c, t) {
+                const lt = t % 12;
+                c.fillStyle = '#160b2e'; c.fillRect(0, 0, SW, SH);
+                for (let i = 0; i < 6; i++) {
+                    const a = t * 0.5 + i * 1.05, x = SW / 2 + Math.cos(a) * (80 + i * 18), y = SH / 2 + Math.sin(a * 1.3) * (50 + i * 8);
+                    const g = c.createRadialGradient(x, y, 0, x, y, 70); g.addColorStop(0, `hsla(${(i * 60 + t * 20) % 360},80%,60%,.55)`); g.addColorStop(1, 'transparent');
+                    c.fillStyle = g; c.fillRect(0, 0, SW, SH);
+                }
+                c.globalAlpha = Math.min(1, lt / 2, (12 - lt) / 1.5); c.fillStyle = '#fff'; c.font = 'bold 40px Arial'; c.textAlign = 'center'; c.fillText('ABERTURA', SW / 2, SH / 2 + 14); c.globalAlpha = 1;
+                c.fillStyle = 'rgba(255,255,255,.25)'; c.fillRect(20, SH - 14, SW - 40, 3); c.fillStyle = '#fff'; c.fillRect(20, SH - 14, (SW - 40) * lt / 12, 3);
+            },
+            tela(c, t) {
+                const g = c.createLinearGradient(0, 0, SW, SH); g.addColorStop(0, '#0f4c81'); g.addColorStop(1, '#07243f'); c.fillStyle = g; c.fillRect(0, 0, SW, SH);
+                c.fillStyle = '#f3f3f3'; c.fillRect(50, 30, 380, 210); c.fillStyle = '#dcdcdc'; c.fillRect(50, 30, 380, 18);
+                c.fillStyle = '#1e88e5'; c.fillRect(64, 62, 120, 12);
+                for (let i = 0; i < 8; i++) { c.fillStyle = '#c8c8c8'; c.fillRect(64, 86 + i * 17, 140 + ((i * 71) % 190), 7); }
+                c.fillStyle = '#e8f1fb'; c.fillRect(300, 62, 116, 80); c.fillStyle = '#43a047'; [30, 55, 42, 70, 52].forEach((h, i) => c.fillRect(310 + i * 21, 136 - h, 14, h));
+                c.fillStyle = '#1b1b1b'; c.fillRect(0, SH - 22, SW, 22);
+                const mx = 240 + Math.sin(t * 0.9) * 140, my = 140 + Math.sin(t * 1.3) * 70;
+                c.fillStyle = '#fff'; c.strokeStyle = '#000'; c.beginPath(); c.moveTo(mx, my); c.lineTo(mx, my + 16); c.lineTo(mx + 4, my + 12); c.lineTo(mx + 10, my + 12); c.closePath(); c.fill(); c.stroke();
+            },
+            imagem(c) {
+                const g = c.createLinearGradient(0, 0, SW, SH); g.addColorStop(0, '#263238'); g.addColorStop(1, '#0d1317'); c.fillStyle = g; c.fillRect(0, 0, SW, SH);
+                c.strokeStyle = '#1e88e5'; c.lineWidth = 4; c.strokeRect(150, 80, 180, 110); c.lineWidth = 1;
+                c.fillStyle = '#fff'; c.font = 'bold 54px Arial'; c.textAlign = 'center'; c.fillText('AVR', SW / 2, 150);
+                c.fillStyle = '#90a4ae'; c.font = '13px Arial'; c.fillText('vinheta.png', SW / 2, 176);
+            },
+        };
+
+        const TIPOS = [
+            { k: 'cam', nome: 'Câmera', ic: 'fa-camera', ger: ['cam1', 'cam2'], tipo: 'Câmera · 1920x1080 30p', audio: true },
+            { k: 'sdi', nome: 'SDI / HDMI', ic: 'fa-plug', ger: ['cam2', 'cam1'], tipo: 'DeckLink · 1080i59,94', audio: true },
+            { k: 'srt', nome: 'SRT', ic: 'fa-satellite-dish', ger: ['srt'], tipo: 'SRT · escuta :9902 · H.264', audio: true },
+            { k: 'ndi', nome: 'NDI', ic: 'fa-network-wired', ger: ['cam1'], tipo: 'NDI · 1080p30', audio: true },
+            { k: 'tela', nome: 'Tela / Janela', ic: 'fa-display', ger: ['tela'], tipo: 'Tela · Monitor 1', audio: false },
+            { k: 'video', nome: 'Vídeo', ic: 'fa-film', ger: ['video'], tipo: 'Vídeo · abertura.mp4 (loop)', audio: true },
+            { k: 'img', nome: 'Imagem', ic: 'fa-image', ger: ['imagem'], tipo: 'Imagem · PNG', audio: false },
+            { k: 'teste', nome: 'Sinal de Teste', ic: 'fa-border-all', ger: ['barras'], tipo: 'Sinal de Teste · 1080p30', audio: true },
+        ];
+        const tipoPor = (k) => TIPOS.find((x) => x.k === k);
+
+        // ---------- Estado ----------
+        let entradas = [], proxId = 1;
+        let pgm = null, pvw = null, trans = null, ftb = 0, ftbAlvo = 0, ftbIni = 0, replay = null;
+        const masterSt = { vol: 80, mudo: false, nivel: 0 };
+
+        function novaEntrada(k, nome) {
+            const tp = tipoPor(k);
+            const cont = entradas.filter((e) => e.k === k).length;
+            const can = document.createElement('canvas'); can.width = SW; can.height = SH;
+            const e = { id: proxId++, k, nome: nome || `${tp.nome} ${cont + 1}`, tipo: tp.tipo, ger: tp.ger[cont % tp.ger.length], audio: tp.audio,
+                        can, ctx: can.getContext('2d'), fase: Math.random() * 10, vol: 75, mudo: false, master: true, nivel: 0 };
+            entradas.push(e);
+            return e;
+        }
+        const porId = (id) => entradas.find((e) => e.id === id);
+
+        // ---------- Cards ----------
+        function renderCards() {
+            $('cards').innerHTML = entradas.map((e) => `
+                <div class="avr-card ${e.id === pgm ? 'pgm' : e.id === pvw ? 'pvw' : ''}" data-id="${e.id}">
+                    <div class="avr-card-cab"><div><b>${esc(e.nome)}</b><small>${esc(e.tipo)}</small></div>
+                        <button class="avr-mini" data-a="ren" title="Renomear…">✎</button><button class="avr-x" data-a="rem" title="Remover">✕</button></div>
+                    <div class="avr-card-vid"><canvas width="240" height="135" data-a="pvw" title="Clique: Colocar na Prévia · Duplo clique: Cortar para o Programa"></canvas>
+                        <div class="avr-vu"><i></i></div><div class="avr-vu"><i></i></div></div>
+                    <div class="avr-card-pe"><button class="avr-cut" data-a="cut" title="Cortar para o Programa">Cortar</button><span>${e.audio ? 'Áudio · 48 kHz estéreo' : 'Sem áudio'}</span></div>
+                </div>`).join('');
+            $('cards').querySelectorAll('.avr-card').forEach((el) => {
+                const e = porId(+el.dataset.id);
+                e.cardCtx = el.querySelector('canvas').getContext('2d');
+                e.vus = el.querySelectorAll('.avr-vu i');
+                el.querySelector('[data-a=pvw]').onclick = () => { if (e.id !== pgm) { pvw = e.id; atualizarTally(); } };
+                el.querySelector('[data-a=pvw]').ondblclick = () => cortarPara(e.id);
+                el.querySelector('[data-a=cut]').onclick = () => cortarPara(e.id);
+                el.querySelector('[data-a=rem]').onclick = () => remover(e);
+                el.querySelector('[data-a=ren]').onclick = () => {
+                    const n = prompt('Novo Nome:', e.nome);
+                    if (n && n.trim()) { e.nome = n.trim(); renderCards(); renderStrips(); atualizarNomes(); }
+                };
+            });
+            atualizarNomes();
+        }
+
+        function atualizarTally() {
+            $('cards').querySelectorAll('.avr-card').forEach((el) => {
+                const id = +el.dataset.id;
+                el.classList.toggle('pgm', id === pgm); el.classList.toggle('pvw', id === pvw && id !== pgm);
+            });
+            atualizarNomes();
+        }
+        function atualizarNomes() {
+            $('nPgm').textContent = replay ? 'Replay' : (porId(pgm) ? porId(pgm).nome : '(nenhum)');
+            $('nPvw').textContent = porId(pvw) ? porId(pvw).nome : '(nenhum)';
+        }
+
+        function remover(e) {
+            if (!confirm(`Remover a entrada "${e.nome}"?`)) return;
+            entradas = entradas.filter((x) => x !== e);
+            if (pgm === e.id) pgm = null;
+            if (pvw === e.id) pvw = null;
+            renderCards(); renderStrips();
+        }
+
+        // ---------- Transições ----------
+        function cortarPara(id) {
+            if (trans || id === pgm) return;
+            const antigo = pgm; pgm = id; pvw = antigo !== null && porId(antigo) ? antigo : pvw === id ? null : pvw;
+            atualizarTally();
+        }
+        $('bCorte').onclick = () => { if (pvw !== null) cortarPara(pvw); };
+        function iniciar(tipo) {
+            if (trans || pvw === null || pvw === pgm) return;
+            trans = { tipo, de: pgm, para: pvw, t0: performance.now(), dur: +$('dur').value };
+        }
+        $('bFade').onclick = () => iniciar('fade');
+        $('bMerge').onclick = () => iniciar('merge');
+        $('bFtb').onclick = () => {
+            ftbAlvo = ftbAlvo ? 0 : 1; ftbIni = ftb;
+            ftbT0 = performance.now(); $('bFtb').classList.toggle('ftb-on', ftbAlvo === 1);
+        };
+        let ftbT0 = 0;
+
+        // ---------- Áudio ----------
+        function renderStrips() {
+            const com = entradas.filter((e) => e.audio);
+            $('strips').innerHTML = com.map((e) => stripHtml(e.id, e.nome, e.vol, e.mudo, e.master)).join('') + stripHtml('m', 'Master', masterSt.vol, masterSt.mudo, null);
+            $('strips').querySelectorAll('.avr-strip').forEach((el) => {
+                const alvo = el.dataset.id === 'm' ? masterSt : porId(+el.dataset.id);
+                alvo.vuEls = el.querySelectorAll('.avr-vu i'); alvo.dbEl = el.querySelector('.avr-db');
+                el.querySelector('input').oninput = (ev) => { alvo.vol = +ev.target.value; };
+                el.querySelector('.avr-mudo').onclick = (ev) => { alvo.mudo = !alvo.mudo; ev.target.classList.toggle('on', alvo.mudo); };
+                const bus = el.querySelector('.avr-bus');
+                if (bus) bus.onclick = () => { alvo.master = !alvo.master; bus.classList.toggle('on', alvo.master); };
+            });
+        }
+        function stripHtml(id, nome, vol, mudo, master) {
+            return `<div class="avr-strip ${id === 'm' ? 'master' : ''}" data-id="${id}"><b title="${esc(nome)}">${esc(nome)}</b>
+                <div class="avr-strip-meio"><div class="avr-vu"><i></i></div><div class="avr-vu"><i></i></div><input type="range" min="0" max="100" value="${vol}"></div>
+                <span class="avr-db">-∞</span><button class="avr-mudo ${mudo ? 'on' : ''}">MUDO</button>
+                ${master === null ? '' : `<button class="avr-bus ${master ? 'on' : ''}" title="Enviar esta entrada para o Master">Master</button>`}</div>`;
+        }
+        const db = (v) => v <= 0.001 ? '-∞' : (20 * Math.log10(v)).toFixed(0);
+
+        // ---------- Desenho ----------
+        function desenharMonitor(ctx, ids) {
+            ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+            ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 640, 360);
+            ids.forEach(([id, a, modo]) => {
+                const e = porId(id); if (!e || a <= 0) return;
+                ctx.globalAlpha = Math.min(1, a); ctx.globalCompositeOperation = modo || 'source-over';
+                ctx.drawImage(e.can, 0, 0, 640, 360);
+            });
+            ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+        }
+
+        const cPgm = $('cPgm').getContext('2d'), cPvw = $('cPvw').getContext('2d');
+        let ultimoCard = 0, ultimoAudio = 0;
+        function quadro(agora) {
+            const t = agora / 1000;
+            entradas.forEach((e) => {
+                const tt = replay && e.id === replay.id ? replay.tIni + (agora - replay.t0) / 1000 * 0.4 : t + e.fase;
+                GER[e.ger](e.ctx, tt);
+            });
+
+            // Programa
+            let camadas = [[pgm, 1]];
+            if (trans) {
+                const p = Math.min(1, (agora - trans.t0) / trans.dur);
+                $('prog').style.width = (p * 100) + '%';
+                if (trans.tipo === 'fade') camadas = [[trans.de, 1], [trans.para, p]];
+                else camadas = [[trans.de, Math.min(1, 2 - 2 * p), 'source-over'], [trans.para, Math.min(1, 2 * p), 'lighter']];
+                if (p >= 1) { pgm = trans.para; pvw = trans.de !== null && porId(trans.de) ? trans.de : null; trans = null; $('prog').style.width = '0'; atualizarTally(); camadas = [[pgm, 1]]; }
+            }
+            desenharMonitor(cPgm, camadas);
+            if (ftbAlvo !== ftb) {
+                const p = Math.min(1, (agora - ftbT0) / +$('dur').value);
+                ftb = ftbIni + (ftbAlvo - ftbIni) * p;
+                if (p >= 1) ftb = ftbAlvo;
+            }
+            if (ftb > 0) { cPgm.fillStyle = `rgba(0,0,0,${ftb})`; cPgm.fillRect(0, 0, 640, 360); }
+            if (replay) {
+                cPgm.fillStyle = '#1e88e5'; cPgm.fillRect(16, 316, 150, 28); cPgm.fillStyle = '#fff'; cPgm.font = 'bold 16px Segoe UI, Arial'; cPgm.textAlign = 'left'; cPgm.fillText('⟲ REPLAY 40%', 26, 336);
+                if (agora - replay.t0 > 5000) { replay = null; atualizarNomes(); }
+            }
+            desenharMonitor(cPvw, [[pvw, 1]]);
+
+            // Cards a 20 fps
+            if (agora - ultimoCard > 50) {
+                ultimoCard = agora;
+                entradas.forEach((e) => { if (e.cardCtx) e.cardCtx.drawImage(e.can, 0, 0, 240, 135); });
+            }
+
+            // VU e números a ~15 fps
+            if (agora - ultimoAudio > 66) {
+                ultimoAudio = agora;
+                let soma = 0;
+                entradas.forEach((e) => {
+                    let n = 0;
+                    if (e.audio) n = e.k === 'teste' ? 0.5 : Math.max(0, 0.25 + 0.45 * Math.abs(Math.sin(t * 2.3 + e.fase)) + Math.random() * 0.25 - (Math.sin(t * 0.4 + e.fase) > 0.85 ? 0.5 : 0));
+                    const saida = e.mudo ? 0 : n * e.vol / 100;
+                    if (e.vus) e.vus.forEach((v, i) => { v.style.height = Math.min(100, n * (i ? 96 : 100) * 100) + '%'; });
+                    if (e.vuEls) { e.vuEls.forEach((v, i) => { v.style.height = Math.min(100, saida * (i ? 95 : 100) * 100) + '%'; }); e.dbEl.textContent = db(saida); }
+                    if (e.master) soma += saida * saida;
+                });
+                const m = masterSt.mudo ? 0 : Math.min(1, Math.sqrt(soma) * masterSt.vol / 100);
+                if (masterSt.vuEls) { masterSt.vuEls.forEach((v, i) => { v.style.height = Math.min(100, m * (i ? 97 : 100) * 100) + '%'; }); masterSt.dbEl.textContent = db(m); }
+            }
+            requestAnimationFrame(quadro);
+        }
+
+        // ---------- Monitor de sistema ----------
+        setInterval(() => {
+            const n = entradas.length, cpu = 6 + n * 2.2 + Math.random() * 4, gpu = 10 + n * 3 + Math.random() * 5;
+            $('sCpu').textContent = `${cpu.toFixed(0)}% (AVR: ${(cpu * 0.55).toFixed(0)}%)`;
+            $('sGpu').textContent = `${gpu.toFixed(0)}%`;
+            $('sRam').textContent = `${(5.8 + n * 0.12).toFixed(1).replace('.', ',')} / 16 GB`;
+            $('sDisco').textContent = rec || iso ? `${(rec ? 1.1 : 0) + iso * 1.1 + Math.random() * 0.2 | 0} MB/s` : '0 MB/s';
+        }, 1000);
+
+        // ---------- Diálogos ----------
+        function toast(t) { const e = $('toast'); e.textContent = t; e.classList.add('on'); clearTimeout(e._t); e._t = setTimeout(() => e.classList.remove('on'), 2200); }
+        function abrir(titulo, html, ligar) {
+            $('dlg').innerHTML = `<div class="avr-dlg-tit"><span>${titulo}</span><span id="dX">✕</span></div><div class="avr-dlg-corpo">${html}</div>`;
+            $('modal').hidden = false; $('dX').onclick = fechar; if (ligar) ligar();
+        }
+        function fechar() { $('modal').hidden = true; }
+        $('modal').onclick = (ev) => { if (ev.target === $('modal')) fechar(); };
+
+        $('bAddIn').onclick = () => abrir('Adicionar Entrada',
+            `<div class="avr-tipos">${TIPOS.map((tp) => `<button data-k="${tp.k}"><i class="fa-solid ${tp.ic}"></i>${tp.nome}</button>`).join('')}</div>`,
+            () => $('dlg').querySelectorAll('[data-k]').forEach((b) => {
+                b.onclick = () => {
+                    if (entradas.length >= 12) { toast('Limite desta demonstração: 12 entradas'); return; }
+                    const e = novaEntrada(b.dataset.k); fechar(); renderCards(); renderStrips();
+                    if (pvw === null && e.id !== pgm) { pvw = e.id; atualizarTally(); }
+                    toast(`${e.nome} adicionada`);
+                };
+            }));
+
+        let saidas = [
+            { tipo: 'SRT', fonte: 'Programa', dest: 'srt://0.0.0.0:9000 (listener)', on: true },
+            { tipo: 'SDI', fonte: 'Programa', dest: 'DeckLink (Dispositivo 1)', on: true },
+            { tipo: 'RTMP', fonte: 'Programa', dest: 'rtmp://a.rtmp.youtube.com/live2', on: false },
+            { tipo: 'NDI', fonte: 'Prévia', dest: 'Nome na rede: AVR-PVW', on: false },
+        ];
+        function dlgSaidas() {
+            abrir('Gerenciar Saídas',
+                `<table class="avr-said"><thead><tr><th>Saída</th><th>Fonte</th><th>Destino</th><th>Status</th><th></th></tr></thead><tbody>
+                ${saidas.map((s, i) => `<tr><td><b>${s.tipo}</b></td><td>${s.fonte}</td><td style="font-size:11px">${esc(s.dest)}</td><td class="${s.on ? 'no-ar' : 'parado'}">${s.on ? '● No ar' : 'Parada'}</td><td><button class="avr-b" data-i="${i}">${s.on ? 'Parar' : 'Iniciar'}</button></td></tr>`).join('')}
+                </tbody></table><button class="avr-b azul" id="dNova" style="align-self:flex-start">+ Adicionar Saída</button>`,
+                () => {
+                    $('dlg').querySelectorAll('[data-i]').forEach((b) => { b.onclick = () => { const s = saidas[+b.dataset.i]; s.on = !s.on; dlgSaidas(); toast(`${s.tipo} ${s.on ? 'no ar' : 'parada'}`); }; });
+                    $('dNova').onclick = dlgNovaSaida;
+                });
+        }
+        function dlgNovaSaida() {
+            const opc = [['SRT', 'fa-satellite-dish', 'srt://192.168.0.20:9000 (caller)'], ['RTMP', 'fa-tower-broadcast', 'rtmp://live.exemplo.com/app'], ['SDI', 'fa-plug', 'DeckLink (Dispositivo 2)'], ['NDI', 'fa-network-wired', 'Nome na rede: AVR-PGM'], ['Gravação', 'fa-circle-dot', 'Programa.mp4 (H.264 + AAC)']];
+            abrir('Adicionar Saída', `<div class="avr-tipos">${opc.map(([n, ic], i) => `<button data-i="${i}"><i class="fa-solid ${ic}"></i>${n}</button>`).join('')}</div>`,
+                () => $('dlg').querySelectorAll('[data-i]').forEach((b) => {
+                    b.onclick = () => { const [n, , d] = opc[+b.dataset.i]; saidas.push({ tipo: n, fonte: 'Programa', dest: d, on: true }); dlgSaidas(); toast(`Saída ${n} no ar`); };
+                }));
+        }
+        $('bSaidas').onclick = dlgSaidas;
+        $('bAddOut').onclick = dlgNovaSaida;
+
+        let rec = false, iso = 0, recIni = 0;
+        function atualizarRec() {
+            $('bRec').classList.toggle('on', rec); $('bRec').textContent = rec ? '■ Parar gravação' : '● Gravar';
+            $('bIso').classList.toggle('on', iso > 0); $('bIso').textContent = iso ? `■ ISO (${iso})` : '● ISO';
+        }
+        $('bRec').onclick = () => { rec = !rec; if (rec && !iso) recIni = Date.now(); if (rec) toast('Gravando o Programa'); atualizarRec(); };
+        $('bIso').onclick = () => { iso = iso ? 0 : entradas.length; if (iso && !rec) recIni = Date.now(); if (iso) toast(`Gravação ISO de ${iso} entradas`); atualizarRec(); };
+        setInterval(() => {
+            if (!rec && !iso) { $('recTxt').textContent = ''; return; }
+            const s = Math.floor((Date.now() - recIni) / 1000);
+            $('recTxt').textContent = `● REC ${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}`;
+        }, 500);
+        $('bReplay').onclick = () => {
+            if (pgm === null) { toast('Nada no Programa para repetir'); return; }
+            const e = porId(pgm);
+            replay = { id: pgm, t0: performance.now(), tIni: performance.now() / 1000 + e.fase - 4 };
+            atualizarNomes(); toast('Replay lento dos últimos segundos');
+        };
+        $('mAjuda').onclick = () => abrir('Sobre o AVR', '<p style="margin:0;text-align:left;color:#ddd">AVR — Audio &amp; Video Router<br>Switcher de produção ao vivo para Windows.<br><br>Desenvolvido por Gabriel Menge.</p>');
+
+        // ---------- Início ----------
+        const c1 = novaEntrada('cam', 'Câmera 1'), c2 = novaEntrada('cam', 'Câmera 2');
+        novaEntrada('srt', 'Repórter (SRT)'); novaEntrada('video', 'Abertura');
+        novaEntrada('tela', 'Apresentação'); novaEntrada('teste', 'Sinal de Teste');
+        pgm = c1.id; pvw = c2.id;
+        renderCards(); renderStrips();
+        requestAnimationFrame(quadro);
+    </script>
+</body>
+</html>

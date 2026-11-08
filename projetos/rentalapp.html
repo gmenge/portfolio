@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocaFácil (RentalAPP) | Gabriel Menge</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="projeto.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <style>
+        .lf { --fundo: #09090B; --sup: #18181B; --borda: #27272A; --bforte: #3F3F46; --txt: #FAFAFA; --sec: #A1A1AA; --fraco: #71717A; --alerta: #F87171;
+              display: flex; background: var(--fundo); color: var(--txt); font: 13px 'Segoe UI', Arial, sans-serif; min-width: 860px; height: 560px; position: relative; }
+        .lf-menu { width: 210px; background: var(--sup); padding: 22px 12px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
+        .lf-menu h3 { margin: 0 8px 24px; font-size: 19px; }
+        .lf-menu button { text-align: left; background: transparent; border: 0; color: var(--sec); padding: 11px 12px; border-radius: 8px; font: inherit; cursor: pointer; }
+        .lf-menu button:hover { background: var(--borda); }
+        .lf-menu button.on { background: var(--borda); color: var(--txt); font-weight: 600; }
+        .lf-menu .ver { margin-top: auto; color: var(--fraco); font-size: 11px; padding-left: 12px; }
+        .lf-conteudo { flex: 1; padding: 22px 26px; overflow-y: auto; }
+        .lf-conteudo h4 { margin: 0 0 18px; font-size: 22px; }
+        .lf-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 22px; }
+        .lf-kpi { background: var(--sup); border: 1px solid var(--borda); border-radius: 8px; padding: 14px; }
+        .lf-kpi span { color: var(--sec); font-size: 12px; } .lf-kpi b { display: block; font-size: 22px; margin-top: 4px; }
+        .lf-sub { color: var(--sec); font-weight: 600; margin: 0 0 10px; }
+        .lf-tab { width: 100%; border-collapse: collapse; background: var(--sup); border-radius: 8px; overflow: hidden; }
+        .lf-tab th { text-align: left; color: var(--fraco); font-weight: 600; padding: 10px; border-bottom: 1px solid var(--borda); }
+        .lf-tab td { padding: 10px; border-bottom: 1px solid var(--borda); }
+        .lf-tab tr:last-child td { border-bottom: 0; }
+        .lf-tab tr.sel td { background: var(--bforte); }
+        .lf-tab tbody tr { cursor: default; }
+        .atr { color: var(--alerta); } .dev { color: var(--fraco); }
+        .lf-barra { display: flex; gap: 8px; margin-bottom: 14px; }
+        .lf-barra input { flex: 1; }
+        .lf input, .lf select { background: var(--sup); border: 1px solid var(--borda); color: var(--txt); padding: 8px 10px; border-radius: 6px; font: inherit; color-scheme: dark; }
+        .lf input:focus, .lf select:focus { outline: none; border-color: var(--bforte); }
+        .bp { background: var(--txt); color: var(--fundo); border: 0; border-radius: 6px; padding: 8px 14px; font: inherit; font-weight: 600; cursor: pointer; }
+        .bp:hover { background: #D4D4D8; }
+        .bs { background: transparent; color: var(--txt); border: 1px solid var(--borda); border-radius: 6px; padding: 8px 14px; font: inherit; cursor: pointer; }
+        .bs:hover { background: var(--borda); } .bs.perigo:hover { background: #7F1D1D; }
+        .lf-card { background: var(--sup); border: 1px solid var(--borda); border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+        .lf-card h5 { margin: 0 0 10px; font-size: 14px; }
+        .lf-grade { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .lf-grade label, .lf-modal label { display: block; color: var(--sec); font-size: 12px; margin-bottom: 4px; }
+        .lf-grade input, .lf-grade select { width: 100%; }
+        .lf-itens { margin-top: 10px; color: var(--sec); }
+        .lf-itens div { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--borda); color: var(--txt); }
+        .lf-itens button { background: none; border: 0; color: var(--fraco); cursor: pointer; }
+        .lf-total { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+        .lf-total b { font-size: 18px; }
+        .lf-msg { color: var(--alerta); font-size: 12px; min-height: 16px; margin-top: 6px; }
+        .lf-msg.ok { color: #4ade80; }
+        .lf-modal-fundo { position: absolute; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; }
+        .lf-modal-fundo[hidden] { display: none; }
+        .lf-modal { background: var(--sup); border: 1px solid var(--borda); border-radius: 10px; padding: 20px; width: 400px; display: flex; flex-direction: column; gap: 10px; }
+        .lf-modal input { width: 100%; }
+        .lf-vazio { color: var(--fraco); padding: 14px; }
+    </style>
+</head>
+<body>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+
+    <main>
+        <section class="projeto-intro">
+            <h2><i class="fa-regular fa-calendar-check"></i> LocaFácil (RentalAPP)</h2>
+            <p>Sistema desktop de gestão de aluguéis de equipamentos. Cadastra equipamentos com patrimônio, importa listas de vários formatos, emite contratos com vários itens e controla o estoque por período, com dashboard de faturamento e atrasos. Dados salvos localmente em SQLite com backup automático.</p>
+            <div class="tags">
+                <span class="tag">Python</span><span class="tag">CustomTkinter</span><span class="tag">SQLite</span><span class="tag">Pytest</span><span class="tag">PyInstaller</span>
+            </div>
+            <div class="acoes">
+                <a class="botao botao-repo" href="https://github.com/gmenge/RentalAPP" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> Ver repositório</a>
+            </div>
+        </section>
+
+        <section class="demo">
+            <h2><i class="fa-solid fa-hand-pointer"></i> Experimente</h2>
+            <p class="aviso-demo">Simulação interativa com dados de exemplo. Cadastre um equipamento, emita um contrato e registre a devolução; nada é salvo.</p>
+
+            <div class="janela">
+                <div class="janela-barra">
+                    <div class="janela-titulo"><i class="fa-regular fa-calendar-check"></i> LocaFácil</div>
+                    <div class="janela-controles"><span>&#8212;</span><span>&#9744;</span><span>&#10005;</span></div>
+                </div>
+                <div class="janela-corpo rolagem">
+                    <div class="lf">
+                        <nav class="lf-menu" id="menu">
+                            <h3>LocaFácil</h3>
+                            <button data-v="dashboard" class="on">Dashboard</button>
+                            <button data-v="equipamentos">Equipamentos</button>
+                            <button data-v="novo">Novo Aluguel</button>
+                            <button data-v="gestao">Gestão de Aluguéis</button>
+                            <span class="ver">v2.0</span>
+                        </nav>
+                        <div class="lf-conteudo" id="conteudo"></div>
+
+                        <div class="lf-modal-fundo" id="modal" hidden>
+                            <div class="lf-modal">
+                                <h5 style="margin:0;font-size:16px">Novo Equipamento</h5>
+                                <div><label>Nome do Equipamento:</label><input id="mNome" placeholder="Ex: Furadeira de Impacto"></div>
+                                <div class="lf-grade">
+                                    <div><label>Marca:</label><input id="mMarca" placeholder="Ex: Bosch, Makita, DeWalt"></div>
+                                    <div><label>Categoria:</label><input id="mCat" placeholder="Ex: Ferramentas Elétricas"></div>
+                                    <div><label>Número de Patrimônio:</label><input id="mPat" placeholder="Opcional"></div>
+                                    <div><label>Quantidade em Estoque:</label><input id="mQtd" type="number" value="1" min="1"></div>
+                                </div>
+                                <div><label>Valor da Diária (R$):</label><input id="mVal" type="number" placeholder="Ex: 45.00" step="0.01"></div>
+                                <div class="lf-msg" id="mMsg"></div>
+                                <div style="display:flex;gap:8px;justify-content:flex-end"><button class="bs" id="mCancel">Cancelar</button><button class="bp" id="mSalvar">Salvar Equipamento</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="recursos">
+            <h2><i class="fa-solid fa-list-check"></i> Recursos</h2>
+            <ul>
+                <li>Cadastro de equipamentos com patrimônio, marca, categoria e diária</li>
+                <li>Importação de listas (.xlsx, .xls, .ods, .csv, .xml, .json, .docx e outros)</li>
+                <li>Contratos com vários itens e controle de estoque por período</li>
+                <li>Dashboard com faturamento, aluguéis ativos e atrasados</li>
+                <li>Histórico de contratos, com edição, devolução e exclusão</li>
+                <li>Banco SQLite local com backup automático</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer><p>&copy; 2026 Gabriel Menge. Todos os direitos reservados.</p></footer>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+        const brl = (v) => 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        const iso = (d) => d.toISOString().slice(0, 10);
+        const br = (s) => s.split('-').reverse().join('/');
+        const dia = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return iso(d); };
+        const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+        let equips = [
+            { id: 1, nome: 'Furadeira de Impacto', marca: 'Bosch', cat: 'Ferramentas Elétricas', pat: 'PAT-0012', qtd: 6, val: 45 },
+            { id: 2, nome: 'Betoneira 400L', marca: 'CSM', cat: 'Construção', pat: 'PAT-0031', qtd: 3, val: 120 },
+            { id: 3, nome: 'Andaime Tubular (módulo)', marca: 'Metax', cat: 'Construção', pat: '', qtd: 40, val: 8.5 },
+            { id: 4, nome: 'Martelete Rompedor', marca: 'Makita', cat: 'Ferramentas Elétricas', pat: 'PAT-0044', qtd: 4, val: 95 },
+            { id: 5, nome: 'Gerador 5 kVA', marca: 'Branco', cat: 'Energia', pat: 'PAT-0050', qtd: 2, val: 180 },
+            { id: 6, nome: 'Lavadora de Alta Pressão', marca: 'Kärcher', cat: 'Limpeza', pat: 'PAT-0063', qtd: 5, val: 60 },
+        ];
+        let contratos = [
+            { id: 101, cliente: 'Construtora Horizonte Ltda', doc: '12.345.678/0001-90', ini: dia(-12), fim: dia(-2), itens: [{ eq: 2, q: 1 }, { eq: 3, q: 20 }], dev: false },
+            { id: 102, cliente: 'Marcos Andrade', doc: '123.456.789-00', ini: dia(-3), fim: dia(4), itens: [{ eq: 1, q: 2 }], dev: false },
+            { id: 103, cliente: 'Eventos Sul', doc: '98.765.432/0001-10', ini: dia(-20), fim: dia(-15), itens: [{ eq: 5, q: 1 }], dev: true },
+        ];
+        let proxEq = 7, proxCt = 104, view = 'dashboard', selCt = null, carrinho = [], filtro = '';
+
+        const eqPor = (id) => equips.find((e) => e.id === id);
+        const dias = (a, b) => Math.max(1, Math.round((new Date(b) - new Date(a)) / 86400000));
+        const total = (c) => c.itens.reduce((s, i) => s + eqPor(i.eq).val * i.q, 0) * dias(c.ini, c.fim);
+        const status = (c) => c.dev ? 'Devolvido' : (c.fim < iso(new Date()) ? 'Atrasado' : 'Ativo');
+        const clsSt = (s) => s === 'Atrasado' ? 'atr' : s === 'Devolvido' ? 'dev' : '';
+        // Estoque livre no período: desconta contratos não devolvidos que se sobrepõem
+        const livre = (eq, ini, fim) => eqPor(eq).qtd - contratos.filter((c) => !c.dev && c.ini <= fim && c.fim >= ini)
+            .reduce((s, c) => s + c.itens.filter((i) => i.eq === eq).reduce((a, i) => a + i.q, 0), 0);
+
+        const linhaCt = (c) => { const s = status(c); return `<tr data-id="${c.id}" class="${c.id === selCt ? 'sel' : ''}"><td>#${c.id}</td><td>${esc(c.cliente)}</td><td>${br(c.ini)}</td><td>${br(c.fim)}</td><td>${brl(total(c))}</td><td class="${clsSt(s)}">${s}</td></tr>`; };
+        const cabCt = '<thead><tr><th>ID</th><th>Cliente</th><th>Data Início</th><th>Data Devolução</th><th>Valor Total</th><th>Status</th></tr></thead>';
+
+        const telas = {
+            dashboard() {
+                const atrasados = contratos.filter((c) => status(c) === 'Atrasado').length;
+                const kpi = (t, v, a) => `<div class="lf-kpi"><span>${t}</span><b class="${a ? 'atr' : ''}">${v}</b></div>`;
+                return `<h4>Dashboard</h4><div class="lf-kpis">
+                    ${kpi('Faturamento Total', brl(contratos.reduce((s, c) => s + total(c), 0)))}
+                    ${kpi('Aluguéis Ativos', contratos.filter((c) => !c.dev).length)}
+                    ${kpi('Aluguéis Atrasados', atrasados, atrasados > 0)}
+                    ${kpi('Total Equipamentos', equips.reduce((s, e) => s + e.qtd, 0))}</div>
+                    <p class="lf-sub">Últimas Locações Registradas</p>
+                    ${contratos.length ? `<table class="lf-tab">${cabCt}<tbody>${[...contratos].reverse().slice(0, 5).map(linhaCt).join('')}</tbody></table>` : '<div class="lf-vazio">Nenhum aluguel registrado até o momento.</div>'}`;
+            },
+            equipamentos() {
+                const f = filtro.toLowerCase();
+                const lista = equips.filter((e) => [e.nome, e.marca, e.cat, e.pat].join(' ').toLowerCase().includes(f));
+                return `<h4>Gestão de Equipamentos</h4>
+                    <div class="lf-barra"><input id="busca" placeholder="Pesquisar por Nome, Marca, Categoria ou Patrimônio..." value="${esc(filtro)}"><button class="bs" id="btnImp">Importar Lista</button><button class="bp" id="btnNovo">Novo Equipamento</button></div>
+                    <table class="lf-tab"><thead><tr><th>Nome</th><th>Marca</th><th>Categoria</th><th>Patrimônio</th><th>Estoque</th><th>Diária</th></tr></thead><tbody>
+                    ${lista.map((e) => `<tr><td>${esc(e.nome)}</td><td>${esc(e.marca)}</td><td>${esc(e.cat)}</td><td>${esc(e.pat || '-')}</td><td>${livre(e.id, iso(new Date()), iso(new Date()))} / ${e.qtd}</td><td>${brl(e.val)}</td></tr>`).join('') || '<tr><td colspan="6" class="lf-vazio">Nenhum equipamento encontrado.</td></tr>'}
+                    </tbody></table><div class="lf-msg ok" id="impMsg"></div>`;
+            },
+            novo() {
+                return `<h4>Novo Aluguel</h4>
+                    <div class="lf-card"><h5>1. Dados do Cliente</h5><div class="lf-grade">
+                        <div><label>Nome do Cliente:</label><input id="nCli" placeholder="Nome ou razão social"></div>
+                        <div><label>CPF / CNPJ:</label><input id="nDoc"></div></div></div>
+                    <div class="lf-card"><h5>2. Período da Locação</h5><div class="lf-grade">
+                        <div><label>Data Início:</label><input type="date" id="nIni" value="${dia(0)}"></div>
+                        <div><label>Data Devolução:</label><input type="date" id="nFim" value="${dia(3)}"></div></div></div>
+                    <div class="lf-card"><h5>3. Itens do Contrato</h5>
+                        <div style="display:flex;gap:8px;align-items:flex-end"><div style="flex:1"><label style="color:#A1A1AA;font-size:12px">Equipamento (Selecione ou Digite):</label>
+                        <select id="nEq" style="width:100%">${equips.map((e) => `<option value="${e.id}">${esc(e.nome)} — ${brl(e.val)}/dia</option>`).join('')}</select></div>
+                        <div style="width:90px"><label style="color:#A1A1AA;font-size:12px">Quantidade:</label><input id="nQ" type="number" value="1" min="1" style="width:100%"></div>
+                        <button class="bs" id="nAdd">Adicionar</button></div>
+                        <div class="lf-itens" id="nItens"></div>
+                        <div class="lf-total"><span id="nDias"></span><b id="nTot"></b></div>
+                        <div class="lf-msg" id="nMsg"></div></div>
+                    <button class="bp" id="nEmitir" style="width:100%;padding:11px">Emitir Contrato de Aluguel</button>`;
+            },
+            gestao() {
+                return `<h4>Histórico de Contratos</h4>
+                    <table class="lf-tab">${cabCt}<tbody>${contratos.map(linhaCt).join('') || '<tr><td colspan="6" class="lf-vazio">Nenhum aluguel registrado até o momento.</td></tr>'}</tbody></table>
+                    <div id="detalhe" style="margin-top:12px"></div>
+                    <div style="display:flex;gap:8px;margin-top:12px"><button class="bp" id="gDev">Registrar Devolução</button><button class="bs perigo" id="gExc">Excluir Contrato</button></div>
+                    <div class="lf-msg" id="gMsg"></div>`;
+            },
+        };
+
+        function render() {
+            $('conteudo').innerHTML = telas[view]();
+            document.querySelectorAll('#menu button').forEach((b) => b.classList.toggle('on', b.dataset.v === view));
+            ligar[view] && ligar[view]();
+        }
+
+        function renderCarrinho() {
+            const ini = $('nIni').value, fim = $('nFim').value, d = dias(ini, fim);
+            $('nItens').innerHTML = carrinho.length ? carrinho.map((i, k) => `<div><span>${i.q}x ${esc(eqPor(i.eq).nome)}</span><span>${brl(eqPor(i.eq).val * i.q * d)} <button data-k="${k}">✕</button></span></div>`).join('') : 'Nenhum item adicionado.';
+            $('nItens').querySelectorAll('button').forEach((b) => { b.onclick = () => { carrinho.splice(+b.dataset.k, 1); renderCarrinho(); }; });
+            $('nDias').textContent = `${d} diária(s)`;
+            $('nTot').textContent = brl(carrinho.reduce((s, i) => s + eqPor(i.eq).val * i.q, 0) * d);
+        }
+
+        const ligar = {
+            equipamentos() {
+                const b = $('busca'); b.oninput = () => { filtro = b.value; render(); const n = $('busca'); n.focus(); n.setSelectionRange(n.value.length, n.value.length); };
+                $('btnNovo').onclick = () => { ['mNome', 'mMarca', 'mCat', 'mPat', 'mVal'].forEach((i) => { $(i).value = ''; }); $('mQtd').value = 1; $('mMsg').textContent = ''; $('modal').hidden = false; $('mNome').focus(); };
+                $('btnImp').onclick = () => {
+                    equips.push({ id: proxEq++, nome: 'Serra Circular', marca: 'DeWalt', cat: 'Ferramentas Elétricas', pat: 'PAT-0071', qtd: 3, val: 55 },
+                                { id: proxEq++, nome: 'Compactador de Solo', marca: 'Wacker', cat: 'Construção', pat: 'PAT-0072', qtd: 2, val: 210 });
+                    render(); $('impMsg').textContent = 'equipamentos.xlsx importado: 2 equipamentos adicionados.';
+                };
+            },
+            novo() {
+                carrinho = [];
+                ['nIni', 'nFim'].forEach((i) => { $(i).onchange = renderCarrinho; });
+                $('nAdd').onclick = () => {
+                    const eq = +$('nEq').value, q = Math.max(1, +$('nQ').value || 1);
+                    const ja = carrinho.filter((i) => i.eq === eq).reduce((s, i) => s + i.q, 0);
+                    const disp = livre(eq, $('nIni').value, $('nFim').value) - ja;
+                    if (q > disp) { $('nMsg').textContent = `Estoque insuficiente no período: ${Math.max(0, disp)} disponível(is).`; return; }
+                    $('nMsg').textContent = ''; carrinho.push({ eq, q }); renderCarrinho();
+                };
+                $('nEmitir').onclick = () => {
+                    const m = $('nMsg'); m.className = 'lf-msg';
+                    if (!$('nCli').value.trim()) { m.textContent = 'Informe o nome do cliente.'; return; }
+                    if ($('nFim').value <= $('nIni').value) { m.textContent = 'A data de devolução deve ser depois do início.'; return; }
+                    if (!carrinho.length) { m.textContent = 'Adicione ao menos um item.'; return; }
+                    const c = { id: proxCt++, cliente: $('nCli').value.trim(), doc: $('nDoc').value, ini: $('nIni').value, fim: $('nFim').value, itens: carrinho, dev: false };
+                    contratos.push(c); selCt = c.id; view = 'gestao'; render();
+                    $('gMsg').className = 'lf-msg ok'; $('gMsg').textContent = `Contrato #${c.id} emitido: ${brl(total(c))}.`;
+                };
+                renderCarrinho();
+            },
+            gestao() {
+                document.querySelectorAll('#conteudo tbody tr[data-id]').forEach((tr) => { tr.onclick = () => { selCt = +tr.dataset.id; render(); }; });
+                const c = contratos.find((x) => x.id === selCt);
+                if (c) $('detalhe').innerHTML = `<div class="lf-card"><h5>Contrato #${c.id} — ${esc(c.cliente)} ${c.doc ? '(' + esc(c.doc) + ')' : ''}</h5>${c.itens.map((i) => `${i.q}x ${esc(eqPor(i.eq).nome)}`).join(' · ')} — ${dias(c.ini, c.fim)} diária(s)</div>`;
+                const precisa = () => { if (!c) { $('gMsg').className = 'lf-msg'; $('gMsg').textContent = 'Selecione um contrato na lista.'; } return c; };
+                $('gDev').onclick = () => { if (!precisa()) return; if (c.dev) { $('gMsg').textContent = 'Este contrato já foi devolvido.'; return; } c.dev = true; render(); $('gMsg').className = 'lf-msg ok'; $('gMsg').textContent = `Devolução do contrato #${c.id} registrada. Itens voltaram ao estoque.`; };
+                $('gExc').onclick = () => { if (!precisa() || !confirm(`Excluir o contrato #${c.id}?`)) return; contratos = contratos.filter((x) => x !== c); selCt = null; render(); };
+            },
+        };
+
+        $('mCancel').onclick = () => { $('modal').hidden = true; };
+        $('mSalvar').onclick = () => {
+            const nome = $('mNome').value.trim(), val = parseFloat($('mVal').value), qtd = parseInt($('mQtd').value, 10);
+            if (!nome) { $('mMsg').textContent = 'Informe o nome do equipamento.'; return; }
+            if (!(val > 0)) { $('mMsg').textContent = 'Informe um valor de diária válido.'; return; }
+            if (!(qtd > 0)) { $('mMsg').textContent = 'Quantidade deve ser maior que zero.'; return; }
+            equips.push({ id: proxEq++, nome, marca: $('mMarca').value.trim(), cat: $('mCat').value.trim(), pat: $('mPat').value.trim(), qtd, val });
+            $('modal').hidden = true; filtro = ''; render();
+        };
+
+        document.querySelectorAll('#menu button').forEach((b) => { b.onclick = () => { view = b.dataset.v; render(); }; });
+        render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+/* Páginas de prévia dos projetos: herda a identidade do portfólio (styles.css) */
+
+.topo-projeto {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 20px 0;
+}
+
+.voltar {
+    color: #555;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.voltar:hover {
+    color: #57b846;
+}
+
+.projeto-intro {
+    max-width: 1100px;
+    text-align: left;
+}
+
+.projeto-intro h2 {
+    text-align: left;
+    margin: 0 0 10px;
+}
+
+.projeto-intro p {
+    text-align: left;
+    margin: 0 0 18px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.tag {
+    background: #f1f5f0;
+    border: 1px solid #d7e8d3;
+    color: #3d7a32;
+    font-size: 0.82em;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 999px;
+}
+
+.acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.botao:hover {
+    transform: scale(1.03);
+}
+
+.botao-repo {
+    background: #111;
+    color: #fff;
+}
+
+.botao-repo:hover {
+    background: #333;
+}
+
+.botao-app {
+    background: #57b846;
+    color: #fff;
+}
+
+.botao-app:hover {
+    background: #45a035;
+}
+
+/* Área da simulação */
+.demo {
+    max-width: 1100px;
+    padding: 30px 24px;
+}
+
+.demo h2 {
+    margin-bottom: 8px;
+}
+
+.aviso-demo {
+    font-size: 0.9em;
+    color: #777 !important;
+}
+
+/* Moldura de janela do Windows */
+.janela {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    border: 1px solid #222;
+    margin-top: 20px;
+    font-family: 'Segoe UI', 'Helvetica', Arial, sans-serif;
+    text-align: left;
+}
+
+.janela-barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #202020;
+    color: #ddd;
+    font-size: 0.82em;
+    height: 32px;
+    padding-left: 12px;
+    user-select: none;
+}
+
+.janela-titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.janela-controles {
+    display: flex;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.janela-controles span {
+    width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    color: #bbb;
+}
+
+.janela-controles span:last-child:hover {
+    background: #c42b1c;
+    color: #fff;
+}
+
+.janela-corpo {
+    position: relative;
+}
+
+/* Recursos */
+.recursos {
+    max-width: 1100px;
+    text-align: left;
+}
+
+.recursos h2 {
+    text-align: left;
+}
+
+.recursos ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 30px;
+}
+
+.recursos li {
+    position: relative;
+    padding-left: 28px;
+    color: #444;
+}
+
+.recursos li::before {
+    content: '✔';
+    position: absolute;
+    left: 0;
+    color: #57b846;
+    font-weight: bold;
+}
+
+/* Rolagem horizontal das simulações em telas estreitas */
+.rolagem {
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .recursos ul {
+        grid-template-columns: 1fr;
+    }
+
+    .demo {
+        padding: 20px 12px;
+    }
+
+    .botao {
+        width: 100%;
+        justify-content: center;
+    }
+}

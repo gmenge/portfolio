@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Solar | Gabriel Menge</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="projeto.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <style>
+        .navegador-barra { display: flex; align-items: center; gap: 10px; background: #2b2b2b; padding: 8px 12px; }
+        .navegador-barra .pontos { display: flex; gap: 6px; } .navegador-barra .pontos i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+        .navegador-barra .end { flex: 1; background: #1b1b1b; color: #bbb; font-size: 0.8em; padding: 5px 12px; border-radius: 999px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .app-frame { width: 100%; height: 640px; border: 0; display: block; background: #fff; }
+    </style>
+</head>
+<body>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+
+    <main>
+        <section class="projeto-intro">
+            <h2><i class="fa-solid fa-solar-panel"></i> Calculadora Solar</h2>
+            <p>Calculadora web de investimento e retorno em energia solar. A partir do tipo de sistema e do consumo mensal em kWh, estima a quantidade de placas, o investimento e o tempo de retorno. Este projeto já é um app web, então a prévia abaixo é o próprio app funcionando.</p>
+            <div class="tags">
+                <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">GitHub Pages</span>
+            </div>
+            <div class="acoes">
+                <a class="botao botao-app" href="https://gmenge.github.io/calculadora-solar/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir o app</a>
+                <a class="botao botao-repo" href="https://github.com/gmenge/calculadora-solar" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> Ver repositório</a>
+            </div>
+        </section>
+
+        <section class="demo">
+            <h2><i class="fa-solid fa-hand-pointer"></i> Experimente</h2>
+            <p class="aviso-demo">App real, carregado abaixo. Os resultados são estimativas com tarifa e preços fixos.</p>
+            <div class="janela">
+                <div class="navegador-barra">
+                    <span class="pontos"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span>
+                    <span class="end"><i class="fa-solid fa-lock"></i> gmenge.github.io/calculadora-solar/</span>
+                </div>
+                <iframe class="app-frame" src="https://gmenge.github.io/calculadora-solar/" title="Calculadora Solar" loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <section class="recursos">
+            <h2><i class="fa-solid fa-list-check"></i> Recursos</h2>
+            <ul>
+                <li>Cálculo de investimento e retorno a partir do consumo mensal</li>
+                <li>Escolha do tipo de sistema</li>
+                <li>Arquivo único, sem dependências</li>
+                <li>Publicado no GitHub Pages</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer><p>&copy; 2026 Gabriel Menge. Todos os direitos reservados.</p></footer>
+</body>
+</html>

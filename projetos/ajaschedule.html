@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AjaSchedule | Gabriel Menge</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="projeto.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <style>
+        /* Proporção da janela real (1350x800) */
+        .as { background: #141414; color: #fff; font: bold 13px Arial, sans-serif; width: 100%; min-width: 1000px; aspect-ratio: 1350 / 800; display: flex; flex-direction: column; position: relative; }
+        .as-abas { display: flex; background: #1A1A1A; flex-shrink: 0; }
+        .as-abas button { background: transparent; border: 0; border-bottom: 3px solid transparent; color: #CCCCCC; padding: 13px 24px; font: bold 15px Arial, sans-serif; cursor: pointer; }
+        .as-abas button:hover { color: #fff; }
+        .as-abas button.on { color: #00E5FF; border-color: #00E5FF; }
+        .as-aba { flex: 1; display: flex; flex-direction: column; padding: 0 18px 8px; min-height: 0; }
+        .as-aba[hidden] { display: none; }
+        .as-logo { text-align: center; padding: 26px 0 22px; line-height: 1; }
+        .as-logo b { font: italic 900 30px Arial, sans-serif; color: #2A9BC9; letter-spacing: 3px; }
+        .as-logo small { display: block; font-size: 8px; color: #2A6F8C; letter-spacing: 2px; margin-top: 3px; }
+        .as-novo { background: #2B2B2B; padding: 8px 6px 14px; }
+        .as-novo h4 { margin: 0 0 12px; color: #00E5FF; font-size: 15px; }
+        .as-form { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-left: 16px; }
+        .as-form > span { margin: 0 2px 0 6px; }
+        .as-sel { background: #1E1E1E; color: #00E5FF; border: 0; font: bold 13px Arial, sans-serif; padding: 9px 14px; cursor: pointer; min-width: 60px; }
+        .as-sel.largo { width: 190px; }
+        .as-sel:hover { background: #262626; }
+        .as-agora { background: #2B2B2B; color: #00E5FF; border: 0; font: bold 13px Arial, sans-serif; padding: 9px 8px; cursor: pointer; }
+        .as-agora:hover { background: #333; }
+        .as-ciano { background: #00E5FF; color: #000; border: 0; font: bold 13px Arial, sans-serif; padding: 10px 18px; cursor: pointer; margin-left: 14px; }
+        .as-ciano:hover { background: #33EBFB; }
+        .as-cinza { background: #262626; color: #fff; border: 0; font: bold 12px Arial, sans-serif; padding: 9px 18px; cursor: pointer; }
+        .as-cinza:hover { background: #333; }
+        .as-verm { background: #FF4444; color: #fff; border: 0; font: bold 12px Arial, sans-serif; padding: 9px 18px; cursor: pointer; }
+        .as-verm:hover { background: #ff6161; }
+        .as-tabela { flex: 1; margin-top: 10px; border: 1px solid #ddd; background: #1E1E1E; overflow-y: auto; min-height: 0; }
+        .as-tabela table { width: 100%; border-collapse: collapse; }
+        .as-tabela th { color: #00E5FF; font-size: 14px; padding: 6px; background: #1E1E1E; position: sticky; top: 0; }
+        .as-tabela td { text-align: center; padding: 7px 6px; font-size: 13px; text-transform: uppercase; }
+        .as-tabela td.esq { text-align: left; padding-left: 4%; }
+        .as-tabela tbody tr { cursor: pointer; }
+        .as-tabela tbody tr.sel td { background: #00E5FF; color: #000; }
+        .as-rodape { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+        .as-assin { text-align: center; color: #888; font-size: 11px; font-weight: normal; padding: 8px 0 2px; }
+        .as-mon-tit { color: #00E5FF; font-size: 17px; padding: 16px 2px; }
+        .as-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; overflow-y: auto; align-content: start; }
+        .as-card { background: #2B2B2B; padding: 12px; }
+        .as-card h5 { margin: 0 0 8px; color: #00E5FF; font-size: 14px; }
+        .as-card p { margin: 3px 0; font-size: 13px; }
+        .as-vazio { color: #888; text-align: center; padding: 30px; font-weight: normal; }
+        .as-logs { flex: 1; margin: 15px 0 0; background: #0F0F0F; color: #00FF66; font: 12px Consolas, monospace; padding: 10px; overflow-y: auto; list-style: none; border: 1px solid #2B2B2B; }
+        .as-logs li { padding: 1px 0; }
+        .as-cfg { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-top: 16px; flex: 1; min-height: 0; }
+        .as-cfg fieldset { border: 1px solid #3A3A3A; background: #1E1E1E; padding: 12px; margin: 0; min-height: 0; display: flex; flex-direction: column; gap: 8px; }
+        .as-cfg legend { color: #00E5FF; padding: 0 6px; }
+        .as-cfg input, .as-cfg select, .as-pop input { background: #2B2B2B; color: #00E5FF; border: 1px solid #3A3A3A; padding: 7px; font: bold 13px Arial, sans-serif; }
+        .as-lista { background: #2B2B2B; overflow-y: auto; flex: 1; min-height: 120px; font-weight: normal; }
+        .as-lista div { padding: 4px 8px; cursor: pointer; }
+        .as-lista div:hover { background: #333; }
+        .as-lista div.sel { background: #00E5FF; color: #000; }
+        .as-modal { position: absolute; inset: 0; background: rgba(0,0,0,.55); display: flex; align-items: center; justify-content: center; z-index: 5; }
+        .as-modal[hidden] { display: none; }
+        .as-pop { background: #1E1E1E; border: 1px solid #444; width: 400px; max-height: 88%; display: flex; flex-direction: column; box-shadow: 0 10px 30px #000; }
+        .as-pop-tit { background: #F0F0F0; color: #000; font: 12px 'Segoe UI', Arial, sans-serif; padding: 6px 10px; display: flex; justify-content: space-between; }
+        .as-pop-tit span:last-child { cursor: pointer; }
+        .as-pop-corpo { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 0; flex: 1; }
+        .as-pop h4 { margin: 0; color: #00E5FF; text-align: center; font-size: 14px; }
+        .as-grade-num { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+        .as-grade-num button { background: #2B2B2B; color: #fff; border: 0; padding: 9px 0; font: bold 13px Arial, sans-serif; cursor: pointer; }
+        .as-grade-num button:hover, .as-grade-num button.sel { background: #00E5FF; color: #000; }
+        .as-pop label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .as-pop input[type=radio], .as-pop input[type=checkbox] { accent-color: #00E5FF; width: 15px; height: 15px; }
+        .as-toast { position: absolute; left: 50%; top: 52px; transform: translateX(-50%); background: #00FF66; color: #000; padding: 9px 16px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 6; }
+        .as-toast.on { opacity: 1; }
+        .as-toast.alerta { background: #FFCC00; }
+        .janela-barra.clara { background: #fff; color: #000; border-bottom: 1px solid #ddd; }
+        .janela-barra.clara .janela-controles span { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="topo-projeto"><a class="voltar" href="../index.html#projects"><i class="fa-solid fa-arrow-left"></i> Voltar ao portfólio</a></div>
+
+    <main>
+        <section class="projeto-intro">
+            <h2><i class="fa-regular fa-clock"></i> AjaSchedule</h2>
+            <p>Agendador desktop que executa comutações programadas em matrizes de vídeo AJA KUMO 64x64. Cada rotina define destino, origem, horário e frequência (dias recorrentes ou data única); o app executa no horário, mostra o painel de monitoração por destino e registra tudo em log. Interface em português, inglês e espanhol.</p>
+            <div class="tags">
+                <span class="tag">Python</span><span class="tag">Tkinter</span><span class="tag">API HTTP</span><span class="tag">Pytest</span><span class="tag">GitHub Actions</span>
+            </div>
+            <div class="acoes">
+                <a class="botao botao-repo" href="https://github.com/gmenge/AjaSchedule" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> Ver repositório</a>
+            </div>
+        </section>
+
+        <section class="demo">
+            <h2><i class="fa-solid fa-hand-pointer"></i> Experimente</h2>
+            <p class="aviso-demo">Simulação interativa. Escolha destino e origem, clique em AGORA (próximo minuto) e em + AGENDAR: a rotina é executada no horário. A matriz é imitada no navegador.</p>
+
+            <div class="janela">
+                <div class="janela-barra clara">
+                    <div class="janela-titulo"><i class="fa-regular fa-clock" style="color:#2A9BC9"></i> Agendador KUMO 64x64</div>
+                    <div class="janela-controles"><span>&#8212;</span><span>&#9744;</span><span>&#10005;</span></div>
+                </div>
+                <div class="janela-corpo rolagem">
+                    <div class="as">
+                        <div class="as-abas" id="abas">
+                            <button class="on" data-aba="agendar">Agendar Trocas</button>
+                            <button data-aba="monitor">Monitoramento em Tempo Real</button>
+                            <button data-aba="logs">Logs do Sistema</button>
+                            <button data-aba="config">Configurações</button>
+                        </div>
+
+                        <div class="as-aba" id="aba-agendar">
+                            <div class="as-logo"><b>KUMO</b><small>64x64 SCHEDULER</small></div>
+                            <div class="as-novo">
+                                <h4>NOVO AGENDAMENTO DE ROTINA</h4>
+                                <div class="as-form">
+                                    <span>Destino:</span><button class="as-sel largo" id="fDest">Selecione Destino...</button>
+                                    <span>Origem:</span><button class="as-sel largo" id="fOrig">Selecione Origem...</button>
+                                    <span>Frequência:</span><button class="as-sel" id="fFreq">Todos os Dias</button>
+                                    <span>Horário:</span><button class="as-sel" id="fH">00 h</button><span style="margin:0">:</span><button class="as-sel" id="fM">00 min</button>
+                                    <button class="as-agora" id="btnAgora">AGORA</button>
+                                    <button class="as-ciano" id="btnAdd">+ AGENDAR</button>
+                                    <button class="as-cinza" id="btnCancelEd" hidden>CANCELAR EDIÇÃO</button>
+                                </div>
+                            </div>
+                            <div class="as-tabela">
+                                <table>
+                                    <thead><tr><th style="width:8%">#</th><th>Destino (Saída Matriz)</th><th>Origem (Entrada Matriz)</th><th>Frequência / Data</th><th style="width:12%">Horário</th><th>Status</th></tr></thead>
+                                    <tbody id="lista"></tbody>
+                                </table>
+                            </div>
+                            <div class="as-rodape">
+                                <button class="as-cinza" id="btnEd">EDITAR SELECIONADO</button>
+                                <button class="as-verm" id="btnRem">REMOVER SELECIONADO</button>
+                                <span style="flex:1"></span>
+                                <button class="as-ciano" id="btnRun">EXECUTAR SELECIONADO AGORA</button>
+                            </div>
+                            <div class="as-assin">Desenvolvido por Gabriel Menge</div>
+                        </div>
+
+                        <div class="as-aba" id="aba-monitor" hidden>
+                            <div class="as-mon-tit">PAINEL DE MONITORAÇÃO DE ROTINAS DA MATRIZ</div>
+                            <div class="as-cards" id="cards"></div>
+                        </div>
+
+                        <div class="as-aba" id="aba-logs" hidden><ul class="as-logs" id="logs"></ul></div>
+
+                        <div class="as-aba" id="aba-config" hidden>
+                            <div class="as-cfg">
+                                <fieldset>
+                                    <legend>Configuração de Rede (Matriz AJA KUMO)</legend>
+                                    <span>Endereço IP da Matriz:</span>
+                                    <div style="display:flex;gap:8px"><input id="cIp" value="192.168.0.150" style="flex:1"><button class="as-ciano" id="cSalvarIp" style="margin:0">SALVAR IP</button></div>
+                                    <span style="color:#aaa">IP Atual em Uso: <b id="cIpAtual" style="color:#00FF66">192.168.0.150</b></span>
+                                    <span style="margin-top:10px">Idioma do Sistema / Language:</span>
+                                    <select><option>Português (Brasil)</option><option>English</option><option>Español</option></select>
+                                </fieldset>
+                                <fieldset>
+                                    <legend id="cLegenda">Gerenciamento de Saídas (Destinos)</legend>
+                                    <div style="display:flex;gap:8px">
+                                        <button class="as-cinza" id="cTipoD" style="flex:1">Destinos</button><button class="as-cinza" id="cTipoO" style="flex:1">Origens</button>
+                                    </div>
+                                    <input id="cFiltro" placeholder="Filtrar:">
+                                    <div class="as-lista" id="cLista"></div>
+                                    <button class="as-cinza" id="cEditar">Editar Rótulo</button>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="as-modal" id="modal" hidden><div class="as-pop" id="pop"></div></div>
+                        <div class="as-toast" id="toast"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="recursos">
+            <h2><i class="fa-solid fa-list-check"></i> Recursos</h2>
+            <ul>
+                <li>Rotinas em dias recorrentes da semana ou em data única</li>
+                <li>Execução automática no horário, com execução manual imediata</li>
+                <li>Painel de monitoração com as rotinas de cada destino</li>
+                <li>Log detalhado de conexão, criação, edição e execução de rotinas</li>
+                <li>Rótulos personalizáveis para as 64 entradas e 64 saídas</li>
+                <li>Interface em três idiomas; testes com Pytest e CI no GitHub Actions</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer><p>&copy; 2026 Gabriel Menge. Todos os direitos reservados.</p></footer>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+        const pad = (n) => String(n).padStart(2, '0');
+        const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const DIAS = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'];
+        const CURTO = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM'];
+        const nomes = { d: [], o: [] };
+        for (let i = 1; i <= 64; i++) { nomes.d.push(`Destino ${i}`); nomes.o.push(`Origem ${i}`); }
+        Object.assign(nomes.o, { 0: 'Câmera 1', 1: 'Câmera 2', 4: 'Servidor de Vídeo', 11: 'Link SRT', 19: 'Barras de Cor' });
+        Object.assign(nomes.d, { 0: 'PGM Principal', 2: 'Monitor Diretor', 7: 'Encoder Stream' });
+        const rot = (t, n) => `[${pad(n)}] ${nomes[t][n - 1]}`;
+
+        function hoje() { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; }
+        const TODOS = [0, 1, 2, 3, 4, 5, 6];
+        let rotinas = [
+            { id: 1, dest: 10, orig: 15, tipo: 'rec', dias: TODOS, data: '', hora: '06:10', ultimo: '' },
+            { id: 2, dest: 1, orig: 12, tipo: 'rec', dias: [0, 1, 2, 3, 4], data: '', hora: '07:00', ultimo: '' },
+            { id: 3, dest: 8, orig: 20, tipo: 'uni', dias: [], data: hoje(), hora: '23:30', ultimo: '' },
+        ];
+        let proxId = 4, sel = null, editando = null;
+        let form = { dest: null, orig: null, tipo: 'rec', dias: TODOS.slice(), data: hoje(), h: 0, m: 0 };
+
+        function freqTxt(r) {
+            if (r.tipo === 'uni') return r.data;
+            if (r.dias.length === 7) return 'Todos os Dias';
+            return r.dias.map((i) => CURTO[i]).join(', ');
+        }
+        const status = (r) => (r.tipo === 'uni' && r.ultimo) ? 'EXECUTADO' : 'AGUARDANDO HORÁRIO';
+
+        function render() {
+            $('lista').innerHTML = rotinas.map((r) => `<tr data-id="${r.id}" class="${r.id === sel ? 'sel' : ''}"><td>${r.id}</td><td class="esq">${esc(rot('d', r.dest))}</td><td class="esq">${esc(rot('o', r.orig))}</td><td>${freqTxt(r)}</td><td>${r.hora}:00</td><td>${status(r)}</td></tr>`).join('');
+            $('lista').querySelectorAll('tr').forEach((tr) => { tr.onclick = () => { sel = +tr.dataset.id; render(); }; });
+            renderCards();
+        }
+
+        function renderCards() {
+            const por = {};
+            rotinas.forEach((r) => { (por[r.dest] = por[r.dest] || []).push(r); });
+            const ds = Object.keys(por).map(Number).sort((a, b) => a - b);
+            if (!ds.length) { $('cards').innerHTML = '<div class="as-vazio" style="grid-column:1/-1">Nenhum destino possui rotinas agendadas no momento.</div>'; return; }
+            $('cards').innerHTML = ds.map((d) => `<div class="as-card"><h5>DESTINO [${pad(d)}] ${esc(nomes.d[d - 1])}</h5>${por[d].map((r) => {
+                const ok = r.ultimo === hoje();
+                return `<p style="color:${ok ? '#00FF66' : '#FFCC00'}">• [${freqTxt(r)}] ${r.hora} -&gt; [${pad(r.orig)}] ${esc(nomes.o[r.orig - 1])} (${ok ? 'EXECUTADO' : 'AGUARDANDO'})</p>`;
+            }).join('')}</div>`).join('');
+        }
+
+        function log(txt) {
+            const d = new Date();
+            $('logs').insertAdjacentHTML('beforeend', `<li>[${hoje()} ${d.toLocaleTimeString('pt-BR')}] ${esc(txt)}</li>`);
+            $('logs').scrollTop = 1e9;
+        }
+
+        function toast(t, alerta) { const e = $('toast'); e.textContent = t; e.className = 'as-toast on' + (alerta ? ' alerta' : ''); clearTimeout(e._t); e._t = setTimeout(() => { e.className = 'as-toast'; }, 2400); }
+
+        function atualizarForm() {
+            $('fDest').textContent = form.dest ? rot('d', form.dest) : 'Selecione Destino...';
+            $('fOrig').textContent = form.orig ? rot('o', form.orig) : 'Selecione Origem...';
+            $('fFreq').textContent = freqTxt(form);
+            $('fH').textContent = `${pad(form.h)} h`; $('fM').textContent = `${pad(form.m)} min`;
+        }
+
+        // Popups
+        function abrir(titulo, html, ligar) {
+            $('pop').innerHTML = `<div class="as-pop-tit"><span>${titulo}</span><span id="pX">✕</span></div><div class="as-pop-corpo">${html}</div>`;
+            $('modal').hidden = false; $('pX').onclick = fechar; ligar();
+        }
+        function fechar() { $('modal').hidden = true; }
+
+        function popLista(t) {
+            const ehD = t === 'd';
+            let escolhido = form[ehD ? 'dest' : 'orig'];
+            abrir(ehD ? 'Selecionar Destino' : 'Selecionar Origem',
+                `<h4>${ehD ? 'SELECIONE O DESTINO' : 'SELECIONE A ORIGEM'}</h4>
+                <label style="cursor:default">Filtrar: <input id="pF" style="flex:1"></label>
+                <span style="color:#aaa;font-size:12px">Lista (Portas 01 a 64):</span>
+                <div class="as-lista" id="pL" style="height:280px;flex:none"></div>
+                <button class="as-ciano" id="pOk" style="margin:0">CONFIRMAR SELEÇÃO</button>`,
+                () => {
+                    const desenhar = () => {
+                        const f = $('pF').value.toLowerCase();
+                        $('pL').innerHTML = nomes[t].map((n, i) => ({ n, i: i + 1 })).filter((x) => rot(t, x.i).toLowerCase().includes(f))
+                            .map((x) => `<div data-i="${x.i}" class="${x.i === escolhido ? 'sel' : ''}">${esc(rot(t, x.i))}</div>`).join('');
+                        $('pL').querySelectorAll('div').forEach((d) => {
+                            d.onclick = () => { escolhido = +d.dataset.i; desenhar(); };
+                            d.ondblclick = () => { escolhido = +d.dataset.i; $('pOk').onclick(); };
+                        });
+                    };
+                    $('pF').oninput = desenhar; desenhar(); $('pF').focus();
+                    $('pOk').onclick = () => { if (!escolhido) return; form[ehD ? 'dest' : 'orig'] = escolhido; atualizarForm(); fechar(); };
+                });
+        }
+
+        function popNum(ehHora) {
+            const max = ehHora ? 24 : 60;
+            abrir(ehHora ? 'Selecionar Hora' : 'Selecionar Minuto',
+                `<h4>${ehHora ? 'SELECIONE A HORA' : 'SELECIONE O MINUTO'}</h4><div class="as-grade-num" id="pG" style="grid-template-columns:repeat(${ehHora ? 6 : 10},1fr)"></div>`,
+                () => {
+                    const atual = ehHora ? form.h : form.m;
+                    $('pG').innerHTML = Array.from({ length: max }, (_, i) => `<button data-v="${i}" class="${i === atual ? 'sel' : ''}">${pad(i)}</button>`).join('');
+                    $('pG').querySelectorAll('button').forEach((b) => { b.onclick = () => { form[ehHora ? 'h' : 'm'] = +b.dataset.v; atualizarForm(); fechar(); }; });
+                });
+        }
+
+        function popFreq() {
+            abrir('Selecionar Frequência / Dias',
+                `<h4>FREQUÊNCIA DA ROTINA</h4>
+                <div style="display:flex;gap:24px;justify-content:center"><label><input type="radio" name="pT" value="rec"> Dias Recorrentes</label><label><input type="radio" name="pT" value="uni"> Data Única</label></div>
+                <div id="pDias" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 20px">${DIAS.map((d, i) => `<label><input type="checkbox" value="${i}"> ${d}</label>`).join('')}</div>
+                <div id="pData"><span style="color:#A0A0A0">Data do Evento (AAAA-MM-DD):</span><input id="pD" style="width:100%;margin-top:6px"></div>
+                <button class="as-ciano" id="pOk" style="margin:0">CONFIRMAR FREQUÊNCIA</button>`,
+                () => {
+                    document.querySelector(`input[name=pT][value=${form.tipo}]`).checked = true;
+                    $('pDias').querySelectorAll('input').forEach((c) => { c.checked = form.dias.includes(+c.value); });
+                    $('pD').value = form.data || hoje();
+                    const modo = () => { const u = document.querySelector('input[name=pT]:checked').value === 'uni'; $('pDias').style.display = u ? 'none' : 'grid'; $('pData').style.display = u ? 'none' : 'block'; };
+                    document.querySelectorAll('input[name=pT]').forEach((r) => { r.onchange = modo; }); modo();
+                    $('pOk').onclick = () => {
+                        const tipo = document.querySelector('input[name=pT]:checked').value;
+                        if (tipo === 'rec') {
+                            const dias = [...$('pDias').querySelectorAll('input:checked')].map((c) => +c.value);
+                            if (!dias.length) { toast('Selecione ao menos um dia da semana.', true); return; }
+                            Object.assign(form, { tipo, dias });
+                        } else {
+                            if (!/^\d{4}-\d{2}-\d{2}$/.test($('pD').value)) { toast('Data inválida. Use AAAA-MM-DD.', true); return; }
+                            Object.assign(form, { tipo, data: $('pD').value });
+                        }
+                        atualizarForm(); fechar();
+                    };
+                });
+        }
+
+        $('fDest').onclick = () => popLista('d');
+        $('fOrig').onclick = () => popLista('o');
+        $('fH').onclick = () => popNum(true);
+        $('fM').onclick = () => popNum(false);
+        $('fFreq').onclick = popFreq;
+        $('btnAgora').onclick = () => { const d = new Date(Date.now() + 60000); form.h = d.getHours(); form.m = d.getMinutes(); atualizarForm(); };
+
+        function sairEdicao() {
+            editando = null; $('btnAdd').textContent = '+ AGENDAR'; $('btnCancelEd').hidden = true;
+            form = { dest: null, orig: null, tipo: 'rec', dias: TODOS.slice(), data: hoje(), h: 0, m: 0 }; atualizarForm();
+        }
+
+        $('btnAdd').onclick = () => {
+            if (!form.dest || !form.orig) { toast('Selecione o destino e a origem.', true); return; }
+            const dados = { dest: form.dest, orig: form.orig, tipo: form.tipo, dias: form.dias.slice(), data: form.data, hora: `${pad(form.h)}:${pad(form.m)}`, ultimo: '' };
+            if (editando) {
+                const r = rotinas.find((x) => x.id === editando);
+                log(`ROTINA ATUALIZADA (ID #${r.id}): [DE] Destino [${r.dest}] <- Origem [${r.orig}] às ${r.hora} | [PARA] Destino [${dados.dest}] <- Origem [${dados.orig}] às ${dados.hora}`);
+                Object.assign(r, dados); sel = r.id; toast('Alterações salvas.');
+            } else {
+                const r = { id: proxId++, ...dados }; rotinas.push(r); sel = r.id;
+                log(`ROTINA ADICIONADA (ID #${r.id}): Destino [${r.dest}] <- Origem [${r.orig}] às ${r.hora} | Frequência: ${freqTxt(r)}`);
+                toast(`Rotina #${r.id} agendada para ${r.hora}.`);
+            }
+            sairEdicao(); render();
+        };
+        $('btnCancelEd').onclick = sairEdicao;
+
+        function exigeSel(msg) { const r = rotinas.find((x) => x.id === sel); if (!r) toast(msg, true); return r; }
+        $('btnEd').onclick = () => {
+            const r = exigeSel('Por favor, selecione um agendamento na lista para editar.'); if (!r) return;
+            editando = r.id; const [h, m] = r.hora.split(':').map(Number);
+            form = { dest: r.dest, orig: r.orig, tipo: r.tipo, dias: r.dias.slice(), data: r.data || hoje(), h, m };
+            atualizarForm(); $('btnAdd').textContent = 'SALVAR ALTERAÇÕES'; $('btnCancelEd').hidden = false;
+        };
+        $('btnRem').onclick = () => {
+            const r = exigeSel('Por favor, selecione um agendamento na lista para excluir.'); if (!r) return;
+            if (!confirm(`Confirmar Exclusão\n\nRemover o agendamento #${r.id}?`)) return;
+            rotinas = rotinas.filter((x) => x !== r); sel = null;
+            log(`ROTINA REMOVIDA (ID #${r.id}): Destino [${r.dest}] <- Origem [${r.orig}] às ${r.hora} | Frequência: ${freqTxt(r)}`); render();
+        };
+        function executar(r) {
+            r.ultimo = hoje();
+            log(`ROTINA EXECUTADA COM SUCESSO: Destino [${rot('d', r.dest)}] <- Origem [${rot('o', r.orig)}]`);
+            toast(`Destino ${pad(r.dest)} ← Origem ${pad(r.orig)}`); render();
+        }
+        $('btnRun').onclick = () => { const r = exigeSel('Por favor, selecione um agendamento na lista para executar.'); if (r) executar(r); };
+
+        document.querySelectorAll('#abas button').forEach((b) => {
+            b.onclick = () => {
+                document.querySelectorAll('#abas button').forEach((x) => x.classList.toggle('on', x === b));
+                document.querySelectorAll('.as-aba').forEach((a) => { a.hidden = a.id !== 'aba-' + b.dataset.aba; });
+            };
+        });
+
+        // Configurações: rótulos
+        let cTipo = 'd', cSel = null;
+        function renderCfg() {
+            $('cLegenda').textContent = cTipo === 'd' ? 'Gerenciamento de Saídas (Destinos)' : 'Gerenciamento de Entradas (Origens)';
+            $('cTipoD').style.color = cTipo === 'd' ? '#00E5FF' : ''; $('cTipoO').style.color = cTipo === 'o' ? '#00E5FF' : '';
+            const f = $('cFiltro').value.toLowerCase();
+            $('cLista').innerHTML = nomes[cTipo].map((n, i) => i + 1).filter((i) => rot(cTipo, i).toLowerCase().includes(f))
+                .map((i) => `<div data-i="${i}" class="${i === cSel ? 'sel' : ''}">${esc(rot(cTipo, i))}</div>`).join('');
+            $('cLista').querySelectorAll('div').forEach((d) => { d.onclick = () => { cSel = +d.dataset.i; renderCfg(); }; });
+        }
+        $('cTipoD').onclick = () => { cTipo = 'd'; cSel = null; renderCfg(); };
+        $('cTipoO').onclick = () => { cTipo = 'o'; cSel = null; renderCfg(); };
+        $('cFiltro').oninput = renderCfg;
+        $('cEditar').onclick = () => {
+            if (!cSel) { toast('Selecione uma porta na lista.', true); return; }
+            const novo = prompt('Novo Nome para o Rótulo:', nomes[cTipo][cSel - 1]);
+            if (novo && novo.trim()) { nomes[cTipo][cSel - 1] = novo.trim(); renderCfg(); render(); atualizarForm(); }
+        };
+        $('cSalvarIp').onclick = () => {
+            const v = $('cIp').value.trim();
+            if (!/^\d{1,3}(\.\d{1,3}){3}$/.test(v)) { toast('IP inválido.', true); return; }
+            $('cIpAtual').textContent = v; log(`[INICIALIZAÇÃO] CONEXÃO BEM-SUCEDIDA com a Matriz KUMO (${v}) - Equipamento Online e Operacional.`); toast('IP salvo.');
+        };
+
+        // Verifica as rotinas a cada virada de minuto
+        let ultimoMin = '';
+        setInterval(() => {
+            const d = new Date(), hm = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+            if (hm === ultimoMin) return; ultimoMin = hm;
+            const dia = (d.getDay() + 6) % 7;
+            rotinas.forEach((r) => {
+                if (r.hora !== hm || r.ultimo === hoje()) return;
+                if (r.tipo === 'rec' ? r.dias.includes(dia) : r.data === hoje()) executar(r);
+            });
+        }, 1000);
+
+        log('AjaSchedule inicializado e operacional.');
+        log('[INICIALIZAÇÃO] Testando conexão com a Matriz KUMO (192.168.0.150)...');
+        log('[INICIALIZAÇÃO] CONEXÃO BEM-SUCEDIDA com a Matriz KUMO (192.168.0.150) - Equipamento Online e Operacional.');
+        atualizarForm(); render(); renderCfg();
+    </script>
+</body>
+</html>
