@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="projeto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-        /* Proporção da janela real (1350x800) */
-        .as { background: #141414; color: #fff; font: bold 13px Arial, sans-serif; width: 100%; min-width: 1000px; aspect-ratio: 1350 / 800; display: flex; flex-direction: column; position: relative; }
+        /* Janela em 16:9 */
+        .as { background: #141414; color: #fff; font: bold 13px Arial, sans-serif; width: 100%; min-width: 1000px; aspect-ratio: 16 / 9; overflow: hidden; display: flex; flex-direction: column; position: relative; }
         .as-abas { display: flex; background: #1A1A1A; flex-shrink: 0; }
         .as-abas button { background: transparent; border: 0; border-bottom: 3px solid transparent; color: #CCCCCC; padding: 13px 24px; font: bold 15px Arial, sans-serif; cursor: pointer; }
         .as-abas button:hover { color: #fff; }
         .as-abas button.on { color: #00E5FF; border-color: #00E5FF; }
         .as-aba { flex: 1; display: flex; flex-direction: column; padding: 0 18px 8px; min-height: 0; }
         .as-aba[hidden] { display: none; }
-        .as-logo { text-align: center; padding: 26px 0 22px; line-height: 1; }
+        .as-logo { text-align: center; padding: 18px 0 14px; line-height: 1; }
         .as-logo b { font: italic 900 30px Arial, sans-serif; color: #2A9BC9; letter-spacing: 3px; }
         .as-logo small { display: block; font-size: 8px; color: #2A6F8C; letter-spacing: 2px; margin-top: 3px; }
         .as-novo { background: #2B2B2B; padding: 8px 6px 14px; }

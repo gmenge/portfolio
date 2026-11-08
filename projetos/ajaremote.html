@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="projeto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-        .aja { background: #1E1E1E; color: #E0E0E0; font-family: Arial, sans-serif; padding: 0 15px 12px; min-width: 900px; position: relative; }
+        .aja { background: #1E1E1E; color: #E0E0E0; font-family: Arial, sans-serif; padding: 0 15px 12px; min-width: 900px; position: relative; aspect-ratio: 16 / 9; display: flex; flex-direction: column; overflow: hidden; }
         .aja-topo { display: flex; align-items: center; justify-content: space-between; height: 56px; }
         .aja-logo { font-size: 18px; font-weight: bold; color: #00E5FF; letter-spacing: 1px; }
         .aja-ip { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: bold; }
@@ -17,18 +17,18 @@
         .aja-ip button:hover { background: #444; }
         .aja-barra { background: #2B2B2B; text-align: center; font-weight: bold; font-size: 13px; padding: 8px; margin-bottom: 8px; color: #CCCCCC; }
         .aja-barra.dest { color: #00E5FF; } .aja-barra.ok { color: #00FF66; } .aja-barra.erro { color: #FF4444; }
-        .aja-caixa { border: 1px solid #444; background: #2B2B2B; padding: 14px 6px 6px; margin: 8px 0; position: relative; }
+        .aja-caixa { border: 1px solid #444; background: #2B2B2B; padding: 14px 6px 6px; margin: 8px 0; position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }
         .aja-caixa > .leg { position: absolute; top: -9px; left: 10px; background: #2B2B2B; padding: 0 6px; font-size: 12px; font-weight: bold; color: #00E5FF; }
-        .aja-grade { display: grid; grid-template-columns: repeat(16, 1fr); gap: 4px; }
-        .aja-grade button { border: 2px solid #444; background: #333; color: #E0E0E0; font: bold 10px Arial, sans-serif; padding: 9px 0; cursor: pointer; white-space: nowrap; }
+        .aja-grade { display: grid; grid-template-columns: repeat(16, 1fr); grid-template-rows: repeat(4, 1fr); gap: 4px; flex: 1; min-height: 0; }
+        .aja-grade button { border: 2px solid #444; background: #333; color: #E0E0E0; font: bold 10px Arial, sans-serif; padding: 0; cursor: pointer; white-space: nowrap; }
         .aja-grade.org button { background: #262626; color: #CCC; }
         .aja-grade button:hover { background: #3a3a3a; }
         .aja-grade.dst button.sel { border-color: #00E5FF; background: #00E5FF; color: #000; }
         .aja-grade.org button.ativa { border-color: #00FF66; background: #00FF66; color: #000; }
         .aja-grade.org button.flash { background: #00FF66; color: #000; }
-        .aja-log { border: 1px solid #333; background: #1E1E1E; position: relative; padding: 12px 8px 6px; margin-top: 8px; }
+        .aja-log { flex-shrink: 0; border: 1px solid #333; background: #1E1E1E; position: relative; padding: 12px 8px 6px; margin-top: 8px; }
         .aja-log > .leg { position: absolute; top: -9px; left: 10px; background: #1E1E1E; padding: 0 6px; font-size: 11px; font-weight: bold; color: #888; }
-        .aja-log ul { list-style: none; margin: 0; padding: 0; height: 92px; overflow-y: auto; font: 12px Consolas, monospace; color: #aaa; }
+        .aja-log ul { list-style: none; margin: 0; padding: 0; height: 84px; overflow-y: auto; font: 12px Consolas, monospace; color: #aaa; }
         .aja-log li { padding: 1px 0; } .aja-log li.ok { color: #00FF66; } .aja-log li.dest { color: #00E5FF; }
         .aja-rodape { text-align: right; font-size: 10px; color: #555; margin-top: 6px; }
         .aja-modal { position: absolute; inset: 0; background: rgba(0,0,0,.65); display: flex; align-items: center; justify-content: center; }
