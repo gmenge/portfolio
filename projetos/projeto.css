@@ -35,17 +35,23 @@
 
 .projeto-intro {
     max-width: 1400px;
-    text-align: left;
+    text-align: center;
 }
 
 .projeto-intro h2 {
-    text-align: left;
+    text-align: center;
     margin: 0 0 10px;
 }
 
 .projeto-intro p {
-    text-align: left;
-    margin: 0 0 18px;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 18px;
+}
+
+.projeto-intro .tags,
+.projeto-intro .acoes {
+    justify-content: center;
 }
 
 .tags {
@@ -272,17 +278,21 @@ body.tem-cheia {
 /* Recursos */
 .recursos {
     max-width: 1400px;
-    text-align: left;
+    text-align: center;
 }
 
 .recursos h2 {
-    text-align: left;
+    text-align: center;
 }
 
+/* a lista fica centralizada como um bloco; cada item continua alinhado com o seu ✔ */
 .recursos ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
+    text-align: left;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px 30px;
